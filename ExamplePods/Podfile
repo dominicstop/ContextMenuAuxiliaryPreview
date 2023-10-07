@@ -5,9 +5,5 @@ platform :ios, '10.0'
 target 'ContextMenuAuxiliaryPreview_Example' do
   pod 'ContextMenuAuxiliaryPreview', :path => '../'
 
-  target 'ContextMenuAuxiliaryPreview_Tests' do
-    inherit! :search_paths
-
-    
   end
 end
