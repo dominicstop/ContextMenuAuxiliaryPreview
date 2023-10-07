@@ -25,8 +25,8 @@ let package = Package(
     // dependencies.
     .target(
       name: "ContextMenuAuxiliaryPreview",
-      path: "Sources",
       dependencies: [],
+      path: "Sources",
       linkerSettings: [
 				.linkedFramework("UIKit"),
 			]
