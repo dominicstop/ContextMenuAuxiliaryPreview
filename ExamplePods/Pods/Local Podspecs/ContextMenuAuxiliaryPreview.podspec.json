@@ -1,0 +1,22 @@
+{
+  "name": "ContextMenuAuxiliaryPreview",
+  "version": "0.1.0",
+  "summary": "A short description of ContextMenuAuxiliaryPreview.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/dominicstop@gmail.com/ContextMenuAuxiliaryPreview",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "dominicstop@gmail.com": "18517029+dominicstop@users.noreply.github.com"
+  },
+  "source": {
+    "git": "https://github.com/dominicstop@gmail.com/ContextMenuAuxiliaryPreview.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "10.0"
+  },
+  "source_files": "ContextMenuAuxiliaryPreview/Classes/**/*"
+}

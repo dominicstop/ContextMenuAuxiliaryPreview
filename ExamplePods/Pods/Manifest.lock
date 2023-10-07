@@ -1,0 +1,16 @@
+PODS:
+  - ContextMenuAuxiliaryPreview (0.1.0)
+
+DEPENDENCIES:
+  - ContextMenuAuxiliaryPreview (from `../`)
+
+EXTERNAL SOURCES:
+  ContextMenuAuxiliaryPreview:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ContextMenuAuxiliaryPreview: 83ff764d5653aba26c369995cdc6d7821b5f9431
+
+PODFILE CHECKSUM: 35a8aaf84633de06379c5fd822f99050431a2ab6
+
+COCOAPODS: 1.12.0
