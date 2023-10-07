@@ -18,9 +18,5 @@ let package = Package(
     .target(
       name: "ContextMenuAuxiliaryPreview"
     ),
-    .testTarget(
-      name: "ContextMenuAuxiliaryPreviewTests",
-      dependencies: ["ContextMenuAuxiliaryPreview"]
-    ),
   ]
 );
