@@ -4,20 +4,23 @@
 import PackageDescription
 
 let package = Package(
-    name: "ContextMenuAuxiliaryPreview",
-    products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
-        .library(
-            name: "ContextMenuAuxiliaryPreview",
-            targets: ["ContextMenuAuxiliaryPreview"]),
-    ],
-    targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
-        .target(
-            name: "ContextMenuAuxiliaryPreview"),
-        .testTarget(
-            name: "ContextMenuAuxiliaryPreviewTests",
-            dependencies: ["ContextMenuAuxiliaryPreview"]),
-    ]
-)
+  name: "ContextMenuAuxiliaryPreview",
+  products: [
+    // Products define the executables and libraries a package produces, making them visible to other packages.
+    .library(
+      name: "ContextMenuAuxiliaryPreview",
+      targets: ["ContextMenuAuxiliaryPreview"]
+    ),
+  ],
+  targets: [
+    // Targets are the basic building blocks of a package, defining a module or a test suite.
+    // Targets can depend on other targets in this package and products from dependencies.
+    .target(
+      name: "ContextMenuAuxiliaryPreview"
+    ),
+    .testTarget(
+      name: "ContextMenuAuxiliaryPreviewTests",
+      dependencies: ["ContextMenuAuxiliaryPreview"]
+    ),
+  ]
+);
