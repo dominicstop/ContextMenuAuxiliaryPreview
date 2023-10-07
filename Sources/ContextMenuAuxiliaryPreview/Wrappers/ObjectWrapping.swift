@@ -7,6 +7,11 @@
 
 import Foundation
 
+
+protocol ObjectWrappingEncodedString: HashedStringDecodable {
+  static var className: Self { get };
+};
+
 protocol ObjectWrapping {
   associatedtype WrapperType;
   
@@ -16,7 +21,7 @@ protocol ObjectWrapping {
 extension ObjectWrapping {
   var wrappedObject: WrapperType? {
     self.objectWrapper.object;
-  };
+  }; 
   
   func debugPrintWrappedObject(){
     #if DEBUG
