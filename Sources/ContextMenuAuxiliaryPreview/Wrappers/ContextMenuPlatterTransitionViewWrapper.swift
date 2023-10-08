@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// Wrapper for: _UIContextMenuPlatterTransitionView
+/// Wrapper for: `_UIContextMenuPlatterTransitionView`
 class ContextMenuPlatterTransitionViewWrapper:
   ObjectWrapperBase<UIView, ContextMenuPlatterTransitionViewWrapper.EncodedString> {
 
@@ -23,5 +23,17 @@ class ContextMenuPlatterTransitionViewWrapper:
       };
     };
   };
+  
+  // MARK: - Computed Properties
+  // ---------------------------
+  
+  var contextMenuViewWrapper: ContextMenuViewWrapper? {
+    guard let view = self.wrappedObject else { return nil };
+    
+    return view.subviews.reduce(nil) {
+      $0 ?? .init(objectToWrap: $1)
+    };
+  };
+  
 };
 
