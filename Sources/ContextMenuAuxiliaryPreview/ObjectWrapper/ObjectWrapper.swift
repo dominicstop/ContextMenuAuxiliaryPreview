@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 class ObjectWrapper<T> {
   
   private let shouldRetainObject: Bool;
