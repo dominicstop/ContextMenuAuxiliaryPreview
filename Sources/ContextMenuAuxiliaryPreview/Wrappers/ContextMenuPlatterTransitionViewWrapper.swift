@@ -35,5 +35,13 @@ class ContextMenuPlatterTransitionViewWrapper:
     };
   };
   
+  var morphingPlatterViewWrapper: MorphingPlatterViewWrapper? {
+    guard let view = self.wrappedObject else { return nil };
+    
+    return view.subviews.reduce(nil) {
+      $0 ?? .init(objectToWrap: $1)
+    };
+  };
+  
 };
 
