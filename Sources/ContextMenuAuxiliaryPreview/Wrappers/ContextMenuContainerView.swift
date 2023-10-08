@@ -36,4 +36,11 @@ class ContextMenuContainerViewWrapper:
     };
   };
   
+  var contextMenuPlatterTransitionViewWrapper: ContextMenuPlatterTransitionViewWrapper? {
+    guard let view = self.wrappedObject else { return nil };
+    
+    return view.subviews.reduce(nil) {
+      $0 ?? .init(objectToWrap: $1)
+    };
+  };
 };
