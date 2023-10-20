@@ -28,6 +28,7 @@ class ContextMenuPlatterTransitionViewWrapper:
   // ---------------------------
   
   /// Root container for the context menu items
+  /// i.e. holds the context menu items
   var contextMenuViewWrapper: ContextMenuViewWrapper? {
     guard let view = self.wrappedObject else { return nil };
     
@@ -36,7 +37,8 @@ class ContextMenuPlatterTransitionViewWrapper:
     };
   };
   
-  /// Root container for the context menu preview
+  /// Root container for the context menu preview.
+  /// i.e. holds the context menu preview.
   var morphingPlatterViewWrapper: MorphingPlatterViewWrapper? {
     guard let view = self.wrappedObject else { return nil };
     
