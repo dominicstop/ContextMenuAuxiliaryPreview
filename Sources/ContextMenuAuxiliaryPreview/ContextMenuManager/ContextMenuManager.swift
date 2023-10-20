@@ -9,22 +9,59 @@ import UIKit
 
 class AuxiliaryRootView: UIView {
 
+  override init(frame: CGRect) {
+    super.init(frame: frame);
+    
+    self.backgroundColor = .red;
+  };
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  };
 };
 
+
 public class ContextMenuManager {
+
+  static weak var auxPreview: AuxiliaryRootView?;
+  
+  // MARK: - Properties
+  // ------------------
+  
+  public var menuAuxPreviewConfig: ContextMenuAuxiliaryPreviewConfig?;
+  var contextMenuMetadata: ContextMenuMetadata?;
+  
+  public var isAuxiliaryPreviewEnabled = false;
+  
+  public var isContextMenuVisible = false;
+  public var isAuxPreviewVisible = false;
+  
+  // temp
+  lazy var menuAuxiliaryPreviewView: AuxiliaryRootView? = {
+    let view = AuxiliaryRootView(frame: .init(
+      origin: .zero,
+      size: .init(
+        width: 100,
+        height: 100
+      )
+    ));
+    
+    return view;
+  }();
+  
+  // MARK: - Properties - References
+  // -------------------------------
   
   /// A reference to the view that contains the context menu interaction
-  public weak var targetView: UIView?;
+  public weak var menuTargetView: UIView?;
   
   /// A reference to the `UIContextMenuInteraction` interaction config that
   /// the `targetView` is using
   public weak var contextMenuInteraction: UIContextMenuInteraction?;
   
-  public var isContextMenuVisible = false;
-  
-  var displayLink: CADisplayLink?;
-  var displayLinkStartTimestamp: CFTimeInterval?;
-  
+  /// A reference to the view controller that contains the custom context menu
+  /// preview that will be used when the menu is shown
+  public weak var menuCustomPreviewController: UIViewController?;
   
   // MARK: - Computed Properties
   // ---------------------------
@@ -35,15 +72,18 @@ public class ContextMenuManager {
   /// **Note**: This `UIView` instance  only exists whenever there's a
   /// context menu interaction.
   ///
-  var contextMenuContainerView: UIView? {
-    guard let targetView = self.targetView,
+  var contextMenuContainerViewWrapper: ContextMenuContainerViewWrapper? {
+    guard let targetView = self.menuTargetView,
           let window = targetView.window
     else { return nil };
     
-    
-    return window.subviews.first {
-      ($0.gestureRecognizers?.count ?? 0) > 0
+    return window.subviews.reduce(nil) { (prev, subview) in
+      prev ?? ContextMenuContainerViewWrapper(objectToWrap: subview);
     };
+  };
+  
+  var isUsingCustomMenuPreview: Bool {
+    self.menuCustomPreviewController != nil
   };
   
   // MARK: - Init
@@ -51,13 +91,353 @@ public class ContextMenuManager {
   
   public init(
     contextMenuInteraction: UIContextMenuInteraction,
-    targetView: UIView
+    menuTargetView: UIView
   ) {
     self.contextMenuInteraction = contextMenuInteraction;
-    self.targetView = targetView;
+    self.menuTargetView = menuTargetView;
   };
-    // MARK: - Functions
-  // -----------------
+  
+  // MARK: - Internal Functions
+  // --------------------------
+  
+  // MARK: Experimental - "Auxiliary Context Menu Preview"-Related
+  func attachContextMenuAuxiliaryPreviewIfAny(
+    _ animator: UIContextMenuInteractionAnimating!
+  ){
+  
+    guard let menuAuxPreviewConfig = self.menuAuxPreviewConfig,
+          let contextMenuMetadata = ContextMenuMetadata(manager: self),
+          let auxPreviewTargetView = contextMenuMetadata.auxPreviewTargetView,
+          
+          let menuAuxiliaryPreviewView = self.menuAuxiliaryPreviewView,
+          
+          let morphingPlatterView =
+            contextMenuMetadata.morphingPlatterViewWrapper.wrappedObject,
+            
+          let contextMenuContainerView =
+            contextMenuMetadata.contextMenuContainerViewWrapper.wrappedObject
+    else { return };
+
+    // MARK: Set Layout
+    // ----------------
+    
+    // Bugfix: Stop bubbling touch events from propagating to parent
+    menuAuxiliaryPreviewView.addGestureRecognizer(
+      UITapGestureRecognizer(target: nil, action: nil)
+    );
+    
+    /// manually set size of aux. preview
+    menuAuxiliaryPreviewView.bounds = .init(
+      origin: .zero,
+      size: contextMenuMetadata.auxiliaryPreviewViewSize
+    );
+
+    /// enable auto layout
+    menuAuxiliaryPreviewView.translatesAutoresizingMaskIntoConstraints = false;
+    
+    /// attach `auxiliaryView` to context menu preview
+    auxPreviewTargetView.addSubview(menuAuxiliaryPreviewView);
+    
+    // set layout constraints based on config
+    NSLayoutConstraint.activate({
+      
+      // set initial constraints
+      var constraints: Array<NSLayoutConstraint> = [
+        // set aux preview height
+        menuAuxiliaryPreviewView.heightAnchor.constraint(
+          equalToConstant: contextMenuMetadata.auxiliaryViewHeight
+        ),
+      ];
+      
+      // set vertical alignment constraint - i.e. either...
+      constraints.append({
+        if contextMenuMetadata.shouldAttachAuxPreviewToTop {
+          // A - pin to top or...
+          return menuAuxiliaryPreviewView.bottomAnchor.constraint(
+           equalTo: morphingPlatterView.topAnchor,
+           constant: -contextMenuMetadata.marginInner
+          );
+        };
+        
+        // B - pin to bottom.
+        return menuAuxiliaryPreviewView.topAnchor.constraint(
+          equalTo: morphingPlatterView.bottomAnchor,
+          constant: contextMenuMetadata.marginInner
+        );
+      }());
+      
+      // set horizontal alignment constraints based on config...
+      constraints += {
+        switch menuAuxPreviewConfig.alignmentHorizontal {
+          // A - pin to left
+          case .previewLeading: return [
+            menuAuxiliaryPreviewView.leadingAnchor.constraint(
+              equalTo: morphingPlatterView.leadingAnchor
+            ),
+            
+            menuAuxiliaryPreviewView.widthAnchor.constraint(
+              equalToConstant: contextMenuMetadata.auxiliaryViewWidth
+            ),
+          ];
+            
+          // B - pin to right
+          case .previewTrailing: return [
+            menuAuxiliaryPreviewView.rightAnchor.constraint(
+              equalTo: morphingPlatterView.rightAnchor
+            ),
+            
+            menuAuxiliaryPreviewView.widthAnchor.constraint(
+              equalToConstant: contextMenuMetadata.auxiliaryViewWidth
+            ),
+          ];
+            
+          // C - pin to center
+          case .previewCenter: return [
+            menuAuxiliaryPreviewView.centerXAnchor.constraint(
+              equalTo: morphingPlatterView.centerXAnchor
+            ),
+            
+            menuAuxiliaryPreviewView.widthAnchor.constraint(
+              equalToConstant: contextMenuMetadata.auxiliaryViewWidth
+            ),
+          ];
+            
+          // D - match preview size
+          case .stretchPreview: return [
+            menuAuxiliaryPreviewView.leadingAnchor
+              .constraint(equalTo: morphingPlatterView.leadingAnchor),
+            
+            menuAuxiliaryPreviewView.trailingAnchor
+              .constraint(equalTo: morphingPlatterView.trailingAnchor),
+          ];
+          
+          // E - stretch to edges of screen
+          case .stretchScreen: return [
+            menuAuxiliaryPreviewView.leadingAnchor.constraint(
+              equalTo: contextMenuContainerView.leadingAnchor
+            ),
+            
+            menuAuxiliaryPreviewView.trailingAnchor.constraint(
+              equalTo: contextMenuContainerView.trailingAnchor
+            ),
+          ];
+        };
+      }();
+      
+      return constraints;
+    }());
+    
+    self.contextMenuMetadata = contextMenuMetadata;
+    
+    //  MARK: Show Aux. View - Prep
+    // ----------------------------
+    
+    let transitionConfigEntrance = menuAuxPreviewConfig.transitionConfigEntrance;
+
+    // closures to set the start/end values for the entrance transition
+    let (setTransitionStateStart, setTransitionStateEnd): (() -> (), () -> ()) = {
+      var transform = menuAuxiliaryPreviewView.transform;
+      
+      let setTransformForTransitionSlideStart = { (yOffset: CGFloat) in
+        switch contextMenuMetadata.morphingPlatterViewPlacement {
+          case .top:
+            transform = transform.translatedBy(x: 0, y: -yOffset);
+            
+          case .bottom:
+            transform = transform.translatedBy(x: 0, y: yOffset);
+        };
+      };
+      
+      let setTransformForTransitionZoomStart = { (scaleOffset: CGFloat) in
+        let scale = 1 - scaleOffset;
+        transform = transform.scaledBy(x: scale, y: scale);
+      };
+      
+      switch menuAuxPreviewConfig.transitionConfigEntrance.transition {
+        case .fade: return ({
+          // A - fade - entrance transition
+          menuAuxiliaryPreviewView.alpha = 0;
+          
+        }, {
+          // B - fade - exit transition
+          menuAuxiliaryPreviewView.alpha = 1;
+        });
+          
+        case let .slide(slideOffset): return ({
+          // A - slide - entrance transition
+          // fade - start
+          menuAuxiliaryPreviewView.alpha = 0;
+          
+          // slide - start
+          setTransformForTransitionSlideStart(slideOffset);
+          
+          // apply transform
+          menuAuxiliaryPreviewView.transform = transform;
+          
+        }, {
+          // B - slide - exit transition
+          // fade - end
+          menuAuxiliaryPreviewView.alpha = 1;
+ 
+          // slide - end - reset transform
+          menuAuxiliaryPreviewView.transform = .identity;
+        });
+          
+        case let .zoom(zoomOffset): return ({
+            // A - zoom - entrance transition
+            // fade - start
+            menuAuxiliaryPreviewView.alpha = 0;
+            
+            // zoom - start
+            setTransformForTransitionZoomStart(zoomOffset);
+            
+            // start - apply transform
+            menuAuxiliaryPreviewView.transform = transform;
+            
+          }, {
+            // B - zoom - exit transition
+            // fade - end
+            menuAuxiliaryPreviewView.alpha = 1;
+            
+            // zoom - end - reset transform
+            menuAuxiliaryPreviewView.transform = .identity;
+          });
+          
+        case let .zoomAndSlide(slideOffset, zoomOffset): return ({
+          // A - zoomAndSlide - entrance transition
+          // fade - start
+          menuAuxiliaryPreviewView.alpha = 0;
+        
+          // slide - start
+          setTransformForTransitionSlideStart(slideOffset);
+          
+          // zoom - start
+          setTransformForTransitionZoomStart(zoomOffset);
+          
+          // start - apply transform
+          menuAuxiliaryPreviewView.transform = transform;
+                    
+        }, {
+          // B - zoomAndSlide - exit transition
+          // fade - end
+          menuAuxiliaryPreviewView.alpha = 1;
+          
+          // slide/zoom - end - reset transform
+          menuAuxiliaryPreviewView.transform = .identity;
+        });
+          
+        case .none:
+          // don't use any entrance transitions...
+          fallthrough;
+          
+        default:
+          // noop entrance + exit transition
+          return ({},{});
+      };
+    }();
+    
+    // MARK: Show Aux. View
+    // --------------------
+    
+    self.isAuxPreviewVisible = true;
+    
+    // transition - set start/initial values
+    setTransitionStateStart();
+    
+    // MARK: Bugfix - Aux-Preview Touch Event on Screen Edge
+    let shouldSwizzle = contextMenuMetadata.contextMenuOffsetY != 0;
+    
+    if shouldSwizzle {
+      Self.auxPreview = menuAuxiliaryPreviewView;
+      UIView.swizzlePoint();
+    };
+    
+    UIView.animate(
+      withDuration: transitionConfigEntrance.duration,
+      delay       : transitionConfigEntrance.delay,
+      options     : transitionConfigEntrance.options,
+      animations  : {
+
+        // transition in - set end values
+        setTransitionStateEnd();
+        
+        let yOffset = contextMenuMetadata.contextMenuOffsetY;
+        
+        // offset from anchor
+        contextMenuContainerView.frame =
+          contextMenuContainerView.frame.offsetBy(dx: 0, dy: yOffset)
+      
+      }, completion: { _ in
+        // TBA
+      }
+    );
+  };
+  
+  // MARK: Experimental - "Auxiliary Context Menu Preview"-Related
+  func detachContextMenuAuxiliaryPreviewIfAny(
+    _ animator: UIContextMenuInteractionAnimating?
+  ){
+    
+    guard self.isAuxiliaryPreviewEnabled,
+          self.isAuxPreviewVisible,
+          
+          let animator = animator,
+          let menuAuxiliaryPreviewView = self.menuAuxiliaryPreviewView,
+          let contextMenuMetadata = self.contextMenuMetadata
+    else { return };
+    
+    /// Bug:
+    /// * "Could not locate shadow view with tag #, this is probably caused by a temporary inconsistency
+    ///   between native views and shadow views."
+    /// * Triggered when the menu is about to be hidden, iOS removes the context menu along with the
+    ///   `previewAuxiliaryViewContainer`
+    ///
+    
+    // reset flag
+    self.isAuxPreviewVisible = false;
+    
+    // Add exit transition
+    animator.addAnimations { [unowned self] in
+      var transform = menuAuxiliaryPreviewView.transform;
+      
+      // transition - fade out
+      menuAuxiliaryPreviewView.alpha = 0;
+      
+      // transition - zoom out
+      transform = transform.scaledBy(x: 0.7, y: 0.7);
+      
+      // transition - slide out
+      switch contextMenuMetadata.morphingPlatterViewPlacement {
+        case .top:
+          transform = transform.translatedBy(x: 0, y: 50);
+          
+        case .bottom:
+          transform = transform.translatedBy(x: 0, y: -50);
+          
+        default: break;
+      };
+      
+      // transition - apply transform
+      menuAuxiliaryPreviewView.transform = transform;
+    };
+    
+    animator.addCompletion { [unowned self] in
+      menuAuxiliaryPreviewView.removeFromSuperview();
+      
+      // clear value
+      self.contextMenuMetadata = nil;
+      
+      // MARK: Bugfix - Aux-Preview Touch Event on Screen Edge
+      if UIView.isSwizzlingApplied {
+        // undo swizzling
+        UIView.swizzlePoint();
+        Self.auxPreview = nil;
+      };
+    };
+  };
+  
+  // MARK: - Public Functions
+  // ------------------------
   
   // context menu display begins
   public func notifyOnContextMenuInteraction(
@@ -67,14 +447,11 @@ public class ContextMenuManager {
   ) {
   
     animator?.addAnimations {
-      guard let contextMenuContainerView = self.contextMenuContainerView
-      else { return };
-    
+      self.attachContextMenuAuxiliaryPreviewIfAny(animator);
     };
     
     if let animator = animator {
       animator.addCompletion {
-        
         self.isContextMenuVisible = true;
       };
       
@@ -98,44 +475,41 @@ public class ContextMenuManager {
       self.isContextMenuVisible = false;
     };
   };
+};
+
+// MARK: - UIView - "Auxiliary Preview"-Related (Experimental)
+// -----------------------------------------------------------
+
+// Bugfix: Fix for aux-preview not receiving touch event when appearing
+// on screen edge
+fileprivate extension UIView {
+  static weak var auxPreview: UIView? = nil;
   
-  // MARK: - Functions - DisplayLink-Related
-  // ---------------------------------------
-    
-  func startDisplayLink(shouldAutoEndDisplayLink: Bool) {
-    let displayLink = CADisplayLink(
-      target: self,
-      selector: #selector(self.onDisplayLinkTick(displayLink:))
-    );
-    
-    self.displayLink = displayLink;
-    
-    if #available(iOS 15.0, *) {
-      displayLink.preferredFrameRateRange =
-        CAFrameRateRange(minimum: 60, maximum: 120);
-      
-    } else {
-      displayLink.preferredFramesPerSecond = 60;
+  static var isSwizzlingApplied = false
+  
+  @objc dynamic func _point(
+    inside point: CGPoint,
+    with event: UIEvent?
+  ) -> Bool {
+    guard let auxPreview = Self.auxPreview,
+          self.subviews.contains(where: { $0 === auxPreview })
+    else {
+      // call original impl.
+      return self._point(inside: point, with: event);
     };
     
-    displayLink.add(to: .current, forMode: .common);
+    return true;
   };
   
-  func endDisplayLink() {
-    self.displayLink?.invalidate();
-  };
-  
-  @objc private func onDisplayLinkTick(displayLink: CADisplayLink) {
-    var shouldEndDisplayLink = false;
+  static func swizzlePoint(){
+    let selectorOriginal = #selector( point(inside: with:));
+    let selectorSwizzled = #selector(_point(inside: with:));
     
-    defer {
-      if shouldEndDisplayLink {
-        self.endDisplayLink();
-      };
-    };
+    guard let methodOriginal = class_getInstanceMethod(UIView.self, selectorOriginal),
+          let methodSwizzled = class_getInstanceMethod(UIView.self, selectorSwizzled)
+    else { return };
     
-    if self.displayLinkStartTimestamp == nil {
-      self.displayLinkStartTimestamp = displayLink.timestamp;
-    };
+    Self.isSwizzlingApplied.toggle();
+    method_exchangeImplementations(methodOriginal, methodSwizzled);
   };
 };
