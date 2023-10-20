@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import ContextMenuAuxiliaryPreview
 
 class AuxPreviewTest01ViewController: UIViewController {
+
+  var interaction: UIContextMenuInteraction?;
+  
+  var contextMenuManager: ContextMenuManager?;
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -19,7 +24,27 @@ class AuxPreviewTest01ViewController: UIViewController {
       view.layer.cornerRadius = 10;
       
       let interaction = UIContextMenuInteraction(delegate: self);
+      self.interaction = interaction;
+      
       view.addInteraction(interaction);
+      
+      let contextMenuManager = ContextMenuManager(
+        contextMenuInteraction: interaction,
+        menuTargetView: self.view
+      );
+      
+      self.contextMenuManager = contextMenuManager;
+     
+      contextMenuManager.menuAuxPreviewConfig = ContextMenuAuxiliaryPreviewConfig(
+        height: 100,
+        width: 100,
+        anchorPosition: .automatic,
+        alignmentHorizontal: .previewCenter,
+        marginPreview: 10,
+        marginAuxiliaryPreview: 10,
+        transitionConfigEntrance: .default,
+        transitionEntranceDelay: .RECOMMENDED
+      );
       
       return view;
     }();
@@ -41,6 +66,7 @@ class AuxPreviewTest01ViewController: UIViewController {
 };
 
 extension AuxPreviewTest01ViewController: UIContextMenuInteractionDelegate {
+
   func contextMenuInteraction(
     _ interaction: UIContextMenuInteraction,
     configurationForMenuAtLocation location: CGPoint
@@ -56,5 +82,31 @@ extension AuxPreviewTest01ViewController: UIContextMenuInteractionDelegate {
       
       return UIMenu(title: "", children: [shareAction]);
     };
+  };
+  
+  func contextMenuInteraction(
+    _ interaction: UIContextMenuInteraction,
+    willDisplayMenuFor configuration: UIContextMenuConfiguration,
+    animator: UIContextMenuInteractionAnimating?
+  ) {
+    
+    self.contextMenuManager!.notifyOnContextMenuInteraction(
+      interaction,
+      willDisplayMenuFor: configuration,
+      animator: animator
+    );
+  };
+  
+  func contextMenuInteraction(
+    _ interaction: UIContextMenuInteraction,
+    willEndFor configuration: UIContextMenuConfiguration,
+    animator: UIContextMenuInteractionAnimating?
+  ) {
+    
+    self.contextMenuManager!.notifyOnContextMenuInteraction(
+      interaction,
+      willDisplayMenuFor: configuration,
+      animator: animator
+    );
   };
 };
