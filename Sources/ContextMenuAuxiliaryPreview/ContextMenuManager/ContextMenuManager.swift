@@ -118,12 +118,22 @@ public class ContextMenuManager {
   ){
   
     // animator.previewViewController
+    
+    print(
+      "attachContextMenuAuxiliaryPreviewIfAny:",
+      "\n- animator.previewViewController:", animator.previewViewController
+    );
   
     guard let menuAuxPreviewConfig = self.menuAuxPreviewConfig,
-          let contextMenuMetadata = ContextMenuMetadata(manager: self),
+    
+          let contextMenuMetadata = ContextMenuAuxiliaryPreviewManager(
+            usingContextMenuManager: self,
+            contextMenuAnimator: animator
+          ),
+          
           let auxPreviewTargetView = contextMenuMetadata.auxPreviewTargetView,
           
-          // get the wrapper for the root view that hold the context menu
+          /// get the wrapper for the root view that hold the context menu
           let menuAuxiliaryPreviewView = self.menuAuxiliaryPreviewView,
           
           let morphingPlatterView =
@@ -172,7 +182,7 @@ public class ContextMenuManager {
         var constraints: Array<NSLayoutConstraint> = [
           // set aux preview height
           menuAuxiliaryPreviewView.heightAnchor.constraint(
-            equalToConstant: contextMenuMetadata.auxiliaryViewHeight
+            equalToConstant: contextMenuMetadata.auxiliaryPreviewViewHeight
           ),
         ];
         
@@ -203,7 +213,7 @@ public class ContextMenuManager {
               ),
               
               menuAuxiliaryPreviewView.widthAnchor.constraint(
-                equalToConstant: contextMenuMetadata.auxiliaryViewWidth
+                equalToConstant: contextMenuMetadata.auxiliaryPreviewViewWidth
               ),
             ];
               
@@ -214,7 +224,7 @@ public class ContextMenuManager {
               ),
               
               menuAuxiliaryPreviewView.widthAnchor.constraint(
-                equalToConstant: contextMenuMetadata.auxiliaryViewWidth
+                equalToConstant: contextMenuMetadata.auxiliaryPreviewViewWidth
               ),
             ];
               
@@ -225,7 +235,7 @@ public class ContextMenuManager {
               ),
               
               menuAuxiliaryPreviewView.widthAnchor.constraint(
-                equalToConstant: contextMenuMetadata.auxiliaryViewWidth
+                equalToConstant: contextMenuMetadata.auxiliaryPreviewViewWidth
               ),
             ];
               

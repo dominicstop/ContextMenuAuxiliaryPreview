@@ -7,8 +7,9 @@
 
 import UIKit
 
-
-public struct ContextMenuMetadata {
+/// This class contains the logic for attaching the "context menu aux. preview"
+/// to the aux. preview
+public struct ContextMenuAuxiliaryPreviewManager {
 
   /// amount to add to width - fix for layout bug
   ///
@@ -28,8 +29,8 @@ public struct ContextMenuMetadata {
   // MARK: - Properties
   // ------------------
   
-  let auxiliaryViewHeight: CGFloat;
-  let auxiliaryViewWidth: CGFloat;
+  let auxiliaryPreviewViewHeight: CGFloat;
+  let auxiliaryPreviewViewWidth: CGFloat;
   
   /// distance of aux. preview from the context menu preview
   let marginInner: CGFloat;
@@ -58,10 +59,7 @@ public struct ContextMenuMetadata {
   // -------------------------------
 
   var contextMenuContainerViewWrapper: ContextMenuContainerViewWrapper;
-  
-  var contextMenuPlatterTransitionViewWrapper:
-    ContextMenuPlatterTransitionViewWrapper;
-    
+  var contextMenuPlatterTransitionViewWrapper: ContextMenuPlatterTransitionViewWrapper;
   var morphingPlatterViewWrapper: MorphingPlatterViewWrapper;
   
   /// where should the aux. preview be attached to?
@@ -72,61 +70,84 @@ public struct ContextMenuMetadata {
   
   var auxiliaryPreviewViewSize: CGSize {
     .init(
-      width : self.auxiliaryViewWidth + Self.auxiliaryViewExtraWidth,
-      height: self.auxiliaryViewHeight
+      width : self.auxiliaryPreviewViewWidth + Self.auxiliaryViewExtraWidth,
+      height: self.auxiliaryPreviewViewHeight
     );
   };
   
   // MARK: - Init
   // ------------
   
-  public init?(manager: ContextMenuManager){
+  public init?(
+    usingContextMenuManager manager: ContextMenuManager,
+    contextMenuAnimator animator: UIContextMenuInteractionAnimating
+  ) {
+  
     guard let menuAuxPreviewConfig = manager.menuAuxPreviewConfig,
-          let menuAuxiliaryPreviewView = manager.menuAuxiliaryPreviewView,
-
-          let contextMenuContainerViewWrapper =
+          let menuAuxiliaryPreviewView = manager.menuAuxiliaryPreviewView
+    else { return nil };
+          
+    /// get wrapper for the "root view" that contains the context menu
+    guard let contextMenuContainerViewWrapper =
             manager.contextMenuContainerViewWrapper,
           
-          contextMenuContainerViewWrapper.wrappedObject != nil,
-        
-          let contextMenuPlatterTransitionViewWrapper =
-            contextMenuContainerViewWrapper.contextMenuPlatterTransitionViewWrapper,
-            
-          let contextMenuContainerView =
-            contextMenuContainerViewWrapper.wrappedObject,
-      
-          let morphingPlatterViewWrapper =
-            contextMenuPlatterTransitionViewWrapper.morphingPlatterViewWrapper,
-            
-          let morphingPlatterView =
-            morphingPlatterViewWrapper.wrappedObject
-              
+          contextMenuContainerViewWrapper.wrappedObject != nil
     else { return nil };
     
-    let contextMenuViewWrapper =
-      contextMenuPlatterTransitionViewWrapper.contextMenuViewWrapper;
-            
-    let contextMenuView = contextMenuViewWrapper?.wrappedObject;
-  
     self.contextMenuContainerViewWrapper = contextMenuContainerViewWrapper;
+          
+    /// get wrapper for the "root view" that contains the "context menu items"
+    /// + the "context menu preview"
+    guard let contextMenuPlatterTransitionViewWrapper =
+            contextMenuContainerViewWrapper.contextMenuPlatterTransitionViewWrapper,
+          
+          /// get the wrapper for the root view that holds the
+          /// "context menu items" + "context menu preview"
+          let contextMenuContainerView = contextMenuContainerViewWrapper.wrappedObject
+    else { return nil };
     
     self.contextMenuPlatterTransitionViewWrapper =
       contextMenuPlatterTransitionViewWrapper;
-      
+          
+          /// get the wrapper for the root view that holds the
+          /// "context menu preview".
+    guard let morphingPlatterViewWrapper =
+            contextMenuPlatterTransitionViewWrapper.morphingPlatterViewWrapper,
+          
+          /// view that holds the "context menu preview".
+          let morphingPlatterView = morphingPlatterViewWrapper.wrappedObject
+    else { return nil };
+    
+    /// get the wrapper for the root view that holds the "context menu items".
+    ///
+    /// note: if you configure the "context menu" to not have any menu items,
+    /// then this will be `nil`
+    ///
+    let contextMenuViewWrapper = contextMenuPlatterTransitionViewWrapper.contextMenuViewWrapper;
     self.morphingPlatterViewWrapper = morphingPlatterViewWrapper;
+    
+    /// a ref. to the view that contains the "context menu items".
+    ///
+    /// note: if you configure the "context menu" to not have any menu items,
+    /// then this will be `nil`
+    ///
+    let contextMenuView = contextMenuViewWrapper?.wrappedObject;
   
     let contextMenuHasMenuItems = contextMenuView != nil;
     self.contextMenuHasMenuItems = contextMenuHasMenuItems;
     
     // MARK: Prep - Set Constants
     // --------------------------
-
-    // TODO: WIP - Change if custom preview is used...
-    self.auxPreviewTargetView = morphingPlatterView;
     
-    let auxiliaryViewHeight: CGFloat = {
-      // Begin inferring the height of the aux. view...
-      
+    let isUsingCustomPreview = animator.previewViewController != nil;
+
+    // where should the aux. preview be attached to?
+    self.auxPreviewTargetView = isUsingCustomPreview
+      ? morphingPlatterView
+      : contextMenuContainerView;
+    
+    // get the height the "context menu aux. view"
+    let auxiliaryPreviewViewHeight: CGFloat = {
       // A - Use height from config
       if let height = menuAuxPreviewConfig.height {
         return height;
@@ -136,7 +157,9 @@ public struct ContextMenuMetadata {
       return menuAuxiliaryPreviewView.frame.height;
     }();
     
-    let auxiliaryViewWidth: CGFloat = {
+    self.auxiliaryPreviewViewHeight = auxiliaryPreviewViewHeight;
+    
+    let auxiliaryPreviewViewWidth: CGFloat = {
       // Begin inferring the width of the aux. view...
       
       switch menuAuxPreviewConfig.alignmentHorizontal {
@@ -155,8 +178,7 @@ public struct ContextMenuMetadata {
       };
     }();
     
-    self.auxiliaryViewHeight = auxiliaryViewHeight;
-    self.auxiliaryViewWidth = auxiliaryViewWidth;
+    self.auxiliaryPreviewViewWidth  = auxiliaryPreviewViewWidth;
     
     /// distance of aux. preview from the context menu preview
     let marginInner = menuAuxPreviewConfig.marginPreview;
@@ -226,8 +248,8 @@ public struct ContextMenuMetadata {
           let topInsets = safeAreaInsets?.top ?? 0;
           let margin = marginBase + topInsets;
           
-          let minEdgeY = auxiliaryViewHeight + topInsets + margin;
-          let distanceToEdge = auxiliaryViewHeight - previewFrame.minY;
+          let minEdgeY = auxiliaryPreviewViewHeight + topInsets + margin;
+          let distanceToEdge = auxiliaryPreviewViewHeight - previewFrame.minY;
         
           return (previewFrame.minY <= minEdgeY)
             ? max((distanceToEdge + margin), 0)
@@ -237,14 +259,14 @@ public struct ContextMenuMetadata {
           let bottomInsets = safeAreaInsets?.bottom ?? 0;
           let margin = marginBase + bottomInsets;
           
-          let tolerance = auxiliaryViewHeight + margin;
+          let tolerance = auxiliaryPreviewViewHeight + margin;
           let maxEdgeY = screenHeight - tolerance;
           let previewFrameMaxY = previewFrame.maxY + marginInner;
           
           let distanceToEdge = screenHeight - previewFrame.maxY;
           
           return (previewFrameMaxY > maxEdgeY)
-            ? -(auxiliaryViewHeight - distanceToEdge + margin)
+            ? -(auxiliaryPreviewViewHeight - distanceToEdge + margin)
             : 0;
       };
     }();
