@@ -9,6 +9,10 @@ import UIKit
 
 
 /// Wrapper for: `_UIContextMenuPlatterTransitionView`
+///
+/// This is a wrapper for the view that holds the "context menu items", and
+/// the  "context menu preview".
+/// 
 class ContextMenuPlatterTransitionViewWrapper:
   ObjectWrapperBase<UIView, ContextMenuPlatterTransitionViewWrapper.EncodedString> {
 
@@ -46,6 +50,5 @@ class ContextMenuPlatterTransitionViewWrapper:
       $0 ?? .init(objectToWrap: $1)
     };
   };
-  
 };
 

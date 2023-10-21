@@ -9,10 +9,11 @@ import UIKit
 
 
 /// Wrapper for: _UIContextMenuContainerView
+/// This is the "root view" that contains the context menut
 ///
 /// **Note**: This `UIView` instance  only exists whenever there's a
 /// context menu interaction.
-  ///
+///
 class ContextMenuContainerViewWrapper:
   ObjectWrapperBase<UIView, ContextMenuContainerViewWrapper.EncodedString> {
 
@@ -40,6 +41,8 @@ class ContextMenuContainerViewWrapper:
     };
   };
   
+  /// Returns the "object wrapper" for the view contains the
+  ///  "context menu items" + "context menu preview".
   var contextMenuPlatterTransitionViewWrapper: ContextMenuPlatterTransitionViewWrapper? {
     guard let view = self.wrappedObject else { return nil };
     
