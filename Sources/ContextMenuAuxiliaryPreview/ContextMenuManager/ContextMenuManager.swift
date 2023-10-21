@@ -41,7 +41,7 @@ public class ContextMenuManager {
   // ------------------
   
   public var menuAuxPreviewConfig: ContextMenuAuxiliaryPreviewConfig?;
-  var contextMenuMetadata: ContextMenuMetadata?;
+  var contextMenuMetadata: ContextMenuAuxiliaryPreviewManager?;
   
   public var isAuxiliaryPreviewEnabled = false;
   
