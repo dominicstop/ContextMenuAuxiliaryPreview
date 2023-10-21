@@ -9,6 +9,10 @@ import UIKit
 
 
 /// Wrapper for: _UIContextMenuContainerView
+///
+/// **Note**: This `UIView` instance  only exists whenever there's a
+/// context menu interaction.
+  ///
 class ContextMenuContainerViewWrapper:
   ObjectWrapperBase<UIView, ContextMenuContainerViewWrapper.EncodedString> {
 

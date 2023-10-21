@@ -121,9 +121,8 @@ public struct ContextMenuMetadata {
     // MARK: Prep - Set Constants
     // --------------------------
 
-    self.auxPreviewTargetView = manager.isUsingCustomMenuPreview
-      ? morphingPlatterView
-      : contextMenuContainerView;
+    // TODO: WIP - Change if custom preview is used...
+    self.auxPreviewTargetView = morphingPlatterView;
     
     let auxiliaryViewHeight: CGFloat = {
       // Begin inferring the height of the aux. view...
