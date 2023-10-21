@@ -11,6 +11,9 @@ import UIKit
 /// to the aux. preview
 public struct ContextMenuAuxiliaryPreviewManager {
 
+  // MARK: - Static Members
+  // ----------------------
+
   /// amount to add to width - fix for layout bug
   ///
   /// if you use the actual width, it triggers a bug w/ autolayout where the
@@ -57,7 +60,10 @@ public struct ContextMenuAuxiliaryPreviewManager {
   
   // MARK: - Properties - References
   // -------------------------------
-
+  
+  weak var contextMenuManager: ContextMenuManager?;
+  weak var contextMenuAnimator: UIContextMenuInteractionAnimating?;
+  
   var contextMenuContainerViewWrapper: ContextMenuContainerViewWrapper;
   var contextMenuPlatterTransitionViewWrapper: ContextMenuPlatterTransitionViewWrapper;
   var morphingPlatterViewWrapper: MorphingPlatterViewWrapper;
@@ -82,6 +88,9 @@ public struct ContextMenuAuxiliaryPreviewManager {
     usingContextMenuManager manager: ContextMenuManager,
     contextMenuAnimator animator: UIContextMenuInteractionAnimating
   ) {
+  
+    self.contextMenuManager = manager;
+    self.contextMenuAnimator = animator;
   
     guard let menuAuxPreviewConfig = manager.menuAuxPreviewConfig,
           let menuAuxiliaryPreviewView = manager.menuAuxiliaryPreviewView
@@ -143,8 +152,8 @@ public struct ContextMenuAuxiliaryPreviewManager {
 
     // where should the aux. preview be attached to?
     self.auxPreviewTargetView = isUsingCustomPreview
-      ? morphingPlatterView
-      : contextMenuContainerView;
+      ? contextMenuContainerView
+      : morphingPlatterView;
     
     // get the height the "context menu aux. view"
     let auxiliaryPreviewViewHeight: CGFloat = {
@@ -270,5 +279,316 @@ public struct ContextMenuAuxiliaryPreviewManager {
             : 0;
       };
     }();
+  };
+  
+  // MARK: - Functions
+  // -----------------
+  
+  func attachAuxiliaryPreview(){
+    guard let manager = self.contextMenuManager,
+          let menuAuxPreviewConfig = manager.menuAuxPreviewConfig,
+          
+          /// get the wrapper for the root view that hold the context menu
+          let menuAuxiliaryPreviewView = manager.menuAuxiliaryPreviewView,
+          let auxPreviewTargetView = self.auxPreviewTargetView,
+          
+          let morphingPlatterView = self.morphingPlatterViewWrapper.wrappedObject,
+          let contextMenuContainerView = self.contextMenuContainerViewWrapper.wrappedObject
+    else { return };
+  
+    // Bugfix: Stop bubbling touch events from propagating to parent
+    menuAuxiliaryPreviewView.addGestureRecognizer(
+      UITapGestureRecognizer(target: nil, action: nil)
+    );
+    
+    /// manually set size of aux. preview
+    menuAuxiliaryPreviewView.bounds = .init(
+      origin: .zero,
+      size: self.auxiliaryPreviewViewSize
+    );
+
+    /// enable auto layout
+    menuAuxiliaryPreviewView.translatesAutoresizingMaskIntoConstraints = false;
+    
+    /// attach `auxiliaryView` to context menu preview
+    auxPreviewTargetView.addSubview(menuAuxiliaryPreviewView);
+    
+    // get layout constraints based on config
+    let constraints: [NSLayoutConstraint] = {
+      // set initial constraints
+      var constraints: Array<NSLayoutConstraint> = [
+      
+        // set aux preview height
+        menuAuxiliaryPreviewView.heightAnchor.constraint(
+          equalToConstant: self.auxiliaryPreviewViewHeight
+        ),
+      ];
+      
+      // set vertical alignment constraint - i.e. either...
+      constraints.append({
+        if self.shouldAttachAuxPreviewToTop {
+          // A - pin to top or...
+          return menuAuxiliaryPreviewView.bottomAnchor.constraint(
+           equalTo: morphingPlatterView.topAnchor,
+           constant: -self.marginInner
+          );
+        };
+        
+        // B - pin to bottom.
+        return menuAuxiliaryPreviewView.topAnchor.constraint(
+          equalTo: morphingPlatterView.bottomAnchor,
+          constant: self.marginInner
+        );
+      }());
+      
+      // set horizontal alignment constraints based on config...
+      constraints += {
+        switch menuAuxPreviewConfig.alignmentHorizontal {
+          // A - pin to left
+          case .previewLeading: return [
+            menuAuxiliaryPreviewView.leadingAnchor.constraint(
+              equalTo: morphingPlatterView.leadingAnchor
+            ),
+            
+            menuAuxiliaryPreviewView.widthAnchor.constraint(
+              equalToConstant: self.auxiliaryPreviewViewWidth
+            ),
+          ];
+            
+          // B - pin to right
+          case .previewTrailing: return [
+            menuAuxiliaryPreviewView.rightAnchor.constraint(
+              equalTo: morphingPlatterView.rightAnchor
+            ),
+            
+            menuAuxiliaryPreviewView.widthAnchor.constraint(
+              equalToConstant: self.auxiliaryPreviewViewWidth
+            ),
+          ];
+            
+          // C - pin to center
+          case .previewCenter: return [
+            menuAuxiliaryPreviewView.centerXAnchor.constraint(
+              equalTo: morphingPlatterView.centerXAnchor
+            ),
+            
+            menuAuxiliaryPreviewView.widthAnchor.constraint(
+              equalToConstant: self.auxiliaryPreviewViewWidth
+            ),
+          ];
+            
+          // D - match preview size
+          case .stretchPreview: return [
+            menuAuxiliaryPreviewView.leadingAnchor.constraint(
+              equalTo: morphingPlatterView.leadingAnchor
+            ),
+            
+            menuAuxiliaryPreviewView.trailingAnchor.constraint(
+              equalTo: morphingPlatterView.trailingAnchor
+            ),
+          ];
+          
+          // E - stretch to edges of screen
+          case .stretchScreen: return [
+            menuAuxiliaryPreviewView.leadingAnchor.constraint(
+              equalTo: contextMenuContainerView.leadingAnchor
+            ),
+            
+            menuAuxiliaryPreviewView.trailingAnchor.constraint(
+              equalTo: contextMenuContainerView.trailingAnchor
+            ),
+          ];
+        };
+      }();
+      
+      return constraints;
+    }();
+    
+    NSLayoutConstraint.activate(constraints);
+    
+    // Bugfix: fix aux-preview touch event on screen edge
+    let shouldSwizzle = self.contextMenuOffsetY != 0;
+    
+    if shouldSwizzle {
+      UIView.auxPreview = menuAuxiliaryPreviewView;
+      UIView.swizzlePoint();
+    };
+  };
+  
+  func createAuxiliaryPreviewTransitionInBlock() -> (
+    setTransitionStateStart: () -> (),
+    setTransitionStateEnd  : () -> ()
+  )? {
+    guard let manager = self.contextMenuManager,
+          let menuAuxPreviewConfig = manager.menuAuxPreviewConfig,
+          
+          /// get the wrapper for the root view that hold the context menu
+          let menuAuxiliaryPreviewView = manager.menuAuxiliaryPreviewView
+    else { return nil };
+    
+    var transform = menuAuxiliaryPreviewView.transform;
+      
+    let setTransformForTransitionSlideStart = { (yOffset: CGFloat) in
+      switch self.morphingPlatterViewPlacement {
+        case .top:
+          transform = transform.translatedBy(x: 0, y: -yOffset);
+          
+        case .bottom:
+          transform = transform.translatedBy(x: 0, y: yOffset);
+      };
+    };
+    
+    let setTransformForTransitionZoomStart = { (scaleOffset: CGFloat) in
+      let scale = 1 - scaleOffset;
+      transform = transform.scaledBy(x: scale, y: scale);
+    };
+    
+    // closures to set the start/end values for the entrance transition
+    return {
+      switch menuAuxPreviewConfig.transitionConfigEntrance.transition {
+        case .fade: return ({
+          // A - fade - entrance transition
+          menuAuxiliaryPreviewView.alpha = 0;
+          
+        }, {
+          // B - fade - exit transition
+          menuAuxiliaryPreviewView.alpha = 1;
+        });
+          
+        case let .slide(slideOffset): return ({
+          // A - slide - entrance transition
+          // fade - start
+          menuAuxiliaryPreviewView.alpha = 0;
+          
+          // slide - start
+          setTransformForTransitionSlideStart(slideOffset);
+          
+          // apply transform
+          menuAuxiliaryPreviewView.transform = transform;
+          
+        }, {
+          // B - slide - exit transition
+          // fade - end
+          menuAuxiliaryPreviewView.alpha = 1;
+ 
+          // slide - end - reset transform
+          menuAuxiliaryPreviewView.transform = .identity;
+        });
+          
+        case let .zoom(zoomOffset): return ({
+            // A - zoom - entrance transition
+            // fade - start
+            menuAuxiliaryPreviewView.alpha = 0;
+            
+            // zoom - start
+            setTransformForTransitionZoomStart(zoomOffset);
+            
+            // start - apply transform
+            menuAuxiliaryPreviewView.transform = transform;
+            
+          }, {
+            // B - zoom - exit transition
+            // fade - end
+            menuAuxiliaryPreviewView.alpha = 1;
+            
+            // zoom - end - reset transform
+            menuAuxiliaryPreviewView.transform = .identity;
+          });
+          
+        case let .zoomAndSlide(slideOffset, zoomOffset): return ({
+          // A - zoomAndSlide - entrance transition
+          // fade - start
+          menuAuxiliaryPreviewView.alpha = 0;
+        
+          // slide - start
+          setTransformForTransitionSlideStart(slideOffset);
+          
+          // zoom - start
+          setTransformForTransitionZoomStart(zoomOffset);
+          
+          // start - apply transform
+          menuAuxiliaryPreviewView.transform = transform;
+                    
+        }, {
+          // B - zoomAndSlide - exit transition
+          // fade - end
+          menuAuxiliaryPreviewView.alpha = 1;
+          
+          // slide/zoom - end - reset transform
+          menuAuxiliaryPreviewView.transform = .identity;
+        });
+          
+        case .none:
+          // don't use any entrance transitions...
+          fallthrough;
+          
+        default:
+          // noop entrance + exit transition
+          return ({},{});
+      };
+    }();
+  };
+  
+  // MARK: - Public Functions
+  // ------------------------
+  
+  public func attachAndAnimateInAuxiliaryPreview() {
+    guard let contextMenuContainerView =
+            self.contextMenuContainerViewWrapper.wrappedObject,
+            
+          let animationBlocks = self.createAuxiliaryPreviewTransitionInBlock()
+    else { return };
+    
+    self.attachAuxiliaryPreview();
+    animationBlocks.setTransitionStateStart();
+    
+    UIView.addKeyframe(withRelativeStartTime: 1, relativeDuration: 1) {
+      // transition in - set end values
+      animationBlocks.setTransitionStateEnd();
+      
+      // offset from anchor
+      contextMenuContainerView.frame = contextMenuContainerView.frame.offsetBy(
+        dx: 0,
+        dy: self.contextMenuOffsetY
+      );
+    };
+  };
+  
+  public func detachAuxiliaryPreview(){
+  
+  };
+};
+
+// Bugfix: Fix for aux-preview not receiving touch event when appearing
+// on screen edge
+extension UIView {
+  static weak var auxPreview: UIView? = nil;
+  
+  static var isSwizzlingApplied = false
+  
+  @objc dynamic func _point(
+    inside point: CGPoint,
+    with event: UIEvent?
+  ) -> Bool {
+    guard let auxPreview = Self.auxPreview,
+          self.subviews.contains(where: { $0 === auxPreview })
+    else {
+      // call original impl.
+      return self._point(inside: point, with: event);
+    };
+    
+    return true;
+  };
+  
+  static func swizzlePoint(){
+    let selectorOriginal = #selector( point(inside: with:));
+    let selectorSwizzled = #selector(_point(inside: with:));
+    
+    guard let methodOriginal = class_getInstanceMethod(UIView.self, selectorOriginal),
+          let methodSwizzled = class_getInstanceMethod(UIView.self, selectorSwizzled)
+    else { return };
+    
+    Self.isSwizzlingApplied.toggle();
+    method_exchangeImplementations(methodOriginal, methodSwizzled);
   };
 };
