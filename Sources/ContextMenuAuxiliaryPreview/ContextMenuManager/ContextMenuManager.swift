@@ -135,58 +135,15 @@ public class ContextMenuManager {
   ){
     
     guard self.isAuxiliaryPreviewEnabled,
-          self.isAuxPreviewVisible,
-          
           let animator = animator,
-          let menuAuxiliaryPreviewView = self.menuAuxiliaryPreviewView,
           let auxPreviewManager = self.auxPreviewManager
     else { return };
     
-    /// Bug:
-    /// * "Could not locate shadow view with tag #, this is probably caused by a temporary inconsistency
-    ///   between native views and shadow views."
-    /// * Triggered when the menu is about to be hidden, iOS removes the context menu along with the
-    ///   `previewAuxiliaryViewContainer`
-    ///
-    
-    // reset flag
+    auxPreviewManager.detachAndAnimateOutAuxiliaryPreview();
     self.isAuxPreviewVisible = false;
     
-    // Add exit transition
-    animator.addAnimations {
-      var transform = menuAuxiliaryPreviewView.transform;
-      
-      // transition - fade out
-      menuAuxiliaryPreviewView.alpha = 0;
-      
-      // transition - zoom out
-      transform = transform.scaledBy(x: 0.7, y: 0.7);
-      
-      // transition - slide out
-      switch auxPreviewManager.morphingPlatterViewPlacement {
-        case .top:
-          transform = transform.translatedBy(x: 0, y: 50);
-          
-        case .bottom:
-          transform = transform.translatedBy(x: 0, y: -50);
-      };
-      
-      // transition - apply transform
-      menuAuxiliaryPreviewView.transform = transform;
-    };
-    
-    animator.addCompletion { [unowned self] in
-      menuAuxiliaryPreviewView.removeFromSuperview();
-      
-      // clear value
+    animator.addCompletion {
       self.auxPreviewManager = nil;
-      
-      // MARK: Bugfix - Aux-Preview Touch Event on Screen Edge
-      if UIView.isSwizzlingApplied {
-        // undo swizzling
-        UIView.swizzlePoint();
-        Self.auxPreview = nil;
-      };
     };
   };
   

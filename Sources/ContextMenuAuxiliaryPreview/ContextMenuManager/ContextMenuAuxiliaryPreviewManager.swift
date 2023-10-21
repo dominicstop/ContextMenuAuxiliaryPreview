@@ -529,6 +529,36 @@ public struct ContextMenuAuxiliaryPreviewManager {
     }();
   };
   
+  public func createAuxiliaryPreviewTransitionOutBlock() -> (() -> ())? {
+    guard let manager = self.contextMenuManager,
+    
+          /// get the wrapper for the root view that hold the context menu
+          let menuAuxiliaryPreviewView = manager.menuAuxiliaryPreviewView
+    else { return nil };
+    
+    var transform = menuAuxiliaryPreviewView.transform;
+    
+    return {
+      // transition - fade out
+      menuAuxiliaryPreviewView.alpha = 0;
+      
+      // transition - zoom out
+      transform = transform.scaledBy(x: 0.7, y: 0.7);
+      
+      // transition - slide out
+      switch self.morphingPlatterViewPlacement {
+        case .top:
+          transform = transform.translatedBy(x: 0, y: 50);
+          
+        case .bottom:
+          transform = transform.translatedBy(x: 0, y: -50);
+      };
+      
+      // transition - apply transform
+      menuAuxiliaryPreviewView.transform = transform;
+    };
+  };
+  
   // MARK: - Public Functions
   // ------------------------
   
@@ -554,14 +584,38 @@ public struct ContextMenuAuxiliaryPreviewManager {
     };
   };
   
-  public func detachAuxiliaryPreview(){
-  
+  public func detachAndAnimateOutAuxiliaryPreview() {
+    guard let animator = self.contextMenuAnimator,
+          
+          let manager = self.contextMenuManager,
+          let menuAuxiliaryPreviewView = manager.menuAuxiliaryPreviewView,
+    
+          let auxPreviewTransitionOutBlock =
+            self.createAuxiliaryPreviewTransitionOutBlock()
+            
+    else { return };
+    
+    animator.addAnimations {
+      auxPreviewTransitionOutBlock();
+    };
+    
+    animator.addCompletion {
+      menuAuxiliaryPreviewView.removeFromSuperview();
+      
+      // Bugfix - Aux-preview touch event on screen edge
+      if UIView.isSwizzlingApplied {
+        // undo swizzling
+        UIView.swizzlePoint();
+        UIView.auxPreview = nil;
+      };
+    };
   };
+  
 };
 
 // Bugfix: Fix for aux-preview not receiving touch event when appearing
 // on screen edge
-extension UIView {
+fileprivate extension UIView {
   static weak var auxPreview: UIView? = nil;
   
   static var isSwizzlingApplied = false
