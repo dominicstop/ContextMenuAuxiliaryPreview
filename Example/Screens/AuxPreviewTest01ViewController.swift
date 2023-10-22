@@ -105,7 +105,7 @@ extension AuxPreviewTest01ViewController: UIContextMenuInteractionDelegate {
     
     self.contextMenuManager!.notifyOnContextMenuInteraction(
       interaction,
-      willDisplayMenuFor: configuration,
+      willEndFor: configuration,
       animator: animator
     );
   };
