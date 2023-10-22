@@ -8,16 +8,6 @@
 import UIKit
 
 
-
-struct AuxiliaryPreviewTransitionKeyframe {
-  var opacity: CGFloat;
-};
-
-struct AuxiliaryPreviewTransitionConfig {
-  var keyframeStart: AuxiliaryPreviewTransitionKeyframe;
-  var keyframeEnd: AuxiliaryPreviewTransitionKeyframe;
-};
-
 public class ContextMenuManager {
 
   static weak var auxPreview: UIView?;
