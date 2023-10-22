@@ -595,9 +595,7 @@ public struct ContextMenuAuxiliaryPreviewManager {
             
     else { return };
     
-    animator.addAnimations {
-      auxPreviewTransitionOutBlock();
-    };
+    auxPreviewTransitionOutBlock();
     
     animator.addCompletion {
       menuAuxiliaryPreviewView.removeFromSuperview();
