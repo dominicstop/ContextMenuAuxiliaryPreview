@@ -18,24 +18,12 @@ struct AuxiliaryPreviewTransitionConfig {
   var keyframeEnd: AuxiliaryPreviewTransitionKeyframe;
 };
 
-
-class AuxiliaryRootView: UIView {
-
-  override init(frame: CGRect) {
-    super.init(frame: frame);
-    
-    self.backgroundColor = .red;
-  };
-  
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  };
-};
-
-
 public class ContextMenuManager {
 
-  static weak var auxPreview: AuxiliaryRootView?;
+  static weak var auxPreview: UIView?;
+  
+  public typealias MenuAuxiliaryPreviewViewProvider =
+    (_: ContextMenuManager) -> UIView;
   
   // MARK: - Properties
   // ------------------
@@ -48,15 +36,8 @@ public class ContextMenuManager {
   public var isContextMenuVisible = false;
   public var isAuxPreviewVisible = false;
   
-  // temp
-  var menuAuxiliaryPreviewView: AuxiliaryRootView? {
-    let view = AuxiliaryRootView(frame: .init(
-      origin: .zero,
-      size: .zero
-    ));
-    
-    return view;
-  };
+  public var menuAuxiliaryPreviewViewProvider: MenuAuxiliaryPreviewViewProvider?;
+  public var menuAuxiliaryPreviewView: UIView?;
   
   // MARK: - Properties - References
   // -------------------------------
@@ -117,8 +98,13 @@ public class ContextMenuManager {
   ) {
     
     guard self.isAuxiliaryPreviewEnabled,
-          let animator = animator
+          let animator = animator,
+          
+          let menuAuxiliaryPreviewViewProvider =
+            self.menuAuxiliaryPreviewViewProvider
     else { return };
+    
+    self.menuAuxiliaryPreviewView = menuAuxiliaryPreviewViewProvider(self);
     
     animator.addAnimations {
       let auxPreviewManager = ContextMenuAuxiliaryPreviewManager(
@@ -148,7 +134,6 @@ public class ContextMenuManager {
           let auxPreviewManager = self.auxPreviewManager
     else { return };
     
-    
     animator.addAnimations {
       auxPreviewManager.detachAndAnimateOutAuxiliaryPreview();
     };
@@ -156,6 +141,7 @@ public class ContextMenuManager {
     animator.addCompletion {
       self.isAuxPreviewVisible = false;
       self.auxPreviewManager = nil;
+      self.menuAuxiliaryPreviewView = nil;
     };
   };
 };

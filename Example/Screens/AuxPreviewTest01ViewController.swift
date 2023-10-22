@@ -34,7 +34,13 @@ class AuxPreviewTest01ViewController: UIViewController {
       );
       
       self.contextMenuManager = contextMenuManager;
-     
+      contextMenuManager.menuAuxiliaryPreviewViewProvider = { _ in
+        let view = UIView(frame: .zero);
+        view.backgroundColor = .red;
+        
+        return view;
+      };
+      
       contextMenuManager.menuAuxPreviewConfig = ContextMenuAuxiliaryPreviewConfig(
         height: 100,
         width: 100,
