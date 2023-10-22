@@ -36,7 +36,7 @@ class AuxPreviewTest01ViewController: UIViewController, ContextMenuManagerDelega
       self.contextMenuManager = contextMenuManager;
       contextMenuManager.delegate = self;
       
-      contextMenuManager.menuAuxPreviewConfig = ContextMenuAuxiliaryPreviewConfig(
+      contextMenuManager.menuAuxPreviewConfig = AuxiliaryPreviewConfig(
         height: 100,
         width: 100,
         anchorPosition: .automatic,

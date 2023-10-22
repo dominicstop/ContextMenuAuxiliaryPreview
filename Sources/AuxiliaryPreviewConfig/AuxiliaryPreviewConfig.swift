@@ -1,5 +1,5 @@
 //
-//  ContextMenuAuxiliaryPreviewConfig.swift
+//  AuxiliaryPreviewConfig.swift
 //  
 //
 //  Created by Dominic Go on 10/9/23.
@@ -8,8 +8,7 @@ import Foundation
 import UIKit
 
 
-//TODO: Rename to: `AuxiliaryPreviewConfig`
-public struct ContextMenuAuxiliaryPreviewConfig {
+public struct AuxiliaryPreviewConfig {
   
   // MARK: - Nested Types
   // --------------------

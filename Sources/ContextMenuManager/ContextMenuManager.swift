@@ -15,7 +15,7 @@ public class ContextMenuManager {
   // MARK: - Properties
   // ------------------
   
-  public var menuAuxPreviewConfig: ContextMenuAuxiliaryPreviewConfig?;
+  public var menuAuxPreviewConfig: AuxiliaryPreviewConfig?;
   var auxPreviewManager: ContextMenuAuxiliaryPreviewManager?;
   
   public var isAuxiliaryPreviewEnabled = true;
