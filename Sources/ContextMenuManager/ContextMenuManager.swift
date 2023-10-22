@@ -22,9 +22,6 @@ public class ContextMenuManager {
 
   static weak var auxPreview: UIView?;
   
-  public typealias MenuAuxiliaryPreviewViewProvider =
-    (_: ContextMenuManager) -> UIView;
-  
   // MARK: - Properties
   // ------------------
   
@@ -36,7 +33,8 @@ public class ContextMenuManager {
   public var isContextMenuVisible = false;
   public var isAuxPreviewVisible = false;
   
-  public var menuAuxiliaryPreviewViewProvider: MenuAuxiliaryPreviewViewProvider?;
+  
+  public weak var delegate: ContextMenuManagerDelegate?;
   public var menuAuxiliaryPreviewView: UIView?;
   
   // MARK: - Properties - References
@@ -99,13 +97,12 @@ public class ContextMenuManager {
     
     guard self.isAuxiliaryPreviewEnabled,
           let animator = animator,
-          
-          let menuAuxiliaryPreviewViewProvider =
-            self.menuAuxiliaryPreviewViewProvider
+          let delegate = self.delegate
     else { return };
     
-    self.menuAuxiliaryPreviewView = menuAuxiliaryPreviewViewProvider(self);
-    
+    self.menuAuxiliaryPreviewView =
+      delegate.onRequestMenuAuxiliaryPreview(sender: self);
+      
     animator.addAnimations {
       let auxPreviewManager = ContextMenuAuxiliaryPreviewManager(
         usingContextMenuManager: self,

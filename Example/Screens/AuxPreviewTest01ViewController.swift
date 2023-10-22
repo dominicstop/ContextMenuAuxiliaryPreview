@@ -8,7 +8,7 @@
 import UIKit
 import ContextMenuAuxiliaryPreview
 
-class AuxPreviewTest01ViewController: UIViewController {
+class AuxPreviewTest01ViewController: UIViewController, ContextMenuManagerDelegate {
 
   var interaction: UIContextMenuInteraction?;
   
@@ -34,12 +34,7 @@ class AuxPreviewTest01ViewController: UIViewController {
       );
       
       self.contextMenuManager = contextMenuManager;
-      contextMenuManager.menuAuxiliaryPreviewViewProvider = { _ in
-        let view = UIView(frame: .zero);
-        view.backgroundColor = .red;
-        
-        return view;
-      };
+      contextMenuManager.delegate = self;
       
       contextMenuManager.menuAuxPreviewConfig = ContextMenuAuxiliaryPreviewConfig(
         height: 100,
@@ -114,5 +109,12 @@ extension AuxPreviewTest01ViewController: UIContextMenuInteractionDelegate {
       willEndFor: configuration,
       animator: animator
     );
+  };
+  
+  func onRequestMenuAuxiliaryPreview(sender: ContextMenuAuxiliaryPreview.ContextMenuManager) -> UIView {
+    let view = UIView(frame: .zero);
+    view.backgroundColor = .red;
+    
+    return view;
   };
 };
