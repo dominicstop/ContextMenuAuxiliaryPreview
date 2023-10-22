@@ -43,23 +43,20 @@ public class ContextMenuManager {
   public var menuAuxPreviewConfig: ContextMenuAuxiliaryPreviewConfig?;
   var auxPreviewManager: ContextMenuAuxiliaryPreviewManager?;
   
-  public var isAuxiliaryPreviewEnabled = false;
+  public var isAuxiliaryPreviewEnabled = true;
   
   public var isContextMenuVisible = false;
   public var isAuxPreviewVisible = false;
   
   // temp
-  lazy var menuAuxiliaryPreviewView: AuxiliaryRootView? = {
+  var menuAuxiliaryPreviewView: AuxiliaryRootView? {
     let view = AuxiliaryRootView(frame: .init(
       origin: .zero,
-      size: .init(
-        width: 100,
-        height: 100
-      )
+      size: .zero
     ));
     
     return view;
-  }();
+  };
   
   // MARK: - Properties - References
   // -------------------------------
@@ -109,44 +106,6 @@ public class ContextMenuManager {
     self.menuTargetView = menuTargetView;
   };
   
-  // MARK: - Internal Functions
-  // --------------------------
-  
-  // MARK: Experimental - "Auxiliary Context Menu Preview"-Related
-  func attachContextMenuAuxiliaryPreviewIfAny(
-    _ animator: UIContextMenuInteractionAnimating!
-  ) {
-  
-    let auxPreviewManager = ContextMenuAuxiliaryPreviewManager(
-      usingContextMenuManager: self,
-      contextMenuAnimator: animator
-    );
-  
-    guard let auxPreviewManager = auxPreviewManager else { return };
-    self.auxPreviewManager = auxPreviewManager;
-
-    auxPreviewManager.attachAndAnimateInAuxiliaryPreview();
-    self.isAuxPreviewVisible = true;
-  };
-  
-  // MARK: Experimental - "Auxiliary Context Menu Preview"-Related
-  func detachContextMenuAuxiliaryPreviewIfAny(
-    _ animator: UIContextMenuInteractionAnimating?
-  ){
-    
-    guard self.isAuxiliaryPreviewEnabled,
-          let animator = animator,
-          let auxPreviewManager = self.auxPreviewManager
-    else { return };
-    
-    auxPreviewManager.detachAndAnimateOutAuxiliaryPreview();
-    self.isAuxPreviewVisible = false;
-    
-    animator.addCompletion {
-      self.auxPreviewManager = nil;
-    };
-  };
-  
   // MARK: - Public Functions
   // ------------------------
   
@@ -156,17 +115,24 @@ public class ContextMenuManager {
     willDisplayMenuFor configuration: UIContextMenuConfiguration,
     animator: UIContextMenuInteractionAnimating?
   ) {
-  
-    if let animator = animator {
-      animator.addAnimations {
-        self.attachContextMenuAuxiliaryPreviewIfAny(animator);
-      };
     
-      animator.addCompletion {
-        self.isContextMenuVisible = true;
-      };
+    guard self.isAuxiliaryPreviewEnabled,
+          let animator = animator
+    else { return };
+    
+    animator.addAnimations {
+      let auxPreviewManager = ContextMenuAuxiliaryPreviewManager(
+        usingContextMenuManager: self,
+        contextMenuAnimator: animator
+      );
       
-    } else {
+      guard let auxPreviewManager = auxPreviewManager else { return };
+      self.auxPreviewManager = auxPreviewManager;
+      
+      auxPreviewManager.attachAndAnimateInAuxiliaryPreview();
+    };
+    
+    animator.addCompletion {
       self.isContextMenuVisible = true;
     };
   };
@@ -177,13 +143,19 @@ public class ContextMenuManager {
     animator: UIContextMenuInteractionAnimating?
   ) {
   
-    if let animator = animator {
-      animator.addCompletion {
-        self.isContextMenuVisible = false;
-      };
-      
-    } else {
-      self.isContextMenuVisible = false;
+    guard self.isAuxiliaryPreviewEnabled,
+          let animator = animator,
+          let auxPreviewManager = self.auxPreviewManager
+    else { return };
+    
+    
+    animator.addAnimations {
+      auxPreviewManager.detachAndAnimateOutAuxiliaryPreview();
+    };
+    
+    animator.addCompletion {
+      self.isAuxPreviewVisible = false;
+      self.auxPreviewManager = nil;
     };
   };
 };
