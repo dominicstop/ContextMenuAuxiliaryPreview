@@ -1,6 +1,0 @@
-framework module Pods_ContextMenuAuxiliaryPreview_Tests {
-  umbrella header "Pods-ContextMenuAuxiliaryPreview_Tests-umbrella.h"
-
-  export *
-  module * { export * }
-}
