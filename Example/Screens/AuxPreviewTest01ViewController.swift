@@ -43,8 +43,7 @@ class AuxPreviewTest01ViewController: UIViewController, ContextMenuManagerDelega
         alignmentHorizontal: .previewCenter,
         marginPreview: 10,
         marginAuxiliaryPreview: 10,
-        transitionConfigEntrance: .default,
-        transitionEntranceDelay: .RECOMMENDED
+        transitionConfigEntrance: .fade
       );
       
       return view;

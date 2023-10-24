@@ -8,30 +8,61 @@
 import Foundation
 
 
-struct AuxiliaryPreviewTransitionConfig {
-
-  var keyframeStart: AuxiliaryPreviewTransitionKeyframeConfig;
-  var keyframeEnd: AuxiliaryPreviewTransitionKeyframeConfig;
+public enum AuxiliaryPreviewTransitionConfig {
   
-  func getKeyframes() -> (
+  // TBA: slide, zoom, zoomAndSlide, custom
+  
+  case none;
+  case fade;
+  
+  public var transitionKeyframeConfig: (
+    keyframeStart: AuxiliaryPreviewTransitionKeyframeConfig,
+    keyframeEnd  : AuxiliaryPreviewTransitionKeyframeConfig
+  ) {
+    switch self {
+      case .none:
+        return (
+          keyframeStart: .init(
+            opacity: 1
+          ),
+          keyframeEnd: .init(
+            opacity: 1
+          )
+        );
+        
+      case .fade:
+        return (
+          keyframeStart: .init(
+            opacity: 0
+          ),
+          keyframeEnd: .init(
+            opacity: 1
+          )
+        );
+    };
+  };
+  
+  public func getKeyframes() -> (
     keyframeStart: AuxiliaryPreviewTransitionKeyframe,
     keyframeEnd  : AuxiliaryPreviewTransitionKeyframe
-  ){
+  ) {
+  
+    let transitionKeyframeConfig = self.transitionKeyframeConfig;
   
     var keyframeStart = AuxiliaryPreviewTransitionKeyframe(
-      keyframeCurrent: self.keyframeStart
+      keyframeCurrent: transitionKeyframeConfig.keyframeStart
     );
     
-    var keyframeEnd = AuxiliaryPreviewTransitionKeyframe(
-      keyframeCurrent: self.keyframeEnd,
+    let keyframeEnd = AuxiliaryPreviewTransitionKeyframe(
+      keyframeCurrent: transitionKeyframeConfig.keyframeEnd,
       keyframePrevious: keyframeStart
     );
     
     keyframeStart = AuxiliaryPreviewTransitionKeyframe(
-      keyframeCurrent: self.keyframeStart,
+      keyframeCurrent: transitionKeyframeConfig.keyframeStart,
       keyframePrevious: keyframeEnd
     );
     
-    return (keyframeStart, keyframeStart);
+    return (keyframeStart, keyframeEnd);
   };
 };

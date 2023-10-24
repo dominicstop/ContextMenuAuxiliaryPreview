@@ -29,39 +29,7 @@ public struct AuxiliaryPreviewConfig {
     case zoom(zoomOffset: CGFloat);
     case zoomAndSlide(slideOffset: CGFloat, zoomOffset: CGFloat);
   };
-  
-  public struct TransitionConfig {
-    public static let `default`: Self = .init(
-      transition: .fade,
-      duration: 0.3,
-      delay: 0,
-      options: []
-    );
-  
-   public var transition: TransitionType;
-    
-   public var duration: CGFloat;
-   public var delay: CGFloat;
-   public var options: UIView.AnimationOptions;
-  };
-  
-  public enum TransitionEntranceDelay: Equatable {
-    case seconds(CGFloat);
-    
-    case RECOMMENDED;
-    case AFTER_PREVIEW;
-    
-    public var seconds: CGFloat {
-      switch self {
-        case .seconds(let seconds):
-          return seconds;
-          
-        case .AFTER_PREVIEW: return 0;
-        case .RECOMMENDED  : return 0.25;
-      };
-    };
-  };
-  
+
   // MARK: - Properties
   // ------------------
   
@@ -74,8 +42,7 @@ public struct AuxiliaryPreviewConfig {
   public var marginPreview: CGFloat;
   public var marginAuxiliaryPreview: CGFloat;
 
-  public var transitionConfigEntrance: TransitionConfig;
-  public var transitionEntranceDelay: TransitionEntranceDelay;
+  public var transitionConfigEntrance: AuxiliaryPreviewTransitionConfig;
   
   // MARK: - Init
   // ------------
@@ -87,17 +54,15 @@ public struct AuxiliaryPreviewConfig {
     alignmentHorizontal: HorizontalAlignment,
     marginPreview: CGFloat,
     marginAuxiliaryPreview: CGFloat,
-    transitionConfigEntrance: TransitionConfig,
-    transitionEntranceDelay: TransitionEntranceDelay
+    transitionConfigEntrance: AuxiliaryPreviewTransitionConfig
   ) {
   
-    self.height = height
-    self.width = width
-    self.anchorPosition = anchorPosition
-    self.alignmentHorizontal = alignmentHorizontal
-    self.marginPreview = marginPreview
-    self.marginAuxiliaryPreview = marginAuxiliaryPreview
-    self.transitionConfigEntrance = transitionConfigEntrance
-    self.transitionEntranceDelay = transitionEntranceDelay
+    self.height = height;
+    self.width = width;
+    self.anchorPosition = anchorPosition;
+    self.alignmentHorizontal = alignmentHorizontal;
+    self.marginPreview = marginPreview;
+    self.marginAuxiliaryPreview = marginAuxiliaryPreview;
+    self.transitionConfigEntrance = transitionConfigEntrance;
   }
 };

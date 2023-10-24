@@ -416,8 +416,8 @@ public struct ContextMenuAuxiliaryPreviewManager {
   };
   
   func createAuxiliaryPreviewTransitionInBlock() -> (
-    setTransitionStateStart: () -> (),
-    setTransitionStateEnd  : () -> ()
+    setTransitionStart: () -> (),
+    setTransitionEnd  : () -> ()
   )? {
     guard let manager = self.contextMenuManager,
           let menuAuxPreviewConfig = manager.menuAuxPreviewConfig,
@@ -425,108 +425,20 @@ public struct ContextMenuAuxiliaryPreviewManager {
           /// get the wrapper for the root view that hold the context menu
           let menuAuxiliaryPreviewView = manager.menuAuxiliaryPreviewView
     else { return nil };
+   
+    let (keyframeStart, keyframeEnd) =
+      menuAuxPreviewConfig.transitionConfigEntrance.getKeyframes();
     
-    var transform = menuAuxiliaryPreviewView.transform;
-      
-    let setTransformForTransitionSlideStart = { (yOffset: CGFloat) in
-      switch self.morphingPlatterViewPlacement {
-        case .top:
-          transform = transform.translatedBy(x: 0, y: -yOffset);
-          
-        case .bottom:
-          transform = transform.translatedBy(x: 0, y: yOffset);
-      };
+    
+    let transitionStartBlock = {
+      keyframeStart.apply(toView: menuAuxiliaryPreviewView);
     };
     
-    let setTransformForTransitionZoomStart = { (scaleOffset: CGFloat) in
-      let scale = 1 - scaleOffset;
-      transform = transform.scaledBy(x: scale, y: scale);
+    let transitionEnd = {
+      keyframeEnd.apply(toView: menuAuxiliaryPreviewView);
     };
     
-    // closures to set the start/end values for the entrance transition
-    return {
-      switch menuAuxPreviewConfig.transitionConfigEntrance.transition {
-        case .fade: return ({
-          // A - fade - entrance transition
-          menuAuxiliaryPreviewView.alpha = 0;
-          
-        }, {
-          // B - fade - exit transition
-          menuAuxiliaryPreviewView.alpha = 1;
-        });
-          
-        case let .slide(slideOffset): return ({
-          // A - slide - entrance transition
-          // fade - start
-          menuAuxiliaryPreviewView.alpha = 0;
-          
-          // slide - start
-          setTransformForTransitionSlideStart(slideOffset);
-          
-          // apply transform
-          menuAuxiliaryPreviewView.transform = transform;
-          
-        }, {
-          // B - slide - exit transition
-          // fade - end
-          menuAuxiliaryPreviewView.alpha = 1;
- 
-          // slide - end - reset transform
-          menuAuxiliaryPreviewView.transform = .identity;
-        });
-          
-        case let .zoom(zoomOffset): return ({
-            // A - zoom - entrance transition
-            // fade - start
-            menuAuxiliaryPreviewView.alpha = 0;
-            
-            // zoom - start
-            setTransformForTransitionZoomStart(zoomOffset);
-            
-            // start - apply transform
-            menuAuxiliaryPreviewView.transform = transform;
-            
-          }, {
-            // B - zoom - exit transition
-            // fade - end
-            menuAuxiliaryPreviewView.alpha = 1;
-            
-            // zoom - end - reset transform
-            menuAuxiliaryPreviewView.transform = .identity;
-          });
-          
-        case let .zoomAndSlide(slideOffset, zoomOffset): return ({
-          // A - zoomAndSlide - entrance transition
-          // fade - start
-          menuAuxiliaryPreviewView.alpha = 0;
-        
-          // slide - start
-          setTransformForTransitionSlideStart(slideOffset);
-          
-          // zoom - start
-          setTransformForTransitionZoomStart(zoomOffset);
-          
-          // start - apply transform
-          menuAuxiliaryPreviewView.transform = transform;
-                    
-        }, {
-          // B - zoomAndSlide - exit transition
-          // fade - end
-          menuAuxiliaryPreviewView.alpha = 1;
-          
-          // slide/zoom - end - reset transform
-          menuAuxiliaryPreviewView.transform = .identity;
-        });
-          
-        case .none:
-          // don't use any entrance transitions...
-          fallthrough;
-          
-        default:
-          // noop entrance + exit transition
-          return ({},{});
-      };
-    }();
+    return (transitionStartBlock, transitionEnd);
   };
   
   public func createAuxiliaryPreviewTransitionOutBlock() -> (() -> ())? {
@@ -570,11 +482,11 @@ public struct ContextMenuAuxiliaryPreviewManager {
     else { return };
     
     self.attachAuxiliaryPreview();
-    animationBlocks.setTransitionStateStart();
+    animationBlocks.setTransitionStart();
     
     UIView.addKeyframe(withRelativeStartTime: 1, relativeDuration: 1) {
       // transition in - set end values
-      animationBlocks.setTransitionStateEnd();
+      animationBlocks.setTransitionEnd();
       
       // offset from anchor
       contextMenuContainerView.frame = contextMenuContainerView.frame.offsetBy(

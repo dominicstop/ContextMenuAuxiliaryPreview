@@ -8,6 +8,6 @@
 import UIKit
 
 
-struct AuxiliaryPreviewTransitionKeyframeConfig {
-  var opacity: CGFloat?;
+public struct AuxiliaryPreviewTransitionKeyframeConfig {
+  public var opacity: CGFloat?;
 };
