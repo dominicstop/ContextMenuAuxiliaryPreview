@@ -4,6 +4,4 @@ platform :ios, '13.0'
 
 target 'ContextMenuAuxiliaryPreview_Example' do
   pod 'ContextMenuAuxiliaryPreview', :path => '../'
-
-  end
 end
