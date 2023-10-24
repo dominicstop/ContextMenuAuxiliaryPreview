@@ -4,7 +4,6 @@
 
 ## WIP
 
-- [ ] `TODO:2023-10-24-21-05-23` - Package: Add dependency to `DGSwiftUtilities`, and replace redundant/duplicated code + usage w/  `DGSwiftUtilities`. 
 - [ ] `TODO:2023-10-23-07-55-46` - Impl: Attach aux. preview to a deeper subview in the context menu preview (i.e. the parent of the context menu preview).
 
 <br>
@@ -38,5 +37,6 @@
 
 ## Completed
 
+- [x] `TODO:2023-10-24-21-05-23` - Package: Add dependency to `DGSwiftUtilities`, and replace redundant/duplicated code + usage w/  `DGSwiftUtilities`. 
 - [x] `TODO:2023-10-22-09-06-33` - Impl: Event delegate - aux. preview related events.
 - [x] `TODO:2023-10-21-20-22-12` - Refactor: Re-write logic for attaching the aux. preview.
