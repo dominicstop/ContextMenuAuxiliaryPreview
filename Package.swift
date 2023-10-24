@@ -13,10 +13,18 @@ let package = Package(
       targets: ["ContextMenuAuxiliaryPreview"]
     ),
   ],
+  dependencies: [
+    .package(
+      url: "https://github.com/dominicstop/DGSwiftUtilities",
+      .upToNextMajor(from: "0.1.0")
+    ),
+  ],
   targets: [
     .target(
       name: "ContextMenuAuxiliaryPreview",
-      dependencies: [],
+      dependencies: [
+        "DGSwiftUtilities"
+      ],
       path: "Sources",
       linkerSettings: [
 				.linkedFramework("UIKit"),

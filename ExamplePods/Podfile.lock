@@ -1,16 +1,23 @@
 PODS:
-  - ContextMenuAuxiliaryPreview (0.1.0)
+  - ContextMenuAuxiliaryPreview (0.1.0):
+    - DGSwiftUtilities (~> 0.1)
+  - DGSwiftUtilities (0.1.0)
 
 DEPENDENCIES:
   - ContextMenuAuxiliaryPreview (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - DGSwiftUtilities
 
 EXTERNAL SOURCES:
   ContextMenuAuxiliaryPreview:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ContextMenuAuxiliaryPreview: 83ff764d5653aba26c369995cdc6d7821b5f9431
+  ContextMenuAuxiliaryPreview: 29172ebb958120d29214d33819ca83ab22b14df1
+  DGSwiftUtilities: e04f2c8a6782592c09be299c411749ebfc4b1cc2
 
-PODFILE CHECKSUM: 35a8aaf84633de06379c5fd822f99050431a2ab6
+PODFILE CHECKSUM: 390ce9d08904d7f4273b197f28c86720c519721c
 
 COCOAPODS: 1.12.0

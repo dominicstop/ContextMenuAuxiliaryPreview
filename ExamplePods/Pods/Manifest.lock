@@ -1,6 +1,6 @@
 PODS:
   - ContextMenuAuxiliaryPreview (0.1.0):
-    - DGSwiftUtilities (~> 0)
+    - DGSwiftUtilities (~> 0.1)
   - DGSwiftUtilities (0.1.0)
 
 DEPENDENCIES:
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ContextMenuAuxiliaryPreview: 8d3e2a7582a59af843b7833754e5a1196b20f3a9
+  ContextMenuAuxiliaryPreview: 29172ebb958120d29214d33819ca83ab22b14df1
   DGSwiftUtilities: e04f2c8a6782592c09be299c411749ebfc4b1cc2
 
 PODFILE CHECKSUM: 390ce9d08904d7f4273b197f28c86720c519721c
