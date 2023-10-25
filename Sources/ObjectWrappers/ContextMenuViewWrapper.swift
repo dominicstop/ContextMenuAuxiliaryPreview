@@ -12,7 +12,7 @@ import DGSwiftUtilities
 /// Wrapper for: `_UIContextMenuView`
 /// Root container for the context menu items
 class ContextMenuViewWrapper:
-  ObjectWrapperBase<UIView, MorphingPlatterViewWrapper.EncodedString> {
+  ObjectWrapperBase<UIView, ContextMenuViewWrapper.EncodedString> {
   
   enum EncodedString: String, ObjectWrappingEncodedString {
     case className;
