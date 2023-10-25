@@ -4,6 +4,7 @@
 
 ## WIP
 
+- [ ] `TODO:2023-10-25-04-11-29` - Refactor: Aux. Preview Config - Re-write how the aux. preview anchor + size is set and applied.
 - [ ] `TODO:2023-10-23-07-55-46` - Impl: Attach aux. preview to a deeper subview in the context menu preview (i.e. the parent of the context menu preview).
 
 <br>
