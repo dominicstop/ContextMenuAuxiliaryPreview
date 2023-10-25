@@ -10,11 +10,15 @@ import UIKit
 enum Route: CaseIterable {
 
   case auxPreviewTest01;
+  case auxPreviewTest02;
 
   var viewController: UIViewController {
     switch self {
       case .auxPreviewTest01:
         return AuxPreviewTest01ViewController();
+        
+      case .auxPreviewTest02:
+        return AuxPreviewTest02ViewController();
     };
   };
 };
@@ -27,7 +31,8 @@ class RouteManager {
   weak var window: UIWindow?;
   
   var routes: [Route] = [
-    .auxPreviewTest01,
+    //.auxPreviewTest01,
+    .auxPreviewTest02,
   ];
   
   var routeCounter = 0;
