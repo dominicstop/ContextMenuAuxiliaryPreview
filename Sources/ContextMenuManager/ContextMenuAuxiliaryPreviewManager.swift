@@ -45,7 +45,7 @@ public struct ContextMenuAuxiliaryPreviewManager {
   let contextMenuHasMenuItems: Bool;
   
   /// if the context menu has "menu items", where is it located in relation to
-  ///  the "menu preview"?
+  /// the "menu preview"?
   let menuItemsPlacement: Position?;
   
   /// in which vertical half does the "context menu preview" fall into?
@@ -67,6 +67,7 @@ public struct ContextMenuAuxiliaryPreviewManager {
   var contextMenuContainerViewWrapper: ContextMenuContainerViewWrapper;
   var contextMenuPlatterTransitionViewWrapper: ContextMenuPlatterTransitionViewWrapper;
   var morphingPlatterViewWrapper: MorphingPlatterViewWrapper;
+  var contextMenuViewWrapper: ContextMenuViewWrapper?;
   
   /// where should the aux. preview be attached to?
   weak var auxPreviewTargetView: UIView?;
@@ -127,13 +128,15 @@ public struct ContextMenuAuxiliaryPreviewManager {
           let morphingPlatterView = morphingPlatterViewWrapper.wrappedObject
     else { return nil };
     
+    self.morphingPlatterViewWrapper = morphingPlatterViewWrapper;
+    
     /// get the wrapper for the root view that holds the "context menu items".
     ///
     /// note: if you configure the "context menu" to not have any menu items,
     /// then this will be `nil`
     ///
     let contextMenuViewWrapper = contextMenuPlatterTransitionViewWrapper.contextMenuViewWrapper;
-    self.morphingPlatterViewWrapper = morphingPlatterViewWrapper;
+    self.contextMenuViewWrapper = contextMenuViewWrapper;
     
     /// a ref. to the view that contains the "context menu items".
     ///
@@ -441,7 +444,7 @@ public struct ContextMenuAuxiliaryPreviewManager {
     return (transitionStartBlock, transitionEnd);
   };
   
-  public func createAuxiliaryPreviewTransitionOutBlock() -> (() -> ())? {
+  func createAuxiliaryPreviewTransitionOutBlock() -> (() -> ())? {
     guard let manager = self.contextMenuManager,
     
           /// get the wrapper for the root view that hold the context menu
@@ -469,6 +472,26 @@ public struct ContextMenuAuxiliaryPreviewManager {
       // transition - apply transform
       menuAuxiliaryPreviewView.transform = transform;
     };
+  };
+  
+  func debugPrintValues(){
+    guard let contextMenuContainerView = self.contextMenuContainerViewWrapper.wrappedObject,
+          let contextMenuPlatterTransitionView = self.contextMenuPlatterTransitionViewWrapper.wrappedObject,
+          let morphingPlatterView = self.morphingPlatterViewWrapper.wrappedObject
+    else { return };
+    
+    let contextMenuView = self.contextMenuViewWrapper?.wrappedObject;
+  
+    print(
+      "debugPrintValues:",
+      "\n- contextMenuContainerView.frame:", contextMenuContainerView.frame,
+      "\n- contextMenuPlatterTransitionView.frame:", contextMenuPlatterTransitionView.frame,
+      "\n- morphingPlatterView.frame:", morphingPlatterView.frame,
+      "\n- contextMenuView.frame:", contextMenuView?.frame ?? .zero,
+      "\n- morphingPlatterViewPlacement:", self.morphingPlatterViewPlacement,
+      "\n- menuItemsPlacement:", self.menuItemsPlacement?.rawValue ?? "N/A",
+      "\n"
+    );
   };
   
   // MARK: - Public Functions
