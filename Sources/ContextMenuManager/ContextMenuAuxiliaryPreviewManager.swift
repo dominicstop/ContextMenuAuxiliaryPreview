@@ -14,7 +14,6 @@ import UIKit
 public class ContextMenuAuxiliaryPreviewManager {
 
   var contextMenuMetadata: ContextMenuMetadata;
-  var auxiliaryPreviewMetadata: AuxiliaryPreviewMetadata;
   
   // MARK: - Properties - References
   // -------------------------------
@@ -31,6 +30,22 @@ public class ContextMenuAuxiliaryPreviewManager {
   
   /// where should the aux. preview be attached to?
   weak var auxPreviewTargetView: UIView?;
+  
+  // MARK: - Computed Properties
+  // ---------------------------
+  
+  var auxiliaryPreviewMetadata: AuxiliaryPreviewMetadata? {
+    guard let contextMenuManager = self.contextMenuManager,
+          let menuAuxPreviewConfig = contextMenuManager.menuAuxPreviewConfig
+    else { return nil };
+  
+    return .init(
+      contextMenuMetadata: contextMenuMetadata,
+      contextMenuManager: contextMenuManager,
+      auxiliaryPreviewConfig: menuAuxPreviewConfig,
+      auxiliaryPreviewManager: self
+    );
+  };
   
   // MARK: - Init
   // ------------
@@ -137,18 +152,6 @@ public class ContextMenuAuxiliaryPreviewManager {
     );
     
     self.contextMenuMetadata = contextMenuMetadata;
-    
-    let auxiliaryPreviewMetadata = AuxiliaryPreviewMetadata(
-      contextMenuMetadata: contextMenuMetadata,
-      contextMenuManager: manager,
-      auxiliaryPreviewConfig: menuAuxPreviewConfig,
-      auxiliaryPreviewManager: self
-    );
-    
-    guard let auxiliaryPreviewMetadata = auxiliaryPreviewMetadata
-    else { return nil };
-    
-    self.auxiliaryPreviewMetadata = auxiliaryPreviewMetadata;
   };
   
   // MARK: - Functions
@@ -157,6 +160,7 @@ public class ContextMenuAuxiliaryPreviewManager {
   func attachAuxiliaryPreview(){
     guard let manager = self.contextMenuManager,
           let menuAuxPreviewConfig = manager.menuAuxPreviewConfig,
+          let auxiliaryPreviewMetadata = self.auxiliaryPreviewMetadata,
           
           /// get the wrapper for the root view that hold the context menu
           let menuAuxiliaryPreviewView = manager.menuAuxiliaryPreviewView,
@@ -171,12 +175,6 @@ public class ContextMenuAuxiliaryPreviewManager {
       UITapGestureRecognizer(target: nil, action: nil)
     );
     
-    /// manually set size of aux. preview
-    menuAuxiliaryPreviewView.bounds = .init(
-      origin: .zero,
-      size: self.auxiliaryPreviewViewSize
-    );
-
     /// enable auto layout
     menuAuxiliaryPreviewView.translatesAutoresizingMaskIntoConstraints = false;
     
@@ -185,65 +183,68 @@ public class ContextMenuAuxiliaryPreviewManager {
     
     // get layout constraints based on config
     let constraints: [NSLayoutConstraint] = {
-      // set initial constraints
-      var constraints: Array<NSLayoutConstraint> = [
+      var constraints: [NSLayoutConstraint] = [];
+    
+      let auxiliaryPreviewViewHeight =
+           auxiliaryPreviewMetadata.auxiliaryPreviewViewHeight
+        ?? menuAuxiliaryPreviewView.bounds.height;
       
-        // set aux preview height
+      // set aux preview height
+      constraints.append(
         menuAuxiliaryPreviewView.heightAnchor.constraint(
-          equalToConstant: self.auxiliaryPreviewViewHeight
-        ),
-      ];
+          equalToConstant: auxiliaryPreviewViewHeight
+        )
+      );
       
       // set vertical alignment constraint - i.e. either...
       constraints.append({
-        if self.shouldAttachAuxPreviewToTop {
-          // A - pin to top or...
-          return menuAuxiliaryPreviewView.bottomAnchor.constraint(
-           equalTo: morphingPlatterView.topAnchor,
-           constant: -self.marginInner
-          );
+        switch auxiliaryPreviewMetadata.auxPreviewPosition {
+          case .top:
+            return menuAuxiliaryPreviewView.bottomAnchor.constraint(
+             equalTo: morphingPlatterView.topAnchor,
+             constant: -menuAuxPreviewConfig.auxiliaryPreviewMarginInner
+            );
+            
+          case .bottom:
+            return menuAuxiliaryPreviewView.topAnchor.constraint(
+              equalTo: morphingPlatterView.bottomAnchor,
+              constant: menuAuxPreviewConfig.auxiliaryPreviewMarginInner
+            );
         };
-        
-        // B - pin to bottom.
-        return menuAuxiliaryPreviewView.topAnchor.constraint(
-          equalTo: morphingPlatterView.bottomAnchor,
-          constant: self.marginInner
-        );
       }());
       
       // set horizontal alignment constraints based on config...
       constraints += {
+        let auxiliaryPreviewViewWidth =
+             auxiliaryPreviewMetadata.auxiliaryPreviewViewWidth
+          ?? menuAuxiliaryPreviewView.bounds.width;
+      
+        let widthAnchor = menuAuxiliaryPreviewView.widthAnchor.constraint(
+          equalToConstant: auxiliaryPreviewViewWidth
+        );
+      
         switch menuAuxPreviewConfig.alignmentHorizontal {
           // A - pin to left
           case .previewLeading: return [
+            widthAnchor,
             menuAuxiliaryPreviewView.leadingAnchor.constraint(
               equalTo: morphingPlatterView.leadingAnchor
-            ),
-            
-            menuAuxiliaryPreviewView.widthAnchor.constraint(
-              equalToConstant: self.auxiliaryPreviewViewWidth
             ),
           ];
             
           // B - pin to right
           case .previewTrailing: return [
+            widthAnchor,
             menuAuxiliaryPreviewView.rightAnchor.constraint(
               equalTo: morphingPlatterView.rightAnchor
-            ),
-            
-            menuAuxiliaryPreviewView.widthAnchor.constraint(
-              equalToConstant: self.auxiliaryPreviewViewWidth
             ),
           ];
             
           // C - pin to center
           case .previewCenter: return [
+            widthAnchor,
             menuAuxiliaryPreviewView.centerXAnchor.constraint(
               equalTo: morphingPlatterView.centerXAnchor
-            ),
-            
-            menuAuxiliaryPreviewView.widthAnchor.constraint(
-              equalToConstant: self.auxiliaryPreviewViewWidth
             ),
           ];
             
@@ -276,13 +277,13 @@ public class ContextMenuAuxiliaryPreviewManager {
     
     NSLayoutConstraint.activate(constraints);
     
-    // Bugfix: fix aux-preview touch event on screen edge
-    let shouldSwizzle = self.contextMenuOffsetY != 0;
+    // // Bugfix: fix aux-preview touch event on screen edge
+    // let shouldSwizzle = self.contextMenuOffsetY != 0;
     
-    if shouldSwizzle {
-      UIView.auxPreview = menuAuxiliaryPreviewView;
-      UIView.swizzlePoint();
-    };
+    // if shouldSwizzle {
+    //   UIView.auxPreview = menuAuxiliaryPreviewView;
+    //   UIView.swizzlePoint();
+    // };
   };
   
   func createAuxiliaryPreviewTransitionInBlock() -> (
@@ -328,7 +329,7 @@ public class ContextMenuAuxiliaryPreviewManager {
       transform = transform.scaledBy(x: 0.7, y: 0.7);
       
       // transition - slide out
-      switch self.morphingPlatterViewPlacement {
+      switch self.contextMenuMetadata.menuPreviewPosition {
         case .top:
           transform = transform.translatedBy(x: 0, y: 50);
           
@@ -355,8 +356,8 @@ public class ContextMenuAuxiliaryPreviewManager {
       "\n- contextMenuPlatterTransitionView.frame:", contextMenuPlatterTransitionView.frame,
       "\n- morphingPlatterView.frame:", morphingPlatterView.frame,
       "\n- contextMenuView.frame:", contextMenuView?.frame ?? .zero,
-      "\n- morphingPlatterViewPlacement:", self.morphingPlatterViewPlacement,
-      "\n- menuItemsPlacement:", self.menuItemsPlacement?.rawValue ?? "N/A",
+      // "\n- morphingPlatterViewPlacement:", self.morphingPlatterViewPlacement,
+      // "\n- menuItemsPlacement:", self.menuItemsPlacement?.rawValue ?? "N/A",
       "\n"
     );
   };
@@ -365,7 +366,7 @@ public class ContextMenuAuxiliaryPreviewManager {
   // ------------------------
   
   public func attachAndAnimateInAuxiliaryPreview() {
-    guard let contextMenuContainerView =
+    guard let _ =
             self.contextMenuContainerViewWrapper.wrappedObject,
             
           let animationBlocks = self.createAuxiliaryPreviewTransitionInBlock()
@@ -379,10 +380,10 @@ public class ContextMenuAuxiliaryPreviewManager {
       animationBlocks.setTransitionEnd();
       
       // offset from anchor
-      contextMenuContainerView.frame = contextMenuContainerView.frame.offsetBy(
-        dx: 0,
-        dy: self.contextMenuOffsetY
-      );
+      // contextMenuContainerView.frame = contextMenuContainerView.frame.offsetBy(
+      //   dx: 0,
+      //   dy: self.contextMenuOffsetY
+      // );
     };
   };
   

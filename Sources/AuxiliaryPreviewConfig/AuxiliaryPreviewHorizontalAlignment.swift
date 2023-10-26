@@ -8,7 +8,9 @@
 import Foundation
 
 
-public enum AuxiliaryPreviewHorizontalAlignment {  
+public enum AuxiliaryPreviewHorizontalAlignment {
+  case stretchPreview;
+  case stretchScreen;
   case previewLeading;
   case previewTrailing;
   case previewCenter;
