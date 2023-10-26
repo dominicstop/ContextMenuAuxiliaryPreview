@@ -181,14 +181,18 @@ public class ContextMenuAuxiliaryPreviewManager {
     /// attach `auxiliaryView` to context menu preview
     auxPreviewTargetView.addSubview(menuAuxiliaryPreviewView);
     
+    let auxiliaryPreviewViewHeight =
+         auxiliaryPreviewMetadata.auxiliaryPreviewViewHeight
+      ?? menuAuxiliaryPreviewView.bounds.height;
+    
+    let auxiliaryPreviewViewWidth =
+         auxiliaryPreviewMetadata.auxiliaryPreviewViewWidth
+      ?? menuAuxiliaryPreviewView.bounds.width;
+    
     // get layout constraints based on config
     let constraints: [NSLayoutConstraint] = {
       var constraints: [NSLayoutConstraint] = [];
     
-      let auxiliaryPreviewViewHeight =
-           auxiliaryPreviewMetadata.auxiliaryPreviewViewHeight
-        ?? menuAuxiliaryPreviewView.bounds.height;
-      
       // set aux preview height
       constraints.append(
         menuAuxiliaryPreviewView.heightAnchor.constraint(
@@ -215,9 +219,7 @@ public class ContextMenuAuxiliaryPreviewManager {
       
       // set horizontal alignment constraints based on config...
       constraints += {
-        let auxiliaryPreviewViewWidth =
-             auxiliaryPreviewMetadata.auxiliaryPreviewViewWidth
-          ?? menuAuxiliaryPreviewView.bounds.width;
+        
       
         let widthAnchor = menuAuxiliaryPreviewView.widthAnchor.constraint(
           equalToConstant: auxiliaryPreviewViewWidth
@@ -300,7 +302,6 @@ public class ContextMenuAuxiliaryPreviewManager {
     let (keyframeStart, keyframeEnd) =
       menuAuxPreviewConfig.transitionConfigEntrance.getKeyframes();
     
-    
     let transitionStartBlock = {
       keyframeStart.apply(toView: menuAuxiliaryPreviewView);
     };
@@ -356,8 +357,8 @@ public class ContextMenuAuxiliaryPreviewManager {
       "\n- contextMenuPlatterTransitionView.frame:", contextMenuPlatterTransitionView.frame,
       "\n- morphingPlatterView.frame:", morphingPlatterView.frame,
       "\n- contextMenuView.frame:", contextMenuView?.frame ?? .zero,
-      // "\n- morphingPlatterViewPlacement:", self.morphingPlatterViewPlacement,
-      // "\n- menuItemsPlacement:", self.menuItemsPlacement?.rawValue ?? "N/A",
+      "\n- menuPreviewPosition:", self.contextMenuMetadata.menuPreviewPosition.rawValue,
+      "\n- menuPosition:", self.contextMenuMetadata.menuPosition?.rawValue ?? "N/A",
       "\n"
     );
   };

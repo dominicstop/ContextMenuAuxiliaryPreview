@@ -38,5 +38,4 @@ public struct ContextMenuMetadata {
   var hasMenuItems: Bool {
     self.menuFrame != nil;
   };
-  
 };

@@ -61,6 +61,8 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
       contextMenuManager.menuAuxPreviewConfig = AuxiliaryPreviewConfig(
         anchorPosition: .automatic,
         alignmentHorizontal: .previewCenter,
+        auxiliaryPreviewPreferredWidth: .constant(100),
+        auxiliaryPreviewPreferredHeight: .constant(100),
         auxiliaryPreviewMarginInner: 10,
         auxiliaryPreviewMarginOuter: 10,
         transitionConfigEntrance: .fade
