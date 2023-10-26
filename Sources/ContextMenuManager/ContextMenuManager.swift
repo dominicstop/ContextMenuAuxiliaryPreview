@@ -102,11 +102,24 @@ public class ContextMenuManager {
       guard let auxPreviewManager = auxPreviewManager else { return };
       self.auxPreviewManager = auxPreviewManager;
       
+      print(
+        "notifyOnContextMenuInteraction",
+        "- addAnimations block"
+      );
+      
+      auxPreviewManager.debugPrintValues();
       auxPreviewManager.attachAndAnimateInAuxiliaryPreview();
     };
     
     animator.addCompletion {
       self.isContextMenuVisible = true;
+      
+      print(
+        "notifyOnContextMenuInteraction",
+        "- addCompletion block"
+      );
+      
+      self.auxPreviewManager?.debugPrintValues();
     };
   };
   

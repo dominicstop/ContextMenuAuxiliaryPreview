@@ -13,15 +13,6 @@ public struct AuxiliaryPreviewConfig {
   // MARK: - Nested Types
   // --------------------
   
-  public enum AnchorPosition: String {
-    case top, bottom, automatic;
-  };
-  
-  public enum HorizontalAlignment: String {
-    case stretchScreen, stretchPreview;
-    case previewLeading, previewTrailing, previewCenter;
-  };
-  
   public enum TransitionType {
     case none, fade;
     
@@ -32,15 +23,18 @@ public struct AuxiliaryPreviewConfig {
 
   // MARK: - Properties
   // ------------------
-  
-  public var height: CGFloat?;
-  public var width: CGFloat?;
 
-  public var anchorPosition: AnchorPosition;
-  public var alignmentHorizontal: HorizontalAlignment;
+  public var anchorPosition: AuxiliaryPreviewAnchorPosition;
+  public var alignmentHorizontal: AuxiliaryPreviewHorizontalAlignment;
   
-  public var marginPreview: CGFloat;
-  public var marginAuxiliaryPreview: CGFloat;
+  public var auxiliaryPreviewPreferredWidth: AuxiliaryPreviewSizeValue?;
+  public var auxiliaryPreviewPreferredHeight: AuxiliaryPreviewSizeValue?;
+  
+  /// The distance between the aux. preview, and the menu preview
+  public var auxiliaryPreviewMarginInner: CGFloat;
+  
+  /// The min. distance of the aux. preview from the edges of the window
+  public var auxiliaryPreviewMarginOuter: CGFloat;
 
   public var transitionConfigEntrance: AuxiliaryPreviewTransitionConfig;
   
@@ -48,21 +42,17 @@ public struct AuxiliaryPreviewConfig {
   // ------------
   
   public init(
-    height: CGFloat? = nil,
-    width: CGFloat? = nil,
-    anchorPosition: AnchorPosition,
-    alignmentHorizontal: HorizontalAlignment,
-    marginPreview: CGFloat,
-    marginAuxiliaryPreview: CGFloat,
+    anchorPosition: AuxiliaryPreviewAnchorPosition,
+    alignmentHorizontal: AuxiliaryPreviewHorizontalAlignment,
+    auxiliaryPreviewMarginInner: CGFloat,
+    auxiliaryPreviewMarginOuter: CGFloat,
     transitionConfigEntrance: AuxiliaryPreviewTransitionConfig
   ) {
   
-    self.height = height;
-    self.width = width;
     self.anchorPosition = anchorPosition;
     self.alignmentHorizontal = alignmentHorizontal;
-    self.marginPreview = marginPreview;
-    self.marginAuxiliaryPreview = marginAuxiliaryPreview;
+    self.auxiliaryPreviewMarginInner = auxiliaryPreviewMarginInner;
+    self.auxiliaryPreviewMarginOuter = auxiliaryPreviewMarginOuter;
     self.transitionConfigEntrance = transitionConfigEntrance;
-  }
+  };
 };
