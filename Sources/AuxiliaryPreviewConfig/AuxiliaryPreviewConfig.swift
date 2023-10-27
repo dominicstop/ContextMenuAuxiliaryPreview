@@ -36,7 +36,7 @@ public struct AuxiliaryPreviewConfig {
   /// The min. distance of the aux. preview from the edges of the window
   public var auxiliaryPreviewMarginOuter: CGFloat;
 
-  public var transitionConfigEntrance: AuxiliaryPreviewTransitionConfig;
+  public var transitionConfigEntrance: AuxiliaryPreviewEntranceTransitionConfig;
   
   // MARK: - Init
   // ------------
@@ -48,7 +48,7 @@ public struct AuxiliaryPreviewConfig {
     auxiliaryPreviewPreferredHeight: AuxiliaryPreviewSizeValue?,
     auxiliaryPreviewMarginInner: CGFloat,
     auxiliaryPreviewMarginOuter: CGFloat,
-    transitionConfigEntrance: AuxiliaryPreviewTransitionConfig
+    transitionConfigEntrance: AuxiliaryPreviewEntranceTransitionConfig
   ) {
   
     self.anchorPosition = anchorPosition;

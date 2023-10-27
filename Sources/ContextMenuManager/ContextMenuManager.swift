@@ -16,7 +16,12 @@ public class ContextMenuManager {
   // ------------------
   
   public var menuAuxPreviewConfig: AuxiliaryPreviewConfig?;
-  var auxPreviewManager: ContextMenuAuxiliaryPreviewManager?;
+  
+  var auxPreviewManager: ContextMenuAuxiliaryPreviewManager? {
+    willSet {
+      print("auxPreviewManager - willSet");
+    }
+  };
   
   public var isAuxiliaryPreviewEnabled = true;
   

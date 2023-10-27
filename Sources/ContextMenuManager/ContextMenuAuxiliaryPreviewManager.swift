@@ -185,12 +185,18 @@ public class ContextMenuAuxiliaryPreviewManager {
       width: auxiliaryPreviewViewWidth,
       height: auxiliaryPreviewViewHeight
     );
+    
+    switch menuAuxPreviewConfig.transitionConfigEntrance {
+      case .afterMenuEntranceTransition, .customDelay:
+        /// Set the initial height/width of the aux. preview
+        menuAuxiliaryPreviewView.frame = .init(
+          origin: .zero,
+          size: auxiliaryPreviewViewSize
+        );
       
-    /// Set the initial height/width of the aux. preview
-    // menuAuxiliaryPreviewView.frame = .init(
-    //   origin: .zero,
-    //   size: auxiliaryPreviewViewSize
-    // );
+      default:
+        break;
+    };
     
     /// enable auto layout
     menuAuxiliaryPreviewView.translatesAutoresizingMaskIntoConstraints = false;
@@ -295,34 +301,6 @@ public class ContextMenuAuxiliaryPreviewManager {
     // };
   };
   
-  func createAuxiliaryPreviewTransitionInBlock() -> (
-    setTransitionStart: () -> (),
-    setTransitionEnd  : () -> ()
-  )? {
-    guard let manager = self.contextMenuManager,
-          let menuAuxPreviewConfig = manager.menuAuxPreviewConfig,
-          
-          /// get the wrapper for the root view that hold the context menu
-          let menuAuxiliaryPreviewView = manager.menuAuxiliaryPreviewView
-    else { return nil };
-   
-    let (keyframeStart, keyframeEnd) =
-      menuAuxPreviewConfig.transitionConfigEntrance.getKeyframes();
-    
-    let transitionStartBlock = {
-      keyframeStart.apply(toView: menuAuxiliaryPreviewView);
-      // menuAuxiliaryPreviewView.alpha = 0;
-      // menuAuxiliaryPreviewView.layoutIfNeeded();
-    };
-    
-    let transitionEnd = {
-      keyframeEnd.apply(toView: menuAuxiliaryPreviewView);
-      // menuAuxiliaryPreviewView.alpha = 1;
-    };
-    
-    return (transitionStartBlock, transitionEnd);
-  };
-  
   func createAuxiliaryPreviewTransitionOutBlock() -> (() -> ())? {
     guard let manager = self.contextMenuManager,
     
@@ -377,25 +355,57 @@ public class ContextMenuAuxiliaryPreviewManager {
   // ------------------------
   
   public func attachAndAnimateInAuxiliaryPreview() {
-    guard let _ =
-            self.contextMenuContainerViewWrapper.wrappedObject,
-            
-          let animationBlocks = self.createAuxiliaryPreviewTransitionInBlock()
+    guard let manager = self.contextMenuManager,
+          let menuAuxiliaryPreviewView = manager.menuAuxiliaryPreviewView
     else { return };
     
-    self.attachAuxiliaryPreview();
-    animationBlocks.setTransitionStart();
+    guard let manager = self.contextMenuManager,
+          let menuAuxPreviewConfig = manager.menuAuxPreviewConfig,
+          
+          /// get the wrapper for the root view that hold the context menu
+          let menuAuxiliaryPreviewView = manager.menuAuxiliaryPreviewView
+    else { return };
     
-    UIView.addKeyframe(withRelativeStartTime: 1, relativeDuration: 1) {
+    let transitionConfigEntrance =
+      menuAuxPreviewConfig.transitionConfigEntrance;
+    
+    switch transitionConfigEntrance {
+      case .syncedToMenuEntranceTransition:
+        self.attachAuxiliaryPreview();
+        
+      default:
+        guard let delay = transitionConfigEntrance.delay,
+              let animatorConfig = transitionConfigEntrance.animatorConfig,
+              let transition = transitionConfigEntrance.transition
+        else { return };
+        
+        let animator =
+          animatorConfig.createAnimator(gestureInitialVelocity: .zero);
+        
+        let keyframes = transition.getKeyframes();
+        
+        animator.addAnimations {
+          keyframes.keyframeStart.apply(toView: menuAuxiliaryPreviewView);
+          
+          UIView.addKeyframe(withRelativeStartTime: 1, relativeDuration: 1){
+            keyframes.keyframeEnd.apply(toView: menuAuxiliaryPreviewView);
+          };
+        };
+        
+        animator.startAnimation(afterDelay: delay);
+    };
+   
+    
+    //UIView.addKeyframe(withRelativeStartTime: 1, relativeDuration: 1) {
       // transition in - set end values
-      animationBlocks.setTransitionEnd();
+      //animationBlocks.setTransitionEnd();
       
       // offset from anchor
       // contextMenuContainerView.frame = contextMenuContainerView.frame.offsetBy(
       //   dx: 0,
       //   dy: self.contextMenuOffsetY
       // );
-    };
+    //};
   };
   
   public func detachAndAnimateOutAuxiliaryPreview() {
