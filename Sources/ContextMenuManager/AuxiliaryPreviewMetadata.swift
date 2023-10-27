@@ -79,8 +79,19 @@ public struct AuxiliaryPreviewMetadata {
         usingAuxiliaryPreviewManager: auxiliaryPreviewManager
       );
       
-      let fallbackWidth =
-        contextMenuManager.menuAuxiliaryPreviewView?.frame.width;
+      let fallbackWidth: CGFloat? = {
+        switch auxiliaryPreviewConfig.alignmentHorizontal {
+          case .stretch:
+            return contextMenuMetadata.rootContainerFrame.size.width;
+        
+          case .stretchPreview:
+            return contextMenuMetadata.menuPreviewFrame.size.width;
+            
+          default:
+            return contextMenuManager.menuAuxiliaryPreviewView?.frame.width;
+        };
+      
+      }();
       
       return computedWidth ?? fallbackWidth;
     }();

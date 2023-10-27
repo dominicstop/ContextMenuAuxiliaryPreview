@@ -57,9 +57,6 @@ public class ContextMenuAuxiliaryPreviewManager {
   
     self.contextMenuManager = manager;
     self.contextMenuAnimator = animator;
-  
-    guard let menuAuxPreviewConfig = manager.menuAuxPreviewConfig
-    else { return nil };
           
     /// get wrapper for the "root view" that contains the context menu
     guard let contextMenuContainerViewWrapper =
@@ -145,6 +142,7 @@ public class ContextMenuAuxiliaryPreviewManager {
     }();
     
     let contextMenuMetadata = ContextMenuMetadata(
+      rootContainerFrame: contextMenuContainerView.frame,
       menuPreviewFrame: morphingPlatterView.frame,
       menuFrame: contextMenuView?.frame,
       menuPreviewPosition: morphingPlatterViewPlacement,
@@ -174,20 +172,31 @@ public class ContextMenuAuxiliaryPreviewManager {
     menuAuxiliaryPreviewView.addGestureRecognizer(
       UITapGestureRecognizer(target: nil, action: nil)
     );
+        
+    let auxiliaryPreviewViewHeight =
+         auxiliaryPreviewMetadata.auxiliaryPreviewViewHeight
+      ?? menuAuxiliaryPreviewView.bounds.height;
+    
+    let auxiliaryPreviewViewWidth =
+         auxiliaryPreviewMetadata.auxiliaryPreviewViewWidthAdjusted
+      ?? menuAuxiliaryPreviewView.bounds.width;
+      
+    let auxiliaryPreviewViewSize = CGSize(
+      width: auxiliaryPreviewViewWidth,
+      height: auxiliaryPreviewViewHeight
+    );
+      
+    /// Set the initial height/width of the aux. preview
+    // menuAuxiliaryPreviewView.frame = .init(
+    //   origin: .zero,
+    //   size: auxiliaryPreviewViewSize
+    // );
     
     /// enable auto layout
     menuAuxiliaryPreviewView.translatesAutoresizingMaskIntoConstraints = false;
     
     /// attach `auxiliaryView` to context menu preview
     auxPreviewTargetView.addSubview(menuAuxiliaryPreviewView);
-    
-    let auxiliaryPreviewViewHeight =
-         auxiliaryPreviewMetadata.auxiliaryPreviewViewHeight
-      ?? menuAuxiliaryPreviewView.bounds.height;
-    
-    let auxiliaryPreviewViewWidth =
-         auxiliaryPreviewMetadata.auxiliaryPreviewViewWidth
-      ?? menuAuxiliaryPreviewView.bounds.width;
     
     // get layout constraints based on config
     let constraints: [NSLayoutConstraint] = {
@@ -219,8 +228,6 @@ public class ContextMenuAuxiliaryPreviewManager {
       
       // set horizontal alignment constraints based on config...
       constraints += {
-        
-      
         let widthAnchor = menuAuxiliaryPreviewView.widthAnchor.constraint(
           equalToConstant: auxiliaryPreviewViewWidth
         );
@@ -262,7 +269,7 @@ public class ContextMenuAuxiliaryPreviewManager {
           ];
           
           // E - stretch to edges of screen
-          case .stretchScreen: return [
+          case .stretch: return [
             menuAuxiliaryPreviewView.leadingAnchor.constraint(
               equalTo: contextMenuContainerView.leadingAnchor
             ),
@@ -304,10 +311,13 @@ public class ContextMenuAuxiliaryPreviewManager {
     
     let transitionStartBlock = {
       keyframeStart.apply(toView: menuAuxiliaryPreviewView);
+      // menuAuxiliaryPreviewView.alpha = 0;
+      // menuAuxiliaryPreviewView.layoutIfNeeded();
     };
     
     let transitionEnd = {
       keyframeEnd.apply(toView: menuAuxiliaryPreviewView);
+      // menuAuxiliaryPreviewView.alpha = 1;
     };
     
     return (transitionStartBlock, transitionEnd);

@@ -21,6 +21,7 @@ public struct ContextMenuMetadata {
   // MARK: - Properties
   // ------------------
   
+  var rootContainerFrame: CGRect;
   var menuPreviewFrame: CGRect;
   var menuFrame: CGRect?;
   
