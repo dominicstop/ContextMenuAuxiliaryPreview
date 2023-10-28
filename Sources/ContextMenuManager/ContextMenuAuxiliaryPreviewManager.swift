@@ -13,7 +13,11 @@ import UIKit
 ///
 public class ContextMenuAuxiliaryPreviewManager {
 
+  // MARK: - Properties
+  // ------------------
+
   var contextMenuMetadata: ContextMenuMetadata;
+  var customAnimator: UIViewPropertyAnimator?;
   
   // MARK: - Properties - References
   // -------------------------------
@@ -301,6 +305,7 @@ public class ContextMenuAuxiliaryPreviewManager {
     // };
   };
   
+  // TODO
   func createAuxiliaryPreviewTransitionOutBlock() -> (() -> ())? {
     guard let manager = self.contextMenuManager,
     
@@ -354,16 +359,9 @@ public class ContextMenuAuxiliaryPreviewManager {
   // MARK: - Public Functions
   // ------------------------
   
-  public func attachAndAnimateInAuxiliaryPreview() {
+  public func attachAndAnimateInAuxiliaryPreviewTogetherWithContextMenu() {
     guard let manager = self.contextMenuManager,
-          let menuAuxiliaryPreviewView = manager.menuAuxiliaryPreviewView
-    else { return };
-    
-    guard let manager = self.contextMenuManager,
-          let menuAuxPreviewConfig = manager.menuAuxPreviewConfig,
-          
-          /// get the wrapper for the root view that hold the context menu
-          let menuAuxiliaryPreviewView = manager.menuAuxiliaryPreviewView
+          let menuAuxPreviewConfig = manager.menuAuxPreviewConfig
     else { return };
     
     let transitionConfigEntrance =
@@ -374,26 +372,55 @@ public class ContextMenuAuxiliaryPreviewManager {
         self.attachAuxiliaryPreview();
         
       default:
-        guard let delay = transitionConfigEntrance.delay,
-              let animatorConfig = transitionConfigEntrance.animatorConfig,
-              let transition = transitionConfigEntrance.transition
-        else { return };
-        
-        let animator =
-          animatorConfig.createAnimator(gestureInitialVelocity: .zero);
-        
-        let keyframes = transition.getKeyframes();
-        
-        animator.addAnimations {
-          keyframes.keyframeStart.apply(toView: menuAuxiliaryPreviewView);
+        break;
+    };
+  };
+  
+  public func attachAndAnimateInAuxiliaryPreviewUsingCustomAnimator() {
+    guard let manager = self.contextMenuManager,
+          let menuAuxPreviewConfig = manager.menuAuxPreviewConfig,
           
-          UIView.addKeyframe(withRelativeStartTime: 1, relativeDuration: 1){
-            keyframes.keyframeEnd.apply(toView: menuAuxiliaryPreviewView);
-          };
+          /// get the wrapper for the root view that hold the context menu
+          let menuAuxiliaryPreviewView = manager.menuAuxiliaryPreviewView
+    else { return };
+    
+    let transitionConfigEntrance =
+      menuAuxPreviewConfig.transitionConfigEntrance;
+    
+    guard let delay = transitionConfigEntrance.delay,
+          let animatorConfig = transitionConfigEntrance.animatorConfig,
+          let transition = transitionConfigEntrance.transition
+    else { return };
+    
+    self.attachAuxiliaryPreview();
+    menuAuxiliaryPreviewView.layoutIfNeeded();
+    
+    let animator = animatorConfig.createAnimator(gestureInitialVelocity: .zero);
+    self.customAnimator = animator;
+    
+    let keyframes = transition.getKeyframes();
+    
+    keyframes.keyframeStart.apply(toView: menuAuxiliaryPreviewView);
+    
+    animator.addAnimations {
+      keyframes.keyframeEnd.apply(toView: menuAuxiliaryPreviewView);
+    };
+    
+    switch menuAuxPreviewConfig.transitionConfigEntrance {
+      case .customDelay:
+        animator.startAnimation(afterDelay: delay);
+        
+      case .afterMenuEntranceTransition:
+        guard let contextMenuAnimator = self.contextMenuAnimator else { return };
+        
+        contextMenuAnimator.addCompletion {
+          animator.startAnimation(afterDelay: delay);
         };
         
-        animator.startAnimation(afterDelay: delay);
+      default:
+        break;
     };
+    
    
     
     //UIView.addKeyframe(withRelativeStartTime: 1, relativeDuration: 1) {
@@ -418,6 +445,10 @@ public class ContextMenuAuxiliaryPreviewManager {
             self.createAuxiliaryPreviewTransitionOutBlock()
             
     else { return };
+    
+    if let customAnimator = self.customAnimator {
+      customAnimator.stopAnimation(true);
+    };
     
     auxPreviewTransitionOutBlock();
     
