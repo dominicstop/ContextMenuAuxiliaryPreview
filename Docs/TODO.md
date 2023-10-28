@@ -4,21 +4,8 @@
 
 ## WIP
 
-- [ ] `TODO:2023-10-25-04-11-29` - Refactor: Aux. Preview Config - Re-write how the aux. preview anchor + size is set and applied.
+- [ ] `TODO:2023-10-29-08-15-08` - Impl: Transition Config - Add support for `3DTransform` keyframes.
 - [ ] `TODO:2023-10-23-07-55-46` - Impl: Attach aux. preview to a deeper subview in the context menu preview (i.e. the parent of the context menu preview).
-
-<br>
-
-- [ ] `TODO:2023-10-23-06-15-16` - Impl: Transition Config - Support both legacy entrance transition config + new config via adding a "transition mode" option.
-  * This mode defines when and how to attach + transition the aux. preview.
-  * This can be defined as an enum, e.g.: `follow` (or: `synced`, `together`, `syncedToEntranceTransition`), `customDelay`, `afterTransition` (or: `onTransitionEnd`, `onEntranceTransitionEnd`).
-  * Modes that support a custom transition configuration: `customDelay`, `onEntranceTransitionEnd`.
-  * Mode: `syncedToEntranceTransition` - The entrance transition for the aux. preview is synced to the context menu.
-  * Mode: `customDelay` - Wait for the specified amount of seconds before attaching and starting the context menu transition.
-    * Use `CADisplayLink` to check on each frame if the context menu preview has been attached to the window.
-  * Mode: `onEntranceTransitionEnd` - Wait for the context menu transition to end before attaching the aux. preview.
-
-<br>
 
 - [ ] `TODO:2023-10-23-02-55-23` - Impl: Adjust transform based on the position of the menu, i.e. `shouldAutoOrientTransformToContextMenuPosition`.
   * Transforms that should be adjusted: translate, rotation.
@@ -33,6 +20,18 @@
 
 ## Completed
 
+- [x] `TODO:2023-10-23-06-15-16` - Impl: Transition Config - Support both legacy entrance transition config + new config via adding a "transition mode" option.
+  * This mode defines when and how to attach + transition the aux. preview.
+  * This can be defined as an enum, e.g.: `follow` (or: `synced`, `together`, `syncedToEntranceTransition`), `customDelay`, `afterTransition` (or: `onTransitionEnd`, `onEntranceTransitionEnd`).
+  * Modes that support a custom transition configuration: `customDelay`, `onEntranceTransitionEnd`.
+  * Mode: `syncedToEntranceTransition` - The entrance transition for the aux. preview is synced to the context menu.
+  * Mode: `customDelay` - Wait for the specified amount of seconds before attaching and starting the context menu transition.
+    * Use `CADisplayLink` to check on each frame if the context menu preview has been attached to the window.
+  * Mode: `onEntranceTransitionEnd` - Wait for the context menu transition to end before attaching the aux. preview.
+
+<br>
+
+- [x] `TODO:2023-10-25-04-11-29` - Refactor: Aux. Preview Config - Re-write how the aux. preview anchor + size is set and applied.
 - [x] `TODO:2023-10-21-06-11-22` - Refactor: Initial re-write for menu aux. preview entrance.
   * Transition config should accept keyframes for the initial position, and final position.
   * The keyframes are then used to animate the aux. preview.
