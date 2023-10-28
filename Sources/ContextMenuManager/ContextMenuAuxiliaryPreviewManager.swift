@@ -361,7 +361,10 @@ public class ContextMenuAuxiliaryPreviewManager {
   
   public func attachAndAnimateInAuxiliaryPreviewTogetherWithContextMenu() {
     guard let manager = self.contextMenuManager,
-          let menuAuxPreviewConfig = manager.menuAuxPreviewConfig
+          let menuAuxPreviewConfig = manager.menuAuxPreviewConfig,
+          let auxiliaryPreviewMetadata = self.auxiliaryPreviewMetadata,
+          let contextMenuPlatterTransitionView =
+            self.contextMenuPlatterTransitionViewWrapper.wrappedObject
     else { return };
     
     let transitionConfigEntrance =
@@ -369,7 +372,17 @@ public class ContextMenuAuxiliaryPreviewManager {
     
     switch transitionConfigEntrance {
       case .syncedToMenuEntranceTransition:
+        
         self.attachAuxiliaryPreview();
+        
+        contextMenuPlatterTransitionView.frame = {
+          let initFrame = contextMenuPlatterTransitionView.frame;
+          
+          return initFrame.offsetBy(
+            dx: 0,
+            dy: auxiliaryPreviewMetadata.menuOffset
+          );
+        }();
         
       default:
         break;
@@ -420,19 +433,6 @@ public class ContextMenuAuxiliaryPreviewManager {
       default:
         break;
     };
-    
-   
-    
-    //UIView.addKeyframe(withRelativeStartTime: 1, relativeDuration: 1) {
-      // transition in - set end values
-      //animationBlocks.setTransitionEnd();
-      
-      // offset from anchor
-      // contextMenuContainerView.frame = contextMenuContainerView.frame.offsetBy(
-      //   dx: 0,
-      //   dy: self.contextMenuOffsetY
-      // );
-    //};
   };
   
   public func detachAndAnimateOutAuxiliaryPreview() {
@@ -463,6 +463,7 @@ public class ContextMenuAuxiliaryPreviewManager {
       };
     };
   };
+  
   
 };
 

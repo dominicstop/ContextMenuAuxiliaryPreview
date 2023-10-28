@@ -29,7 +29,10 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
       return stack;
     }();
     
-    for index in 0...10 {
+    let itemCount = 30;
+    let itemCountMid = Int(itemCount / 2);
+    
+    for index in 0 ..< itemCountMid {
       let label = UILabel();
       
       label.text = "\(index)";
@@ -65,11 +68,7 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
         auxiliaryPreviewPreferredHeight: .constant(100),
         auxiliaryPreviewMarginInner: 10,
         auxiliaryPreviewMarginOuter: 10,
-        transitionConfigEntrance: .customDelay(
-          delay: 0.3,
-          animatorConfig: .presetCurve(duration: 1, curve: .linear),
-          transition: .fade
-        )
+        transitionConfigEntrance: .syncedToMenuEntranceTransition
       );
       
       return view;
@@ -83,7 +82,7 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
       box.heightAnchor.constraint(equalToConstant: 150),
     ]);
     
-    for index in 11...20 {
+    for index in itemCountMid...itemCount {
       let label = UILabel();
       
       label.text = "\(index)";
