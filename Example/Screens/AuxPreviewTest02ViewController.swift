@@ -8,6 +8,38 @@
 import UIKit
 import ContextMenuAuxiliaryPreview;
 
+
+class TestAuxiliaryPreviewView: UIView {
+
+  var flag: Bool = false;
+  
+  override init(frame: CGRect) {
+    super.init(frame: frame);
+    
+    let tapGesture = UITapGestureRecognizer(
+      target: self,
+      action: #selector(Self.handleTapGesture(sender:))
+    );
+    
+    self.addGestureRecognizer(tapGesture);
+    self.setBackgroundColor();
+  };
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented");
+  };
+  
+  func setBackgroundColor(){
+    self.backgroundColor = self.flag ? .blue : .red;
+  };
+  
+  @objc func handleTapGesture(sender: UITapGestureRecognizer){
+    self.flag.toggle();
+    self.setBackgroundColor();
+  };
+};
+
+
 class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelegate {
 
   var interaction: UIContextMenuInteraction?;
@@ -68,7 +100,11 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
         auxiliaryPreviewPreferredHeight: .constant(100),
         auxiliaryPreviewMarginInner: 10,
         auxiliaryPreviewMarginOuter: 10,
-        transitionConfigEntrance: .syncedToMenuEntranceTransition
+        transitionConfigEntrance: .afterMenuEntranceTransition(
+          delay: 0,
+          animatorConfig: .presetCurve(duration: 0.3, curve: .easeIn),
+          transition: .fade
+        )
       );
       
       return view;
@@ -176,10 +212,11 @@ extension AuxPreviewTest02ViewController: UIContextMenuInteractionDelegate {
     );
   };
   
-  func onRequestMenuAuxiliaryPreview(sender: ContextMenuAuxiliaryPreview.ContextMenuManager) -> UIView {
-    let view = UIView(frame: .zero);
-    view.backgroundColor = .red;
-    
-    return view;
+  func onRequestMenuAuxiliaryPreview(
+    sender: ContextMenuAuxiliaryPreview.ContextMenuManager
+  ) -> UIView {
+  
+    let auxPreviewView = TestAuxiliaryPreviewView(frame: .zero);
+    return auxPreviewView;
   };
 };
