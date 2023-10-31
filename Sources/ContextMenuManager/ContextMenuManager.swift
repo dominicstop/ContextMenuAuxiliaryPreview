@@ -126,6 +126,8 @@ public class ContextMenuManager {
       guard let auxPreviewManager = auxPreviewManager else { return };
       self.auxPreviewManager = auxPreviewManager;
       
+      auxPreviewManager.nudgeContextMenuIfNeeded();
+      
       guard case .syncedToMenuEntranceTransition =
               menuAuxPreviewConfig.transitionConfigEntrance
       else { return };

@@ -305,6 +305,24 @@ public class ContextMenuAuxiliaryPreviewManager {
     // };
   };
   
+  func nudgeContextMenuIfNeeded(){
+    guard let auxiliaryPreviewMetadata = self.auxiliaryPreviewMetadata,
+          auxiliaryPreviewMetadata.menuOffset > 0,
+    
+          let contextMenuPlatterTransitionView =
+            self.contextMenuPlatterTransitionViewWrapper.wrappedObject
+    else { return };
+    
+    contextMenuPlatterTransitionView.frame = {
+      let initFrame = contextMenuPlatterTransitionView.frame;
+      
+      return initFrame.offsetBy(
+        dx: 0,
+        dy: auxiliaryPreviewMetadata.menuOffset
+      );
+    }();
+  };
+  
   // TODO
   func createAuxiliaryPreviewTransitionOutBlock() -> (() -> ())? {
     guard let manager = self.contextMenuManager,
@@ -463,8 +481,6 @@ public class ContextMenuAuxiliaryPreviewManager {
       };
     };
   };
-  
-  
 };
 
 // Bugfix: Fix for aux-preview not receiving touch event when appearing
