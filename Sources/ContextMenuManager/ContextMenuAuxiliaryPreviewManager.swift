@@ -307,7 +307,7 @@ public class ContextMenuAuxiliaryPreviewManager {
   
   func nudgeContextMenuIfNeeded(){
     guard let auxiliaryPreviewMetadata = self.auxiliaryPreviewMetadata,
-          auxiliaryPreviewMetadata.menuOffset > 0,
+          auxiliaryPreviewMetadata.menuOffset != 0,
     
           let contextMenuPlatterTransitionView =
             self.contextMenuPlatterTransitionViewWrapper.wrappedObject
