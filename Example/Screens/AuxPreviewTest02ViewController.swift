@@ -16,12 +16,30 @@ class TestAuxiliaryPreviewView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame);
     
-    let tapGesture = UITapGestureRecognizer(
-      target: self,
-      action: #selector(Self.handleTapGesture(sender:))
+    let button = UIButton(frame: .zero);
+    button.setTitle("Press Me", for: .normal);
+    
+    if #available(iOS 15.0, *) {
+      button.configuration = .filled()
+    };
+    
+    button.addTarget(self,
+      action: #selector(Self.handleButtonPress(sender:)),
+      for: .touchUpInside
     );
     
-    self.addGestureRecognizer(tapGesture);
+    button.translatesAutoresizingMaskIntoConstraints = false;
+    self.addSubview(button);
+    
+    NSLayoutConstraint.activate([
+      button.centerXAnchor.constraint(
+        equalTo: self.centerXAnchor
+      ),
+      button.centerYAnchor.constraint(
+        equalTo: self.centerYAnchor
+      ),
+    ]);
+    
     self.setBackgroundColor();
   };
   
@@ -33,7 +51,7 @@ class TestAuxiliaryPreviewView: UIView {
     self.backgroundColor = self.flag ? .blue : .red;
   };
   
-  @objc func handleTapGesture(sender: UITapGestureRecognizer){
+  @objc func handleButtonPress(sender: UIButton){
     self.flag.toggle();
     self.setBackgroundColor();
   };
