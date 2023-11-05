@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "dgswiftutilities",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dominicstop/DGSwiftUtilities",
+      "state" : {
+        "revision" : "c14c6b492d8a06c78b9c90b563c900bcd1785c0b",
+        "version" : "0.3.1"
+      }
+    }
+  ],
+  "version" : 2
+}
