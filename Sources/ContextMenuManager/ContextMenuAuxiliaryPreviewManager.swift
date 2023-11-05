@@ -19,6 +19,8 @@ public class ContextMenuAuxiliaryPreviewManager {
   var contextMenuMetadata: ContextMenuMetadata;
   var customAnimator: UIViewPropertyAnimator?;
   
+  var isAuxPreviewVisible = false;
+  
   // MARK: - Properties - References
   // -------------------------------
   
@@ -38,7 +40,7 @@ public class ContextMenuAuxiliaryPreviewManager {
   // MARK: - Computed Properties
   // ---------------------------
   
-  var auxiliaryPreviewMetadata: AuxiliaryPreviewMetadata? {
+  lazy var auxiliaryPreviewMetadata: AuxiliaryPreviewMetadata? = {
     guard let contextMenuManager = self.contextMenuManager,
           let menuAuxPreviewConfig = contextMenuManager.menuAuxPreviewConfig
     else { return nil };
@@ -49,7 +51,7 @@ public class ContextMenuAuxiliaryPreviewManager {
       auxiliaryPreviewConfig: menuAuxPreviewConfig,
       auxiliaryPreviewManager: self
     );
-  };
+  }();
   
   // MARK: - Init
   // ------------
@@ -295,14 +297,7 @@ public class ContextMenuAuxiliaryPreviewManager {
     }();
     
     NSLayoutConstraint.activate(constraints);
-    
-    // // Bugfix: fix aux-preview touch event on screen edge
-    // let shouldSwizzle = self.contextMenuOffsetY != 0;
-    
-    // if shouldSwizzle {
-    //   UIView.auxPreview = menuAuxiliaryPreviewView;
-    //   UIView.swizzlePoint();
-    // };
+    self.isAuxPreviewVisible = true;
   };
   
   func nudgeContextMenuIfNeeded(){
@@ -402,41 +397,29 @@ public class ContextMenuAuxiliaryPreviewManager {
   // MARK: - Public Functions
   // ------------------------
   
+  public func notifyOnMenuWillShow() {
+    guard self.auxiliaryPreviewMetadata != nil else { return };
+    self.swizzleViews();
+  };
+  
+  public func notifyOnMenuWillHide(){
+    guard self.auxiliaryPreviewMetadata != nil,
+          self.isAuxPreviewVisible
+    else { return };
+    
+    self.unSwizzleViews();
+    self.isAuxPreviewVisible = false;
+  };
+  
   public func attachAndAnimateInAuxiliaryPreviewTogetherWithContextMenu() {
     guard let manager = self.contextMenuManager,
           let menuAuxPreviewConfig = manager.menuAuxPreviewConfig,
-          let auxiliaryPreviewMetadata = self.auxiliaryPreviewMetadata,
           
-          let contextMenuPlatterTransitionView =
-            self.contextMenuPlatterTransitionViewWrapper.wrappedObject,
-            
-          let contextMenuAnimator = self.contextMenuAnimator
+          case .syncedToMenuEntranceTransition =
+            menuAuxPreviewConfig.transitionConfigEntrance
     else { return };
     
-    contextMenuAnimator.addCompletion { [unowned self] in
-      self.swizzleViews();
-    };
-    
-    let transitionConfigEntrance =
-      menuAuxPreviewConfig.transitionConfigEntrance;
-    
-    switch transitionConfigEntrance {
-      case .syncedToMenuEntranceTransition:
-        
-        self.attachAuxiliaryPreview();
-        
-        contextMenuPlatterTransitionView.frame = {
-          let initFrame = contextMenuPlatterTransitionView.frame;
-          
-          return initFrame.offsetBy(
-            dx: 0,
-            dy: auxiliaryPreviewMetadata.menuOffset
-          );
-        }();
-        
-      default:
-        break;
-    };
+    self.attachAuxiliaryPreview();
   };
   
   public func attachAndAnimateInAuxiliaryPreviewUsingCustomAnimator() {
@@ -469,10 +452,6 @@ public class ContextMenuAuxiliaryPreviewManager {
       keyframes.keyframeEnd.apply(toView: menuAuxiliaryPreviewView);
     };
     
-    animator.addCompletion { [unowned self] _ in
-      self.swizzleViews();
-    };
-    
     switch menuAuxPreviewConfig.transitionConfigEntrance {
       case .customDelay:
         animator.startAnimation(afterDelay: delay);
@@ -490,9 +469,7 @@ public class ContextMenuAuxiliaryPreviewManager {
   };
   
   public func detachAndAnimateOutAuxiliaryPreview() {
-    guard let animator = self.contextMenuAnimator,
-          
-          let auxPreviewTransitionOutBlock =
+    guard let auxPreviewTransitionOutBlock =
             self.createAuxiliaryPreviewTransitionOutBlock()
     else { return };
     
@@ -501,10 +478,6 @@ public class ContextMenuAuxiliaryPreviewManager {
     };
     
     auxPreviewTransitionOutBlock();
-    
-    animator.addCompletion { [unowned self] in
-      self.unSwizzleViews();
-    };
   };
 };
 
@@ -519,9 +492,31 @@ fileprivate extension UIView {
     inside point: CGPoint,
     with event: UIEvent?
   ) -> Bool {
-    guard let auxPreview = Self.auxPreview,
-          self.subviews.contains(where: { $0 === auxPreview })
-    else {
+    
+  
+    guard let auxPreview = Self.auxPreview else {
+      // call original impl.
+      return self._point(inside: point, with: event);
+    };
+    
+    let isPointInsideFrameOfAuxPreview: Bool = {
+      guard let window = auxPreview.window else { return false };
+    
+      let auxPreviewFrameAdj = auxPreview.convert(auxPreview.bounds, to: window);
+      let pointAdj = self.convert(point, to: window);
+    
+      return auxPreviewFrameAdj.contains(pointAdj);
+    }();
+    
+    
+    
+    let isParentOfAuxPreview = self.subviews.contains {
+      $0 === auxPreview;
+    };
+    
+    print("isParentOfAuxPreview:", isParentOfAuxPreview);
+    
+    guard isParentOfAuxPreview else {
       // call original impl.
       return self._point(inside: point, with: event);
     };

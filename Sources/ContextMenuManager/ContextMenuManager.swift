@@ -28,16 +28,14 @@ public class ContextMenuManager {
   };
   
   public var isAuxiliaryPreviewEnabled = true;
-  
   public var isContextMenuVisible = false;
-  public var isAuxPreviewVisible = false;
   
-  
-  public weak var delegate: ContextMenuManagerDelegate?;
   public var menuAuxiliaryPreviewView: UIView?;
   
   // MARK: - Properties - References
   // -------------------------------
+  
+  public weak var delegate: ContextMenuManagerDelegate?;
   
   /// A reference to the view that contains the context menu interaction
   public weak var menuTargetView: UIView?;
@@ -71,6 +69,10 @@ public class ContextMenuManager {
   
   var isUsingCustomMenuPreview: Bool {
     self.menuCustomPreviewController != nil
+  };
+
+  public var isAuxiliaryPreviewVisible: Bool {
+    self.auxPreviewManager?.isAuxPreviewVisible ?? false;
   };
   
   // MARK: - Init
@@ -127,6 +129,7 @@ public class ContextMenuManager {
       self.auxPreviewManager = auxPreviewManager;
       
       auxPreviewManager.nudgeContextMenuIfNeeded();
+      auxPreviewManager.notifyOnMenuWillShow();
       
       guard case .syncedToMenuEntranceTransition =
               menuAuxPreviewConfig.transitionConfigEntrance
@@ -164,12 +167,13 @@ public class ContextMenuManager {
           let auxPreviewManager = self.auxPreviewManager
     else { return };
     
+    auxPreviewManager.notifyOnMenuWillHide();
+    
     animator.addAnimations {
       auxPreviewManager.detachAndAnimateOutAuxiliaryPreview();
     };
     
     animator.addCompletion {
-      self.isAuxPreviewVisible = false;
       self.auxPreviewManager = nil;
       self.menuAuxiliaryPreviewView = nil;
     };
