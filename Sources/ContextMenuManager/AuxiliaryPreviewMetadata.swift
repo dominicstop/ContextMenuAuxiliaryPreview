@@ -128,10 +128,9 @@ public struct AuxiliaryPreviewMetadata {
       
       switch contextMenuMetadata.menuPreviewPosition {
         case .top:
-          let topInsets = safeAreaInsets.top;
-          let margin = marginBase + topInsets;
+          let margin = marginBase + safeAreaInsets.top;
           
-          let minEdgeY = auxiliaryPreviewViewHeight + topInsets + margin;
+          let minEdgeY = auxiliaryPreviewViewHeight + margin;
           let distanceToEdge = auxiliaryPreviewViewHeight - previewFrame.minY;
         
           return (previewFrame.minY <= minEdgeY)
