@@ -11,6 +11,8 @@ enum Route: CaseIterable {
 
   case auxPreviewTest01;
   case auxPreviewTest02;
+  case experiment01;
+  case experiment02;
 
   var viewController: UIViewController {
     switch self {
@@ -19,6 +21,12 @@ enum Route: CaseIterable {
         
       case .auxPreviewTest02:
         return AuxPreviewTest02ViewController();
+        
+      case .experiment01:
+        return Experiment01ViewController();
+        
+      case .experiment02:
+        return Experiment02ViewController();
     };
   };
 };
@@ -30,12 +38,8 @@ class RouteManager {
   
   weak var window: UIWindow?;
   
-  var routes: [Route] = [
-    //.auxPreviewTest01,
-    .auxPreviewTest02,
-  ];
-  
-  var routeCounter = 0;
+  var routes: [Route] = Route.allCases;
+  var routeCounter = 3;
   
   var currentRouteIndex: Int {
     self.routeCounter % self.routes.count;
