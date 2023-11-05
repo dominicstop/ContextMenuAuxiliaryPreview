@@ -9,7 +9,7 @@ import UIKit
 import ContextMenuAuxiliaryPreview;
 
 
-class TestAuxiliaryPreviewView: UIView {
+fileprivate class TestAuxiliaryPreviewView: UIView {
 
   var flag: Bool = false;
   
