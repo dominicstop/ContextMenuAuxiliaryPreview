@@ -200,13 +200,11 @@ class Experiment02ViewController: UIViewController, ContextMenuManagerDelegate {
   };
   
   @objc func onPressButton(_ sender: UIButton){
-    guard let interaction = self.interaction else { return };
+    guard let interaction = self.interaction,
+          let interactionWrapper = ContextMenuInteractionWrapper(objectToWrap: interaction)
+    else { return };
     
-    ObjectWrapperHelpers.performSelector(
-      forObject: interaction,
-      selector: NSSelectorFromString("_presentMenuAtLocation:"),
-      withArg1: CGPoint.zero
-    );
+    try? interactionWrapper.presentMenuAtLocation(point: .zero);
   };
 };
 
