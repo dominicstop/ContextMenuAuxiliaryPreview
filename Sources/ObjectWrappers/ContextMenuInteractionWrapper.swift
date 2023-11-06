@@ -20,8 +20,8 @@ public class ContextMenuInteractionWrapper: ObjectWrapper<
     public var encodedString: String {
       switch self {
         case .presentMenuAtLocation:
-          // _presentMenuAtLocation
-          return "X3ByZXNlbnRNZW51QXRMb2NhdGlvbg==";
+          // _presentMenuAtLocation:
+          return "X3ByZXNlbnRNZW51QXRMb2NhdGlvbjo=";
       };
     };
   };
