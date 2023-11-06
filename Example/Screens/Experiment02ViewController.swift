@@ -6,7 +6,8 @@
 //
 
 import UIKit
-import ContextMenuAuxiliaryPreview;
+import ContextMenuAuxiliaryPreview
+import DGSwiftUtilities
 
 
 fileprivate class TestAuxiliaryPreviewView: UIView {
@@ -201,7 +202,7 @@ class Experiment02ViewController: UIViewController, ContextMenuManagerDelegate {
   @objc func onPressButton(_ sender: UIButton){
     guard let interaction = self.interaction else { return };
     
-    TempHelpers.performSelector(
+    ObjectWrapperHelpers.performSelector(
       forObject: interaction,
       selector: NSSelectorFromString("_presentMenuAtLocation:"),
       withArg1: CGPoint.zero
