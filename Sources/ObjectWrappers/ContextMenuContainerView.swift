@@ -16,9 +16,9 @@ import DGSwiftUtilities
 /// context menu interaction.
 ///
 class ContextMenuContainerViewWrapper:
-  ObjectWrapperBase<UIView, ContextMenuContainerViewWrapper.EncodedString> {
+  PrivateObjectWrapper<UIView, ContextMenuContainerViewWrapper.EncodedString> {
 
-  enum EncodedString: String, ObjectWrappingEncodedString {
+  enum EncodedString: String, PrivateObjectWrappingEncodedString {
     case className;
     
     var encodedString: String {

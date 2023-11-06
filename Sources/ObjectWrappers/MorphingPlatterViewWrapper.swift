@@ -12,9 +12,9 @@ import DGSwiftUtilities
 /// Wrapper for: `_UIMorphingPlatterView`
 /// Root container for the context menu preview
 class MorphingPlatterViewWrapper:
-  ObjectWrapperBase<UIView, MorphingPlatterViewWrapper.EncodedString> {
+  PrivateObjectWrapper<UIView, MorphingPlatterViewWrapper.EncodedString> {
   
-  enum EncodedString: String, ObjectWrappingEncodedString {
+  enum EncodedString: String, PrivateObjectWrappingEncodedString {
     case className;
     
     var encodedString: String {

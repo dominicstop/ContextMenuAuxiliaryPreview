@@ -14,9 +14,9 @@ import DGSwiftUtilities
 /// the  "context menu preview".
 /// 
 class ContextMenuPlatterTransitionViewWrapper:
-  ObjectWrapperBase<UIView, ContextMenuPlatterTransitionViewWrapper.EncodedString> {
+  PrivateObjectWrapper<UIView, ContextMenuPlatterTransitionViewWrapper.EncodedString> {
 
-  enum EncodedString: String, ObjectWrappingEncodedString {
+  enum EncodedString: String, PrivateObjectWrappingEncodedString {
     case className;
     
     var encodedString: String {
