@@ -7,9 +7,69 @@
 
 import UIKit
 import ContextMenuAuxiliaryPreview;
+import DGSwiftUtilities
+
+extension SwizzlingHelpers {
+
+    //   _ interaction: UIContextMenuInteraction,
+    // willDisplayMenuFor configuration: UIContextMenuConfiguration,
+    // animator: UIContextMenuInteractionAnimating?
 
 
+  @available(iOS 14.0, *)
+  @discardableResult
+  static func swizzleContextMenuInteractionWillDisplayMenu<T, U>(
+  
+    /// ```
+    /// UIContextMenuInteractionDelegate.contextMenuInteraction(
+    ///   _ interaction: UIContextMenuInteraction,
+    ///  willDisplayMenuFor configuration: UIContextMenuConfiguration,
+    ///  animator: UIContextMenuInteractionAnimating?
+    /// )
+    /// ```
+    ///
+    impMethodType: T.Type = (@convention(c) (
+      Any, Selector, UIContextMenuInteraction, UIContextMenuConfiguration,
+      UIContextMenuInteractionAnimating?
+    ) -> Void).self,
+      
+    impBlockType: U.Type =  (@convention(block) (
+      Any, UIContextMenuInteraction, UIContextMenuConfiguration,
+      UIContextMenuInteractionAnimating?
+    ) -> Void).self,
+      
+    forInteraction interaction: UIContextMenuInteractionDelegate,
+    impMakerBlock: @escaping (
+      _ originalImp: T,
+      _ selector: Selector
+    ) -> U
+  ) -> IMP? {
+    let selector =
+      #selector(UIButton.contextMenuInteraction(_:willDisplayMenuFor:animator:));
+    
+    return Self.swizzleWithBlock(
+      impMethodType: impMethodType,
+      forObject: interaction,
+      withSelector: selector,
+      newImpMaker: impMakerBlock
+    );
+  };
+};
 
+
+class ContextMenuInteractionInterceptor: NSObject, UIContextMenuInteractionDelegate {
+
+  func contextMenuInteraction(
+    _ interaction: UIContextMenuInteraction,
+    configurationForMenuAtLocation location: CGPoint
+  ) -> UIContextMenuConfiguration? {
+    // no-op
+    return nil;
+  };
+  
+  
+
+};
 
 
 fileprivate class TestAuxiliaryPreviewView: UIView {
@@ -115,6 +175,21 @@ class Experiment01ViewController: UIViewController {
             
           return UIMenu(title: "", children: [shareAction]);
         }();
+      };
+      
+      
+      if #available(iOS 14.0, *) {
+        SwizzlingHelpers.swizzleContextMenuInteractionWillDisplayMenu(
+          forInteraction: button
+        ) { originalImp, selector in
+          
+          return { _self, interaction, configuration, animator in
+            
+            // call original impl.
+            originalImp(_self, selector, interaction, configuration, animator);
+            print("intercepted call to will display menu");
+          }
+        }
       };
       
       return button;
