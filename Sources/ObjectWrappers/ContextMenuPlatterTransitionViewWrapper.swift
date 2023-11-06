@@ -13,13 +13,13 @@ import DGSwiftUtilities
 /// This is a wrapper for the view that holds the "context menu items", and
 /// the  "context menu preview".
 /// 
-class ContextMenuPlatterTransitionViewWrapper:
+public class ContextMenuPlatterTransitionViewWrapper:
   PrivateObjectWrapper<UIView, ContextMenuPlatterTransitionViewWrapper.EncodedString> {
 
-  enum EncodedString: String, PrivateObjectWrappingEncodedString {
+  public enum EncodedString: String, PrivateObjectWrappingEncodedString {
     case className;
     
-    var encodedString: String {
+    public var encodedString: String {
       switch self {
         case .className:
           // _UIContextMenuPlatterTransitionView
@@ -33,7 +33,7 @@ class ContextMenuPlatterTransitionViewWrapper:
   
   /// Root container for the context menu items
   /// i.e. holds the context menu items
-  var contextMenuViewWrapper: ContextMenuViewWrapper? {
+  public var contextMenuViewWrapper: ContextMenuViewWrapper? {
     guard let view = self.wrappedObject else { return nil };
     
     return view.subviews.reduce(nil) {
@@ -43,7 +43,7 @@ class ContextMenuPlatterTransitionViewWrapper:
   
   /// Root container for the context menu preview.
   /// i.e. holds the context menu preview.
-  var morphingPlatterViewWrapper: MorphingPlatterViewWrapper? {
+  public var morphingPlatterViewWrapper: MorphingPlatterViewWrapper? {
     guard let view = self.wrappedObject else { return nil };
     
     return view.subviews.reduce(nil) {

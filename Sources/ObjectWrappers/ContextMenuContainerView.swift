@@ -15,13 +15,13 @@ import DGSwiftUtilities
 /// **Note**: This `UIView` instance  only exists whenever there's a
 /// context menu interaction.
 ///
-class ContextMenuContainerViewWrapper:
+public class ContextMenuContainerViewWrapper:
   PrivateObjectWrapper<UIView, ContextMenuContainerViewWrapper.EncodedString> {
 
-  enum EncodedString: String, PrivateObjectWrappingEncodedString {
+  public enum EncodedString: String, PrivateObjectWrappingEncodedString {
     case className;
     
-    var encodedString: String {
+    public var encodedString: String {
       switch self {
         case .className:
           // _UIContextMenuContainerView
@@ -34,7 +34,7 @@ class ContextMenuContainerViewWrapper:
   // MARK: - Computed Properties
   // ---------------------------
   
-  var backgroundVisualEffectView: UIVisualEffectView? {
+  public var backgroundVisualEffectView: UIVisualEffectView? {
     guard let view = self.wrappedObject else { return nil };
     
     return view.subviews.reduce(nil){
@@ -44,7 +44,7 @@ class ContextMenuContainerViewWrapper:
   
   /// Returns the "object wrapper" for the view contains the
   ///  "context menu items" + "context menu preview".
-  var contextMenuPlatterTransitionViewWrapper: ContextMenuPlatterTransitionViewWrapper? {
+  public var contextMenuPlatterTransitionViewWrapper: ContextMenuPlatterTransitionViewWrapper? {
     guard let view = self.wrappedObject else { return nil };
     
     return view.subviews.reduce(nil) {
