@@ -4,7 +4,6 @@
 
 ## WIP - Current
 
-- [ ] `TODO:2023-10-29-08-15-08` - Impl: Transition Config - Add support for `3DTransform` keyframes.
 - [ ] `TODO:2023-10-23-02-55-23` - Impl: Adjust transform based on the position of the menu, i.e. `shouldAutoOrientTransformToContextMenuPosition`.
   * Transforms that should be adjusted: translate, rotation.
   * Positive values means away from the preview, and negative values means towards the menu.
@@ -29,6 +28,7 @@
 
 ## Completed
 
+- [x]  `TODO:2023-10-29-08-15-08` - Impl: Transition Config - Add support for `3DTransform` keyframes.
 - [x] `TODO:2023-11-08-14-13-46` - Refactor: Extract `AuxiliaryPreviewEntranceTransitionConfig` associated enum values to its own type called: `AuxiliaryPreviewTransitionAnimationConfig`.
 
 <br>
