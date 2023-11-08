@@ -222,21 +222,13 @@ public class AuxiliaryPreviewManager {
       );
       
       // set vertical alignment constraint - i.e. either...
-      constraints.append({
-        switch auxiliaryPreviewMetadata.auxPreviewPosition {
-          case .top:
-            return menuAuxiliaryPreviewView.bottomAnchor.constraint(
-             equalTo: morphingPlatterView.topAnchor,
-             constant: -menuAuxPreviewConfig.auxiliaryPreviewMarginInner
-            );
-            
-          case .bottom:
-            return menuAuxiliaryPreviewView.topAnchor.constraint(
-              equalTo: morphingPlatterView.bottomAnchor,
-              constant: menuAuxPreviewConfig.auxiliaryPreviewMarginInner
-            );
-        };
-      }());
+      constraints.append(
+        auxiliaryPreviewMetadata.auxPreviewPosition.createVerticalConstraints(
+          forView: menuAuxiliaryPreviewView,
+          attachingTo: morphingPlatterView,
+          margin: menuAuxPreviewConfig.auxiliaryPreviewMarginInner
+        )
+      );
       
       // set horizontal alignment constraints based on config...
       constraints += {
