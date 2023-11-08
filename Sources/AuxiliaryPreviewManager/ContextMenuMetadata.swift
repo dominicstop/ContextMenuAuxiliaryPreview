@@ -10,14 +10,6 @@ import UIKit
 
 public struct ContextMenuMetadata {
 
-  // MARK: - Embedded Types
-  // ----------------------
-
-  public enum Position: String {
-    case top;
-    case bottom;
-  };
-  
   // MARK: - Properties
   // ------------------
   
@@ -26,11 +18,11 @@ public struct ContextMenuMetadata {
   var menuFrame: CGRect?;
   
   /// in which vertical half does the "context menu preview" fall into?
-  var menuPreviewPosition: Position;
+  var menuPreviewPosition: VerticalAnchorPosition;
   
   /// if the context menu has "menu items", where is it located in relation to
   /// the "menu preview"?
-  var menuPosition: Position?;
+  var menuPosition: VerticalAnchorPosition?;
   
   // MARK: - Computed Properties
   // ---------------------------

@@ -5,7 +5,7 @@
 //  Created by Dominic Go on 10/27/23.
 //
 
-import Foundation
+import UIKit
 
 
 public struct AuxiliaryPreviewMetadata {
@@ -20,12 +20,12 @@ public struct AuxiliaryPreviewMetadata {
   ///
   static let auxiliaryViewExtraWidth = 0.5;
   
-    // MARK: - Properties
+  // MARK: - Properties
   // --------------------
   
   /// whether to attach the `auxiliaryView` on the top or bottom of the
   /// context menu
-  var auxPreviewPosition: ContextMenuMetadata.Position;
+  var auxPreviewPosition: VerticalAnchorPosition;
   
   var auxiliaryPreviewViewHeight: CGFloat?;
   var auxiliaryPreviewViewWidth: CGFloat?;
@@ -52,7 +52,7 @@ public struct AuxiliaryPreviewMetadata {
     auxiliaryPreviewManager: AuxiliaryPreviewManager
   ) {
     
-    let auxPreviewPosition: ContextMenuMetadata.Position = {
+    let auxPreviewPosition: VerticalAnchorPosition = {
       switch auxiliaryPreviewConfig.anchorPosition {
         case .top   : return .top;
         case .bottom: return .bottom;

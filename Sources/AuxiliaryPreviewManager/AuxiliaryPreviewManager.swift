@@ -129,7 +129,7 @@ public class AuxiliaryPreviewManager {
     // MARK: Prep - Determine Size and Position
     // ----------------------------------------
     
-    let menuItemsPlacement: ContextMenuMetadata.Position? = {
+    let menuItemsPlacement: VerticalAnchorPosition? = {
       guard contextMenuHasMenuItems,
             let contextMenuView = contextMenuView
       else { return nil };
@@ -140,7 +140,7 @@ public class AuxiliaryPreviewManager {
       return (menuItemsFrame.midY < previewFrame.midY) ? .bottom : .top;
     }();
     
-    let morphingPlatterViewPlacement: ContextMenuMetadata.Position = {
+    let morphingPlatterViewPlacement: VerticalAnchorPosition = {
       let previewFrame = morphingPlatterView.frame;
       let screenBounds = UIScreen.main.bounds;
 
