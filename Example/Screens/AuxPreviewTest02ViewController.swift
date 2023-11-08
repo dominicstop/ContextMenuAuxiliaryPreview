@@ -138,6 +138,23 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
       box.heightAnchor.constraint(equalToConstant: 150),
     ]);
     
+    let showContextMenuButton: UIView = {
+      let button = UIButton(frame: .zero);
+      button.setTitle("Show Context Menu", for: .normal);
+      
+      if #available(iOS 15.0, *) {
+        button.configuration = .filled()
+      };
+      
+      button.addTarget(self,
+        action: #selector(Self.onPressShowContextMenu(_:)),
+        for: .touchUpInside
+      );
+      
+      return button;
+    }();
+    
+    stackView.addArrangedSubview(showContextMenuButton);
     for index in itemCountMid...itemCount {
       let label = UILabel();
       
@@ -185,6 +202,15 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
       scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
     ]);
   };
+  
+  @objc func onPressShowContextMenu(_ sender: UIButton){
+    guard let interaction = self.interaction,
+          let interactionWrapper = ContextMenuInteractionWrapper(objectToWrap: interaction)
+    else { return };
+    
+    try? interactionWrapper.presentMenuAtLocation(point: .zero);
+  };
+  
 };
 
 extension AuxPreviewTest02ViewController: UIContextMenuInteractionDelegate {
