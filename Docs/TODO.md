@@ -7,10 +7,6 @@
 - [ ] `TODO:2023-11-08-14-01-55` - Impl: `AuxiliaryPreviewModalManager` - Manager used to show/attach the auxiliary preview on the target view.
   * Ideally, we would have a function like an `showAuxiliaryPreview` where it would use the existing auxiliary preview config to show the aux. preview.
 
-<br>
-
-- [ ] `TODO:2023-11-08-14-13-46` - Refactor: Extract `AuxiliaryPreviewEntranceTransitionConfig` associated enum values to it's own type called: `AuxiliaryPreviewTransitionAnimationConfig`.
-
 <br><br>
 
 ## WIP - Queue
@@ -30,6 +26,10 @@
 <br><br>
 
 ## Completed
+
+- [x] `TODO:2023-11-08-14-13-46` - Refactor: Extract `AuxiliaryPreviewEntranceTransitionConfig` associated enum values to its own type called: `AuxiliaryPreviewTransitionAnimationConfig`.
+
+<br>
 
 - [x] `TODO:2023-10-23-06-15-16` - Impl: Transition Config - Support both legacy entrance transition config + new config via adding a "transition mode" option.
   * This mode defines when and how to attach + transition the aux. preview.
