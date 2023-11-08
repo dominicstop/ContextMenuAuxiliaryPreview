@@ -11,6 +11,12 @@
 
 ## WIP - Queue
 
+- [ ] `TODO:2023-11-09-00-59-48` - Impl: `ContextMenuInteractionDelegateInterceptor` - Intercept `UIContextMenuInteractionDelegate` calls from `UIButton`.
+- [ ] `TODO:2023-11-09-01-01-04` - Impl: Add support for attaching an aux. preview. to a `UIButton` w/ a context menu.
+  * Related to: `TODO:2023-11-09-00-59-48`
+
+<br>
+
 - [ ] `TODO:2023-10-23-07-55-46` - Impl: Attach aux. preview to a deeper subview in the context menu preview (i.e. the parent of the context menu preview).
 
 <br>
