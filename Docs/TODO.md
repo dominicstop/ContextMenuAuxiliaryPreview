@@ -2,7 +2,18 @@
 
 <br>
 
-## WIP
+## WIP - Current
+
+- [ ] `TODO:2023-11-08-14-01-55` - Impl: `AuxiliaryPreviewModalManager` - Manager used to show/attach the auxiliary preview on the target view.
+  * Ideally, we would have a function like an `showAuxiliaryPreview` where it would use the existing auxiliary preview config to show the aux. preview.
+
+<br>
+
+- [ ] `TODO:2023-11-08-14-13-46` - Refactor: Extract `AuxiliaryPreviewEntranceTransitionConfig` associated enum values to it's own type called: `AuxiliaryPreviewTransitionAnimationConfig`.
+
+<br><br>
+
+## WIP - Queue
 
 - [ ] `TODO:2023-10-29-08-15-08` - Impl: Transition Config - Add support for `3DTransform` keyframes.
 - [ ] `TODO:2023-10-23-07-55-46` - Impl: Attach aux. preview to a deeper subview in the context menu preview (i.e. the parent of the context menu preview).
