@@ -13,57 +13,24 @@ public enum AuxiliaryPreviewEntranceTransitionConfig {
 
   case syncedToMenuEntranceTransition;
   
-  case customDelay(
-    delay: TimeInterval,
-    animatorConfig: AnimationConfig,
-    transition: AuxiliaryPreviewTransitionConfig
-  );
+  case customDelay(AuxiliaryPreviewTransitionAnimationConfig);
   
-  case afterMenuEntranceTransition(
-    delay: TimeInterval,
-    animatorConfig: AnimationConfig,
-    transition: AuxiliaryPreviewTransitionConfig
-  );
+  case afterMenuEntranceTransition(AuxiliaryPreviewTransitionAnimationConfig);
   
   // MARK: - Computed Properties
   // ---------------------------
   
-  var delay: TimeInterval? {
+  public var transitionAnimationConfig: AuxiliaryPreviewTransitionAnimationConfig? {
     switch self {
-      case let .customDelay(delay, _, _):
-        return delay;
-        
-      case let .afterMenuEntranceTransition(delay, _, _):
-        return delay;
-        
-      default:
+      case .syncedToMenuEntranceTransition:
         return nil;
+        
+      case let .customDelay(config):
+        return config;
+        
+      case let .afterMenuEntranceTransition(config):
+        return config
     };
   };
   
-  var animatorConfig: AnimationConfig? {
-    switch self {
-      case let .customDelay(_, animatorConfig, _):
-        return animatorConfig;
-        
-      case let .afterMenuEntranceTransition(_, animatorConfig, _):
-        return animatorConfig;
-        
-      default:
-        return nil;
-    };
-  };
-  
-  var transition: AuxiliaryPreviewTransitionConfig? {
-    switch self {
-      case let .customDelay(_, _, transition):
-        return transition;
-        
-      case let .afterMenuEntranceTransition(_, _, transition):
-        return transition;
-        
-      default:
-        return nil;
-    };
-  };
 };

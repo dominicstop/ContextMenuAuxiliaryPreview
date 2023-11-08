@@ -119,9 +119,11 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
         auxiliaryPreviewMarginInner: 10,
         auxiliaryPreviewMarginOuter: 10,
         transitionConfigEntrance: .afterMenuEntranceTransition(
-          delay: 0,
-          animatorConfig: .presetCurve(duration: 0.3, curve: .easeIn),
-          transition: .fade
+          AuxiliaryPreviewTransitionAnimationConfig(
+            delay: 0,
+            animatorConfig: .presetCurve(duration: 0.3, curve: .easeIn),
+            transition: .fade
+          )
         )
       );
       

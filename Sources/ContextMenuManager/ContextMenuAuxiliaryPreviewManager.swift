@@ -433,19 +433,20 @@ public class ContextMenuAuxiliaryPreviewManager {
     let transitionConfigEntrance =
       menuAuxPreviewConfig.transitionConfigEntrance;
     
-    guard let delay = transitionConfigEntrance.delay,
-          let animatorConfig = transitionConfigEntrance.animatorConfig,
-          let transition = transitionConfigEntrance.transition
+    guard let transitionAnimationConfig =
+            transitionConfigEntrance.transitionAnimationConfig
     else { return };
     
     self.attachAuxiliaryPreview();
     menuAuxiliaryPreviewView.layoutIfNeeded();
     
-    let animator = animatorConfig.createAnimator(gestureInitialVelocity: .zero);
+    let animator = transitionAnimationConfig.animatorConfig.createAnimator(
+      gestureInitialVelocity: .zero
+    );
+    
     self.customAnimator = animator;
     
-    let keyframes = transition.getKeyframes();
-    
+    let keyframes = transitionAnimationConfig.transition.getKeyframes();
     keyframes.keyframeStart.apply(toView: menuAuxiliaryPreviewView);
     
     animator.addAnimations {
@@ -454,13 +455,17 @@ public class ContextMenuAuxiliaryPreviewManager {
     
     switch menuAuxPreviewConfig.transitionConfigEntrance {
       case .customDelay:
-        animator.startAnimation(afterDelay: delay);
+        animator.startAnimation(
+          afterDelay: transitionAnimationConfig.delay
+        );
         
       case .afterMenuEntranceTransition:
         guard let contextMenuAnimator = self.contextMenuAnimator else { return };
         
         contextMenuAnimator.addCompletion {
-          animator.startAnimation(afterDelay: delay);
+          animator.startAnimation(
+            afterDelay: transitionAnimationConfig.delay
+          );
         };
         
       default:
