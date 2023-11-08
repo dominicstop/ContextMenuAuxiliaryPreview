@@ -23,13 +23,36 @@ public struct AuxiliaryPreviewTransitionKeyframe {
       ?? keyframePrev?.opacity
       ?? 1;
       
-    self.transform = keyframeCurrent.transform
-      ?? keyframePrev?.transform
-      ?? .default;
+    self.transform = {
+      let prevTransform = keyframePrev?.transform ?? .default;
+    
+      guard var nextTransform = keyframeCurrent.transform else {
+        return prevTransform;
+      };
+      
+      nextTransform.setNonNilValues(with: prevTransform);
+      return nextTransform;
+    }();
   };
   
-  public func apply(toView view: UIView){
+  public func apply(
+    toView view: UIView,
+    auxiliaryPreviewMetadata: AuxiliaryPreviewMetadata
+  ){
     view.alpha = self.opacity;
-    view.layer.transform = self.transform.transform;
+    
+    view.layer.transform = {
+      var transform = self.transform;
+      
+      switch auxiliaryPreviewMetadata.auxPreviewPosition {
+        case .top:
+          transform.translateY = -transform.translateY;
+          
+        case .bottom:
+          transform.rotateX = .degrees(-transform.rotateX.degrees);
+      };
+      
+      return transform.transform;
+    }();
   };
 };

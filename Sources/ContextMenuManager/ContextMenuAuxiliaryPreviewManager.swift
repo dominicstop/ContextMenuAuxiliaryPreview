@@ -173,7 +173,7 @@ public class ContextMenuAuxiliaryPreviewManager {
           let morphingPlatterView = self.morphingPlatterViewWrapper.wrappedObject,
           let contextMenuContainerView = self.contextMenuContainerViewWrapper.wrappedObject
     else { return };
-  
+    
     // Bugfix: Stop bubbling touch events from propagating to parent
     menuAuxiliaryPreviewView.addGestureRecognizer(
       UITapGestureRecognizer(target: nil, action: nil)
@@ -425,6 +425,7 @@ public class ContextMenuAuxiliaryPreviewManager {
   public func attachAndAnimateInAuxiliaryPreviewUsingCustomAnimator() {
     guard let manager = self.contextMenuManager,
           let menuAuxPreviewConfig = manager.menuAuxPreviewConfig,
+          let auxiliaryPreviewMetadata = self.auxiliaryPreviewMetadata,
           
           /// get the wrapper for the root view that hold the context menu
           let menuAuxiliaryPreviewView = manager.menuAuxiliaryPreviewView
@@ -445,12 +446,18 @@ public class ContextMenuAuxiliaryPreviewManager {
     );
     
     self.customAnimator = animator;
-    
     let keyframes = transitionAnimationConfig.transition.getKeyframes();
-    keyframes.keyframeStart.apply(toView: menuAuxiliaryPreviewView);
+    
+    keyframes.keyframeStart.apply(
+      toView: menuAuxiliaryPreviewView,
+      auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
+    );
     
     animator.addAnimations {
-      keyframes.keyframeEnd.apply(toView: menuAuxiliaryPreviewView);
+      keyframes.keyframeEnd.apply(
+        toView: menuAuxiliaryPreviewView,
+        auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
+      );
     };
     
     switch menuAuxPreviewConfig.transitionConfigEntrance {
