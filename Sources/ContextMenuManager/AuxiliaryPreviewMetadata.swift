@@ -49,7 +49,7 @@ public struct AuxiliaryPreviewMetadata {
     contextMenuMetadata: ContextMenuMetadata,
     contextMenuManager: ContextMenuManager,
     auxiliaryPreviewConfig: AuxiliaryPreviewConfig,
-    auxiliaryPreviewManager: ContextMenuAuxiliaryPreviewManager
+    auxiliaryPreviewManager: AuxiliaryPreviewManager
   ) {
     
     let auxPreviewPosition: ContextMenuMetadata.Position = {

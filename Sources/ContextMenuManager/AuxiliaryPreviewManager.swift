@@ -1,5 +1,5 @@
 //
-//  ContextMenuMetadata.swift
+//  AuxiliaryPreviewManager.swift
 //  
 //
 //  Created by Dominic Go on 10/9/23.
@@ -11,7 +11,7 @@ import UIKit
 /// This class contains the logic for attaching the "context menu aux. preview"
 /// to the aux. preview
 ///
-public class ContextMenuAuxiliaryPreviewManager {
+public class AuxiliaryPreviewManager {
 
   // MARK: - Properties
   // ------------------

@@ -18,7 +18,7 @@ public enum AuxiliaryPreviewSizeValue {
   
   func compute(
     computingForSizeKey sizeKey: KeyPath<CGSize, CGFloat>,
-    usingAuxiliaryPreviewManager auxPreviewManager: ContextMenuAuxiliaryPreviewManager
+    usingAuxiliaryPreviewManager auxPreviewManager: AuxiliaryPreviewManager
   ) -> CGFloat? {
   
     switch self {

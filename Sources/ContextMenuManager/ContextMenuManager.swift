@@ -17,7 +17,7 @@ public class ContextMenuManager {
   
   public var menuAuxPreviewConfig: AuxiliaryPreviewConfig?;
   
-  var auxPreviewManager: ContextMenuAuxiliaryPreviewManager? {
+  var auxPreviewManager: AuxiliaryPreviewManager? {
     willSet {
       guard let newValue = newValue else { return };
       
@@ -90,7 +90,7 @@ public class ContextMenuManager {
   // -----------------
   
   func attachAndAnimateAuxiliaryPreviewUsingCustomAnimator(
-    usingAuxiliaryPreviewManager manager: ContextMenuAuxiliaryPreviewManager
+    usingAuxiliaryPreviewManager manager: AuxiliaryPreviewManager
   ){
     guard self.isAuxiliaryPreviewEnabled,
           self.menuAuxiliaryPreviewView != nil,
@@ -120,7 +120,7 @@ public class ContextMenuManager {
       delegate.onRequestMenuAuxiliaryPreview(sender: self);
       
     animator.addAnimations {
-      let auxPreviewManager = ContextMenuAuxiliaryPreviewManager(
+      let auxPreviewManager = AuxiliaryPreviewManager(
         usingContextMenuManager: self,
         contextMenuAnimator: animator
       );
