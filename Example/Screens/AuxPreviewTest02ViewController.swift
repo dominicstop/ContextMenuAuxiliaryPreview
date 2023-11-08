@@ -105,7 +105,7 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
       
       let contextMenuManager = ContextMenuManager(
         contextMenuInteraction: interaction,
-        menuTargetView: self.view
+        menuTargetView: view
       );
       
       self.contextMenuManager = contextMenuManager;
@@ -155,6 +155,25 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
     }();
     
     stackView.addArrangedSubview(showContextMenuButton);
+    
+    let showAuxPreviewButton: UIView = {
+      let button = UIButton(frame: .zero);
+      button.setTitle("Show Aux. Preview", for: .normal);
+      
+      if #available(iOS 15.0, *) {
+        button.configuration = .filled()
+      };
+      
+      button.addTarget(self,
+        action: #selector(Self.onPressShowAuxPreviewButton(_:)),
+        for: .touchUpInside
+      );
+      
+      return button;
+    }();
+    
+    stackView.addArrangedSubview(showAuxPreviewButton);
+    
     for index in itemCountMid...itemCount {
       let label = UILabel();
       
@@ -211,6 +230,13 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
     try? interactionWrapper.presentMenuAtLocation(point: .zero);
   };
   
+  @objc func onPressShowAuxPreviewButton(_ sender: UIButton){
+    guard let contextMenuManager = self.contextMenuManager else { return };
+    
+    contextMenuManager.showAuxiliaryPreviewAsPopover(
+      presentingViewController: self
+    );
+  };
 };
 
 extension AuxPreviewTest02ViewController: UIContextMenuInteractionDelegate {
