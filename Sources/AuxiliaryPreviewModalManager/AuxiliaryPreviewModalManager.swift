@@ -20,6 +20,8 @@ class AuxiliaryPreviewModalManager: NSObject {
   
   // MARK: - Properties
   // ------------------
+  
+  var menuAuxPreviewConfig: AuxiliaryPreviewConfig;
 
   weak var presentingVC: UIViewController?;
   weak var targetView: UIView?;
@@ -32,7 +34,8 @@ class AuxiliaryPreviewModalManager: NSObject {
   
   var presentationState: PresentationState?;
 
-  override init() {
+  init(menuAuxPreviewConfig: AuxiliaryPreviewConfig) {
+    self.menuAuxPreviewConfig = menuAuxPreviewConfig;
     super.init();
   };
   

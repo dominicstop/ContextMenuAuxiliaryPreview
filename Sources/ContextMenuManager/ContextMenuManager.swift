@@ -32,6 +32,9 @@ public class ContextMenuManager {
   
   public var menuAuxiliaryPreviewView: UIView?;
   
+  var auxiliaryPreviewModalManager: AuxiliaryPreviewModalManager?;
+  var auxiliaryPreviewModalVC: AuxiliaryPreviewModalViewController?;
+  
   // MARK: - Properties - References
   // -------------------------------
   
@@ -102,6 +105,37 @@ public class ContextMenuManager {
   
   // MARK: - Public Functions
   // ------------------------
+  
+  public func showAuxiliaryPreviewAsPopover(
+    presentingViewController presentingVC: UIViewController
+  ){
+    guard !self.isContextMenuVisible,
+          let menuAuxPreviewConfig = self.menuAuxPreviewConfig,
+          let menuTargetView = self.menuTargetView,
+          
+          let delegate = self.delegate
+    else { return };
+    
+    let auxPreviewView = delegate.onRequestMenuAuxiliaryPreview(sender: self);
+    self.menuAuxiliaryPreviewView = auxPreviewView;
+    
+    let modalVC = AuxiliaryPreviewModalViewController();
+    modalVC.view = auxPreviewView;
+    
+    self.auxiliaryPreviewModalVC = modalVC;
+    
+    let modalManager = AuxiliaryPreviewModalManager(
+      menuAuxPreviewConfig: menuAuxPreviewConfig
+    );
+    
+    self.auxiliaryPreviewModalManager = modalManager;
+    
+    modalManager.present(
+      viewControllerToPresent: modalVC,
+      presentingViewController: presentingVC,
+      targetView: menuTargetView
+    )
+  };
   
   // context menu display begins
   public func notifyOnContextMenuInteraction(
