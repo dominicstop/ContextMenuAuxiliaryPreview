@@ -39,7 +39,7 @@ class RouteManager {
   weak var window: UIWindow?;
   
   var routes: [Route] = Route.allCases;
-  var routeCounter = 2;
+  var routeCounter = 1;
   
   var currentRouteIndex: Int {
     self.routeCounter % self.routes.count;
