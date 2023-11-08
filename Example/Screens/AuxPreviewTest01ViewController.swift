@@ -38,7 +38,7 @@ class AuxPreviewTest01ViewController: UIViewController, ContextMenuManagerDelega
       
       contextMenuManager.menuAuxPreviewConfig = AuxiliaryPreviewConfig(
         anchorPosition: .automatic,
-        alignmentHorizontal: .previewCenter,
+        alignmentHorizontal: .targetCenter,
         auxiliaryPreviewPreferredWidth: .constant(100),
         auxiliaryPreviewPreferredHeight: .constant(100),
         auxiliaryPreviewMarginInner: 10,

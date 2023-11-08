@@ -12,9 +12,9 @@ public enum HorizontalAnchorPosition {
   case stretch;
   case stretchTarget;
   
-  case previewLeading;
-  case previewTrailing;
-  case previewCenter;
+  case targetLeading;
+  case targetTrailing;
+  case targetCenter;
   
   // MARK: - Functions
   // -----------------
@@ -34,7 +34,7 @@ public enum HorizontalAnchorPosition {
   
     switch self {
       // A - pin to left
-      case .previewLeading: return [
+      case .targetLeading: return [
         widthAnchor,
         view.leadingAnchor.constraint(
           equalTo: targetView.leadingAnchor,
@@ -43,7 +43,7 @@ public enum HorizontalAnchorPosition {
       ];
       
       // B - pin to right
-      case .previewTrailing: return [
+      case .targetTrailing: return [
         widthAnchor,
         view.trailingAnchor.constraint(
           equalTo: targetView.trailingAnchor,
@@ -52,7 +52,7 @@ public enum HorizontalAnchorPosition {
       ];
       
       // C - pin to center
-      case .previewCenter: return [
+      case .targetCenter: return [
         widthAnchor,
         view.centerXAnchor.constraint(
           equalTo: targetView.centerXAnchor
