@@ -10,17 +10,6 @@ import UIKit
 
 public struct AuxiliaryPreviewConfig {
   
-  // MARK: - Nested Types
-  // --------------------
-  
-  public enum TransitionType {
-    case none, fade;
-    
-    case slide(slideOffset: CGFloat);
-    case zoom(zoomOffset: CGFloat);
-    case zoomAndSlide(slideOffset: CGFloat, zoomOffset: CGFloat);
-  };
-
   // MARK: - Properties
   // ------------------
 
