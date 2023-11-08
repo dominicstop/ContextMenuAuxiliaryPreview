@@ -7,13 +7,6 @@
 
 import UIKit
 
-class ModaWrappertViewController: UIViewController {
-  override func viewDidLoad() {
-    super.viewDidLoad();
-    
-    self.view.backgroundColor = .clear;
-  };
-};
 
 class AuxiliaryPreviewModalManager: NSObject {
 
@@ -34,7 +27,7 @@ class AuxiliaryPreviewModalManager: NSObject {
   var modalRootView: UIView?;
   var dimmingView: UIView?;
   
-  var modalWrapperVC: ModaWrappertViewController?;
+  var modalWrapperVC: AuxiliaryPreviewModalWrapperViewController?;
   var presentedVC: UIViewController?;
   
   var presentationState: PresentationState?;
@@ -156,7 +149,7 @@ class AuxiliaryPreviewModalManager: NSObject {
     self.presentingVC = presentingVC;
     self.targetView = targetView;
     
-    let modalWrapperVC = ModaWrappertViewController();
+    let modalWrapperVC = AuxiliaryPreviewModalWrapperViewController();
     self.modalWrapperVC = modalWrapperVC;
     
     modalWrapperVC.addChild(presentedVC);
