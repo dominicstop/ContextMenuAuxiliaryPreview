@@ -262,7 +262,7 @@ public class AuxiliaryPreviewManager {
           ];
             
           // D - match preview size
-          case .stretchPreview: return [
+          case .stretchTarget: return [
             menuAuxiliaryPreviewView.leadingAnchor.constraint(
               equalTo: morphingPlatterView.leadingAnchor
             ),

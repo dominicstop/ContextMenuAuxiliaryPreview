@@ -14,7 +14,7 @@ public struct AuxiliaryPreviewConfig {
   // ------------------
 
   public var anchorPosition: AuxiliaryPreviewAnchorPosition;
-  public var alignmentHorizontal: AuxiliaryPreviewHorizontalAlignment;
+  public var alignmentHorizontal: HorizontalAnchorPosition;
   
   public var auxiliaryPreviewPreferredWidth: AuxiliaryPreviewSizeValue?;
   public var auxiliaryPreviewPreferredHeight: AuxiliaryPreviewSizeValue?;
@@ -32,7 +32,7 @@ public struct AuxiliaryPreviewConfig {
   
   public init(
     anchorPosition: AuxiliaryPreviewAnchorPosition,
-    alignmentHorizontal: AuxiliaryPreviewHorizontalAlignment,
+    alignmentHorizontal: HorizontalAnchorPosition,
     auxiliaryPreviewPreferredWidth: AuxiliaryPreviewSizeValue?,
     auxiliaryPreviewPreferredHeight: AuxiliaryPreviewSizeValue?,
     auxiliaryPreviewMarginInner: CGFloat,

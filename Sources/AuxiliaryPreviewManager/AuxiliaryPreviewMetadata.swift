@@ -84,7 +84,7 @@ public struct AuxiliaryPreviewMetadata {
           case .stretch:
             return contextMenuMetadata.rootContainerFrame.size.width;
         
-          case .stretchPreview:
+          case .stretchTarget:
             return contextMenuMetadata.menuPreviewFrame.size.width;
             
           default:

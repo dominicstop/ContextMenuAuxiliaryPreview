@@ -1,5 +1,5 @@
 //
-//  AuxiliaryPreviewHorizontalAlignment.swift
+//  HorizontalAnchorPosition.swift
 //  
 //
 //  Created by Dominic Go on 10/25/23.
@@ -8,9 +8,9 @@
 import Foundation
 
 
-public enum AuxiliaryPreviewHorizontalAlignment {
+public enum HorizontalAnchorPosition {
   case stretch;
-  case stretchPreview;
+  case stretchTarget;
   
   case previewLeading;
   case previewTrailing;
