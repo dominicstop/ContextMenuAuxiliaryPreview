@@ -1,5 +1,5 @@
 //
-//  ModalManager+UIViewControllerAnimatedTransitioning.swift
+//  AuxiliaryPreviewModalManager+UIViewControllerAnimatedTransitioning.swift
 //  experiment-message-tap-back
 //
 //  Created by Dominic Go on 11/7/23.
@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-extension ModalManager: UIViewControllerAnimatedTransitioning {
+extension AuxiliaryPreviewModalManager: UIViewControllerAnimatedTransitioning {
   func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
     return 1;
   };

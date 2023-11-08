@@ -1,5 +1,5 @@
 //
-//  ModalManager+UIViewControllerTransitioningDelegate.swift
+//  AuxiliaryPreviewModalManager+UIViewControllerTransitioningDelegate.swift
 //  experiment-message-tap-back
 //
 //  Created by Dominic Go on 11/7/23.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-extension ModalManager: UIViewControllerTransitioningDelegate {
+extension AuxiliaryPreviewModalManager: UIViewControllerTransitioningDelegate {
 
   func presentationController(
     forPresented presented: UIViewController,
@@ -16,7 +16,7 @@ extension ModalManager: UIViewControllerTransitioningDelegate {
     source: UIViewController
   ) -> UIPresentationController? {
     
-    let presentationController = ModalPresentationController(
+    let presentationController = AuxiliaryPreviewModaPresentationController(
       presentedViewController: presented,
       presenting: presenting,
       modalManager: self

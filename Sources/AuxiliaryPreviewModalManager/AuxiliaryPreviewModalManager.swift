@@ -1,5 +1,5 @@
 //
-//  ModalManager.swift
+//  AuxiliaryPreviewModalManager.swift
 //  experiment-message-tap-back
 //
 //  Created by Dominic Go on 11/7/23.
@@ -15,7 +15,7 @@ class ModaWrappertViewController: UIViewController {
   };
 };
 
-class ModalManager: NSObject {
+class AuxiliaryPreviewModalManager: NSObject {
 
   // MARK: - Embedded Types
   // ----------------------

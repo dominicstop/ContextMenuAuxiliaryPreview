@@ -1,5 +1,5 @@
 //
-//  ModalPresentationController.swift
+//  AuxiliaryPreviewModaPresentationController.swift
 //  experiment-message-tap-back
 //
 //  Created by Dominic Go on 11/7/23.
@@ -7,16 +7,16 @@
 
 import UIKit
 
-class ModalPresentationController: UIPresentationController {
+class AuxiliaryPreviewModaPresentationController: UIPresentationController {
 
-  weak var modalManager: ModalManager!;
+  weak var modalManager: AuxiliaryPreviewModalManager!;
   
   var shouldPauseLayoutUpdates = false;
 
   init(
     presentedViewController: UIViewController,
     presenting presentingViewController: UIViewController?,
-    modalManager: ModalManager
+    modalManager: AuxiliaryPreviewModalManager
   ) {
     super.init(
       presentedViewController: presentedViewController,
