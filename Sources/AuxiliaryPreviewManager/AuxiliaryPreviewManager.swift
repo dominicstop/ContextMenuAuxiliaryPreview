@@ -231,59 +231,12 @@ public class AuxiliaryPreviewManager {
       );
       
       // set horizontal alignment constraints based on config...
-      constraints += {
-        let widthAnchor = menuAuxiliaryPreviewView.widthAnchor.constraint(
-          equalToConstant: auxiliaryPreviewViewWidth
-        );
-      
-        switch menuAuxPreviewConfig.alignmentHorizontal {
-          // A - pin to left
-          case .previewLeading: return [
-            widthAnchor,
-            menuAuxiliaryPreviewView.leadingAnchor.constraint(
-              equalTo: morphingPlatterView.leadingAnchor
-            ),
-          ];
-            
-          // B - pin to right
-          case .previewTrailing: return [
-            widthAnchor,
-            menuAuxiliaryPreviewView.rightAnchor.constraint(
-              equalTo: morphingPlatterView.rightAnchor
-            ),
-          ];
-            
-          // C - pin to center
-          case .previewCenter: return [
-            widthAnchor,
-            menuAuxiliaryPreviewView.centerXAnchor.constraint(
-              equalTo: morphingPlatterView.centerXAnchor
-            ),
-          ];
-            
-          // D - match preview size
-          case .stretchTarget: return [
-            menuAuxiliaryPreviewView.leadingAnchor.constraint(
-              equalTo: morphingPlatterView.leadingAnchor
-            ),
-            
-            menuAuxiliaryPreviewView.trailingAnchor.constraint(
-              equalTo: morphingPlatterView.trailingAnchor
-            ),
-          ];
-          
-          // E - stretch to edges of screen
-          case .stretch: return [
-            menuAuxiliaryPreviewView.leadingAnchor.constraint(
-              equalTo: contextMenuContainerView.leadingAnchor
-            ),
-            
-            menuAuxiliaryPreviewView.trailingAnchor.constraint(
-              equalTo: contextMenuContainerView.trailingAnchor
-            ),
-          ];
-        };
-      }();
+      constraints += menuAuxPreviewConfig.alignmentHorizontal.createHorizontalConstraints(
+        forView: menuAuxiliaryPreviewView,
+        attachingTo: morphingPlatterView,
+        enclosingView: contextMenuContainerView,
+        preferredWidth: auxiliaryPreviewViewWidth
+      );
       
       return constraints;
     }();
