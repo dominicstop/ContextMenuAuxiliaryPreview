@@ -1,5 +1,5 @@
 //
-//  AuxiliaryPreviewMetadata.swift
+//  AuxiliaryPreviewMenuMetadata.swift
 //  
 //
 //  Created by Dominic Go on 10/27/23.
@@ -8,7 +8,7 @@
 import UIKit
 
 
-public struct AuxiliaryPreviewMetadata {
+public struct AuxiliaryPreviewMenuMetadata {
   
   // MARK: - Static Members
   // ----------------------
@@ -49,7 +49,7 @@ public struct AuxiliaryPreviewMetadata {
     contextMenuMetadata: ContextMenuMetadata,
     contextMenuManager: ContextMenuManager,
     auxiliaryPreviewConfig: AuxiliaryPreviewConfig,
-    auxiliaryPreviewManager: AuxiliaryPreviewManager
+    auxiliaryPreviewManager: AuxiliaryPreviewMenuManager
   ) {
   
     guard let window = auxiliaryPreviewManager.window,

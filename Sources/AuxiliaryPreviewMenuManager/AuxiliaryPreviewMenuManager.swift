@@ -1,5 +1,5 @@
 //
-//  AuxiliaryPreviewManager.swift
+//  AuxiliaryPreviewMenuManager.swift
 //  
 //
 //  Created by Dominic Go on 10/9/23.
@@ -9,9 +9,9 @@ import UIKit
 
 
 /// This class contains the logic for attaching the "context menu aux. preview"
-/// to the aux. preview
+/// to the context menu
 ///
-public class AuxiliaryPreviewManager {
+public class AuxiliaryPreviewMenuManager {
 
   // MARK: - Properties
   // ------------------
@@ -40,7 +40,7 @@ public class AuxiliaryPreviewManager {
   // MARK: - Computed Properties
   // ---------------------------
   
-  lazy var auxiliaryPreviewMetadata: AuxiliaryPreviewMetadata? = {
+  lazy var auxiliaryPreviewMetadata: AuxiliaryPreviewMenuMetadata? = {
     guard let contextMenuManager = self.contextMenuManager,
           let menuAuxPreviewConfig = contextMenuManager.menuAuxPreviewConfig
     else { return nil };
