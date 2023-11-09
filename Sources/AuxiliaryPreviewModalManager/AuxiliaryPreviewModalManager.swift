@@ -49,7 +49,9 @@ class AuxiliaryPreviewModalManager: NSObject {
           let targetView = self.targetView,
           
           let targetViewSnapshot =
-            targetView.snapshotView(afterScreenUpdates: true)
+            targetView.snapshotView(afterScreenUpdates: true),
+            
+          let window = targetView.window
     else { return };
     
     modalWrapperVC.view.translatesAutoresizingMaskIntoConstraints = false;
@@ -120,23 +122,95 @@ class AuxiliaryPreviewModalManager: NSObject {
     modalVC.view.translatesAutoresizingMaskIntoConstraints = false;
     modalWrapperVC.view.addSubview(modalVC.view);
     
-    NSLayoutConstraint.activate([
-      modalVC.view.widthAnchor.constraint(
-        equalToConstant: 100
-      ),
-      modalVC.view.heightAnchor.constraint(
-        equalToConstant: 100
-      ),
+    let sizeValueContext = AuxiliaryPreviewSizeValue.Context(
+      windowSize: window.bounds.size,
+      previewFrame: targetView.frame
+    );
+    
+    let auxiliaryPreviewViewWidth: CGFloat = {
+      let computedWidth = self.menuAuxPreviewConfig.auxiliaryPreviewPreferredWidth?.compute(
+        computingForSizeKey: \.width,
+        usingContext: sizeValueContext
+      );
       
-      modalVC.view.bottomAnchor.constraint(
-        equalTo: targetViewSnapshot.topAnchor,
-        constant: -10
-      ),
+      let fallbackWidth: CGFloat = {
+        switch self.menuAuxPreviewConfig.alignmentHorizontal {
+          case .stretch:
+            return modalWrapperVC.view.frame.width;
+        
+          case .stretchTarget:
+            return targetView.frame.size.width;
+            
+          default:
+            return max(
+              modalVC.preferredContentSize.width,
+              modalVC.view.frame.size.width
+            );
+        };
       
-      modalVC.view.centerXAnchor.constraint(
-        equalTo: targetViewSnapshot.centerXAnchor
-      ),
-    ]);
+      }();
+      
+      return computedWidth ?? fallbackWidth;
+    }();
+    
+    let auxiliaryPreviewViewHeight: CGFloat = {
+      let computedHeight = self.menuAuxPreviewConfig.auxiliaryPreviewPreferredHeight?.compute(
+        computingForSizeKey: \.height,
+        usingContext: sizeValueContext
+      );
+      
+      let fallbackHeight = max(
+        modalVC.preferredContentSize.height,
+        modalVC.view.frame.size.height
+      );
+        
+      return computedHeight ?? fallbackHeight;
+    }();
+    
+    let verticalAnchorPosition: VerticalAnchorPosition = {
+      switch self.menuAuxPreviewConfig.anchorPosition {
+        case .top:
+          return .top;
+        
+        case .bottom:
+          return .bottom;
+          
+        case .automatic:
+          let targetViewY = targetView.frame.midY;
+          let rootViewY = modalWrapperVC.view.frame.midY;
+          
+          return targetViewY <= rootViewY ? .bottom : .top
+      };
+    }();
+    
+    let constraints: [NSLayoutConstraint] = {
+      var constraints: [NSLayoutConstraint] = [];
+      
+      constraints.append(
+        modalVC.view.heightAnchor.constraint(
+          equalToConstant: auxiliaryPreviewViewHeight
+        )
+      );
+      
+      constraints.append(
+        verticalAnchorPosition.createVerticalConstraints(
+          forView: modalVC.view,
+          attachingTo: targetViewSnapshot,
+          margin: self.menuAuxPreviewConfig.auxiliaryPreviewMarginInner
+        )
+      );
+      
+      constraints += self.menuAuxPreviewConfig.alignmentHorizontal.createHorizontalConstraints(
+        forView: modalVC.view,
+        attachingTo: targetViewSnapshot,
+        enclosingView: modalWrapperVC.view,
+        preferredWidth: auxiliaryPreviewViewWidth
+      );
+    
+      return constraints;
+    }();
+    
+    NSLayoutConstraint.activate(constraints);
   };
   
   // MARK: - Functions
