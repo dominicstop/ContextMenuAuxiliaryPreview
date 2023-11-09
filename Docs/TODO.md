@@ -4,7 +4,11 @@
 
 ## WIP - Current
 
-- [ ] `TODO:2023-11-08-14-01-55` - Impl: `AuxiliaryPreviewModalManager` - Manager used to show/attach the auxiliary preview on the target view.
+- [ ] `TODO:2023-11-09-15-38-40` - Impl: Aux. Preview Modal - `backgroundTapInteraction` - Allow closing of aux. preview modal when the bg is tapped.
+- [ ] `TODO:2023-11-09-15-40-11` - Impl: Aux. Preview Modal - Update target view position on layout change.
+- [ ] `TODO:2023-11-09-15-49-09` - Refactor: Aux. Preview Modal - Move computed height/width of aux. preview to keyframe (i.e. `AuxiliaryPreviewTransitionKeyframe`)
+
+- [ ] `TODO:2023-11-08-14-01-55` - Impl: Aux. Preview Modal - `AuxiliaryPreviewModalManager` - Manager used to show/attach the auxiliary preview on the target view.
   * Ideally, we would have a function like an `showAuxiliaryPreview` where it would use the existing auxiliary preview config to show the aux. preview.
 
 <br><br>
