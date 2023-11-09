@@ -9,6 +9,11 @@ import Foundation
 
 
 public enum AuxiliaryPreviewSizeValue {
+
+  struct Context {
+    var windowSize: CGSize?;
+    var previewFrame: CGRect;
+  };
   
   case constant(CGFloat);
   case percentRelativeToWindow(CGFloat);
@@ -18,31 +23,28 @@ public enum AuxiliaryPreviewSizeValue {
   
   func compute(
     computingForSizeKey sizeKey: KeyPath<CGSize, CGFloat>,
-    usingAuxiliaryPreviewManager auxPreviewManager: AuxiliaryPreviewManager
+    usingContext context: Context
   ) -> CGFloat? {
   
     switch self {
-      case let .constant(size):
-        return size;
+      case let .constant(sizeValue):
+        return sizeValue;
         
       case let .percentRelativeToWindow(percent):
-        guard let window = auxPreviewManager.window else { return nil };
+        guard let windowSize = context.windowSize else { return nil };
         
-        let windowSize = window.bounds.size[keyPath: sizeKey];
-        return windowSize * percent;
+        let sizeValue = windowSize[keyPath: sizeKey];
+        return sizeValue * percent;
         
       case let .percentRelativeToPreview(percent):
-        guard let auxPreviewTargetView = auxPreviewManager.auxPreviewTargetView
-        else { return nil };
-        
-        let previewSize = auxPreviewTargetView.bounds.size[keyPath: sizeKey];
-        return previewSize * percent;
+        let sizeValue = context.previewFrame.size[keyPath: sizeKey];
+        return sizeValue * percent;
       
       case let .multipleValues(sizeValues):
         let computedSizes = sizeValues.compactMap {
           $0.compute(
             computingForSizeKey: sizeKey,
-            usingAuxiliaryPreviewManager: auxPreviewManager
+            usingContext: context
           );
         };
       

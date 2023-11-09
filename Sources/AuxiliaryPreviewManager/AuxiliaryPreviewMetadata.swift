@@ -51,6 +51,15 @@ public struct AuxiliaryPreviewMetadata {
     auxiliaryPreviewConfig: AuxiliaryPreviewConfig,
     auxiliaryPreviewManager: AuxiliaryPreviewManager
   ) {
+  
+    guard let window = auxiliaryPreviewManager.window,
+          let auxPreviewTargetView = auxiliaryPreviewManager.auxPreviewTargetView
+    else { return nil };
+  
+    let previewSizeContext = AuxiliaryPreviewSizeValue.Context(
+      windowSize: window.bounds.size,
+      previewFrame: auxPreviewTargetView.frame
+    );
     
     let auxPreviewPosition: VerticalAnchorPosition = {
       switch auxiliaryPreviewConfig.anchorPosition {
@@ -76,7 +85,7 @@ public struct AuxiliaryPreviewMetadata {
     let auxiliaryPreviewViewWidth: CGFloat? = {
       let computedWidth = auxiliaryPreviewConfig.auxiliaryPreviewPreferredWidth?.compute(
         computingForSizeKey: \.width,
-        usingAuxiliaryPreviewManager: auxiliaryPreviewManager
+        usingContext: previewSizeContext
       );
       
       let fallbackWidth: CGFloat? = {
@@ -99,9 +108,9 @@ public struct AuxiliaryPreviewMetadata {
     self.auxiliaryPreviewViewWidth = auxiliaryPreviewViewWidth;
     
     let auxiliaryPreviewViewHeight: CGFloat? = {
-      let computedHeight: CGFloat? = auxiliaryPreviewConfig.auxiliaryPreviewPreferredWidth?.compute(
+      let computedHeight: CGFloat? = auxiliaryPreviewConfig.auxiliaryPreviewPreferredHeight?.compute(
         computingForSizeKey: \.height,
-        usingAuxiliaryPreviewManager: auxiliaryPreviewManager
+        usingContext: previewSizeContext
       );
       
       let fallbackHeight =
