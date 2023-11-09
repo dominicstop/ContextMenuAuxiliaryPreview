@@ -22,6 +22,7 @@ class AuxiliaryPreviewModalManager: NSObject {
   // ------------------
   
   var menuAuxPreviewConfig: AuxiliaryPreviewConfig;
+  var verticalAnchorPosition: VerticalAnchorPosition?;
 
   weak var presentingVC: UIViewController?;
   weak var targetView: UIView?;
@@ -76,6 +77,15 @@ class AuxiliaryPreviewModalManager: NSObject {
       let view = UIView();
       view.backgroundColor = .black;
       view.alpha = 0.25;
+      view.isHidden = true;
+      
+      let tapGesture = UITapGestureRecognizer(
+        target: self,
+        action: #selector(Self.handleOnTapDimmingView(_:))
+      );
+      
+      tapGesture.isEnabled = true;
+      view.addGestureRecognizer(tapGesture);
       
       return view;
     }();
@@ -183,6 +193,8 @@ class AuxiliaryPreviewModalManager: NSObject {
       };
     }();
     
+    self.verticalAnchorPosition = verticalAnchorPosition;
+    
     let constraints: [NSLayoutConstraint] = {
       var constraints: [NSLayoutConstraint] = [];
       
@@ -211,6 +223,73 @@ class AuxiliaryPreviewModalManager: NSObject {
     }();
     
     NSLayoutConstraint.activate(constraints);
+  };
+  
+  func showModal(completion: (() -> Void)? = nil){
+    guard let modalRootView = self.modalRootView,
+          let modalWrapperVC = self.modalWrapperVC,
+          let modalVC = self.presentedVC,
+          let targetView = self.targetView,
+          let verticalAnchorPosition = self.verticalAnchorPosition,
+        
+          let window = targetView.window
+    else { return };
+    
+    let transitionConfigEntrance = self.menuAuxPreviewConfig.transitionConfigEntrance;
+    let transitionAnimationConfig = transitionConfigEntrance.transitionAnimationConfig ?? .default;
+    
+    let keyframes = transitionAnimationConfig.transition.getKeyframes();
+    
+    let animator = transitionAnimationConfig.animatorConfig.createAnimator(gestureInitialVelocity: .zero);
+    
+    keyframes.keyframeStart.apply(
+      toView: modalVC.view,
+      auxPreviewVerticalAnchorPosition: verticalAnchorPosition
+    );
+    
+    animator.addAnimations {
+      self.dimmingView?.isHidden = false;
+    
+      keyframes.keyframeEnd.apply(
+        toView: modalVC.view,
+        auxPreviewVerticalAnchorPosition: verticalAnchorPosition
+      );
+    };
+    
+    animator.addCompletion { _ in
+      completion?();
+    };
+    
+    animator.startAnimation(afterDelay: transitionAnimationConfig.delay);
+  };
+  
+  func hideModal(completion: (() -> Void)? = nil){
+    guard let modalRootView = self.modalRootView,
+          let modalWrapperVC = self.modalWrapperVC,
+          let modalVC = self.presentedVC,
+          let targetView = self.targetView,
+          
+          let window = targetView.window
+    else { return };
+    
+    targetView.alpha = 1;
+    
+    let animator = UIViewPropertyAnimator(duration: 0.3, curve: .linear);
+    
+    animator.addCompletion() { _ in
+      completion?();
+    };
+    
+    animator.addAnimations {
+      self.modalWrapperVC?.view.alpha = 0;
+      self.dimmingView?.isHidden = true;
+    };
+    
+    animator.startAnimation();
+  };
+  
+  @objc func handleOnTapDimmingView(_ sender: UITapGestureRecognizer){
+    self.modalWrapperVC?.dismiss(animated: true);
   };
   
   // MARK: - Functions

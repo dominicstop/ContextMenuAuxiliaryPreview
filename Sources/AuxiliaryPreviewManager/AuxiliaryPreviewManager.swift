@@ -395,13 +395,13 @@ public class AuxiliaryPreviewManager {
     
     keyframes.keyframeStart.apply(
       toView: menuAuxiliaryPreviewView,
-      auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
+      auxPreviewVerticalAnchorPosition: auxiliaryPreviewMetadata.auxPreviewPosition
     );
     
     animator.addAnimations {
       keyframes.keyframeEnd.apply(
         toView: menuAuxiliaryPreviewView,
-        auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
+        auxPreviewVerticalAnchorPosition: auxiliaryPreviewMetadata.auxPreviewPosition
       );
     };
     

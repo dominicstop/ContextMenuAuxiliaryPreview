@@ -25,9 +25,16 @@ extension AuxiliaryPreviewModalManager: UIViewControllerAnimatedTransitioning {
         self.modalRootView = containerView;
         
         self.setupViews();
-        transitionContext.completeTransition(true);
+        
+        self.showModal() {
+          transitionContext.completeTransition(true);
+        };
         
       case .dismissing:
+        self.hideModal() {
+          transitionContext.completeTransition(true);
+        };
+        
         break;
     };
   };

@@ -11,6 +11,12 @@ import DGSwiftUtilities
 
 public struct AuxiliaryPreviewTransitionAnimationConfig {
 
+  public static var `default`: Self = .init(
+    delay: .zero,
+    animatorConfig: .presetCurve(duration: 0.3, curve: .linear),
+    transition: .fade
+  );
+
   public var delay: TimeInterval;
   public var animatorConfig: AnimationConfig;
   public var transition: AuxiliaryPreviewTransitionConfig;
