@@ -4,6 +4,10 @@
 
 ## WIP - Current
 
+- [ ] `TODO:2023-11-10-12-24-03` - Impl: `ContextMenuManaer.presentContextMenu` - Add helper function that calls `ContextMenuInteractionWrapper.presentMenuAtLocation`. 
+- [ ] `TODO:2023-11-10-12-24-16` - Bug: Context Menu Aux. Preview - Fix the entrance transition not working properly when the aux. preview is located at the top half of the screen.
+- [ ] `TODO:2023-11-10-12-25-26` - Bug: Aux. Preview Modal - Fix: Cannot show aux. preview again after it has been prev. presented.
+- [ ] `TODO:2023-11-10-07-11-39` - Refactor: Extract common/duplicated code - Code sharing/re-use between `AuxiliaryPreviewMenuManager` and `AuxiliaryPreviewModalManager`.
 - [ ] `TODO:2023-11-09-15-38-40` - Impl: Aux. Preview Modal - `backgroundTapInteraction` - Allow closing of aux. preview modal when the bg is tapped.
 - [ ] `TODO:2023-11-09-15-40-11` - Impl: Aux. Preview Modal - Update target view position on layout change.
 - [ ] `TODO:2023-11-09-15-49-09` - Refactor: Aux. Preview Modal - Move computed height/width of aux. preview to keyframe (i.e. `AuxiliaryPreviewTransitionKeyframe`)
@@ -14,6 +18,11 @@
 <br><br>
 
 ## WIP - Queue
+
+- [ ] `TODO:2023-11-10-12-17-26` - Bug: Aux. Preview - Fix aux. preview not receiving touch events when it's at the very bottom of the screen.
+  * This is likely caused by nudging the context menu container view.
+
+<br>
 
 - [ ] `TODO:2023-11-09-00-59-48` - Impl: `ContextMenuInteractionDelegateInterceptor` - Intercept `UIContextMenuInteractionDelegate` calls from `UIButton`.
 - [ ] `TODO:2023-11-09-01-01-04` - Impl: Add support for attaching an aux. preview. to a `UIButton` w/ a context menu.
