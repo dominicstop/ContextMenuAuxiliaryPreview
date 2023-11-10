@@ -4,16 +4,19 @@
 
 ## WIP - Current
 
-- [ ] `TODO:2023-11-10-12-24-03` - Impl: `ContextMenuManaer.presentContextMenu` - Add helper function that calls `ContextMenuInteractionWrapper.presentMenuAtLocation`. 
-- [ ] `TODO:2023-11-10-12-24-16` - Bug: Context Menu Aux. Preview - Fix the entrance transition not working properly when the aux. preview is located at the top half of the screen.
-- [ ] `TODO:2023-11-10-12-25-26` - Bug: Aux. Preview Modal - Fix: Cannot show aux. preview again after it has been prev. presented.
-- [ ] `TODO:2023-11-10-07-11-39` - Refactor: Extract common/duplicated code - Code sharing/re-use between `AuxiliaryPreviewMenuManager` and `AuxiliaryPreviewModalManager`.
-- [ ] `TODO:2023-11-09-15-38-40` - Impl: Aux. Preview Modal - `backgroundTapInteraction` - Allow closing of aux. preview modal when the bg is tapped.
-- [ ] `TODO:2023-11-09-15-40-11` - Impl: Aux. Preview Modal - Update target view position on layout change.
-- [ ] `TODO:2023-11-09-15-49-09` - Refactor: Aux. Preview Modal - Move computed height/width of aux. preview to keyframe (i.e. `AuxiliaryPreviewTransitionKeyframe`)
-
 - [ ] `TODO:2023-11-08-14-01-55` - Impl: Aux. Preview Modal - `AuxiliaryPreviewModalManager` - Manager used to show/attach the auxiliary preview on the target view.
   * Ideally, we would have a function like an `showAuxiliaryPreview` where it would use the existing auxiliary preview config to show the aux. preview.
+
+<br>
+
+- [ ] `TODO:2023-11-10-07-11-39` - Refactor: Extract common/duplicated code - Code sharing/re-use between `AuxiliaryPreviewMenuManager` and `AuxiliaryPreviewModalManager`.
+- [ ] `TODO:2023-11-10-12-24-16` - Bug: Context Menu Aux. Preview - Fix the entrance transition not working properly when the aux. preview is located at the top half of the screen.
+- [ ] `TODO:2023-11-10-12-25-26` - Bug: Aux. Preview Modal - Fix: Cannot show aux. preview again after it has been prev. presented.
+- [ ] `TODO:2023-11-09-15-38-40` - Impl: Aux. Preview Modal - `backgroundTapInteraction` - Allow closing of aux. preview modal when the bg is tapped.
+- [ ] `TODO:2023-11-09-15-40-11` - Impl: Aux. Preview Modal - Update target view position on layout change.
+- [ ] `TODO:2023-11-09-15-49-09` - Refactor: Aux. Preview Modal - Move computed height/width of aux. preview to keyframe (i.e. `AuxiliaryPreviewTransitionKeyframe`).
+- [ ] `TODO:2023-11-10-12-24-03` - Impl: `ContextMenuManaer.presentContextMenu` - Add helper function that calls `ContextMenuInteractionWrapper.presentMenuAtLocation`. 
+- [ ] `TODO:2023-10-22-09-09-34` - Add: Examples - Add VC for testing the different possible combinations of aux. preview config.
 
 <br><br>
 
@@ -34,7 +37,6 @@
 
 <br>
 
-- [ ] `TODO:2023-10-22-09-09-34` - Add: Examples - Add VC for testing the different possible combinations of aux. preview config.
 - [ ] `TODO:2023-10-22-08-25-16` - Refactor: Re-write aux. preview + hit test swizzling logic.
 
 <br><br>
