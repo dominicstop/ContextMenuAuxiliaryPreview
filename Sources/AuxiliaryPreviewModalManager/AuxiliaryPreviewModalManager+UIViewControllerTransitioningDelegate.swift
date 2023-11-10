@@ -10,7 +10,7 @@ import UIKit
 
 extension AuxiliaryPreviewModalManager: UIViewControllerTransitioningDelegate {
 
-  func presentationController(
+  public func presentationController(
     forPresented presented: UIViewController,
     presenting: UIViewController?,
     source: UIViewController
@@ -26,7 +26,7 @@ extension AuxiliaryPreviewModalManager: UIViewControllerTransitioningDelegate {
     return presentationController;
   };
   
-  func animationController(
+  public func animationController(
     forPresented presented: UIViewController,
     presenting: UIViewController,
     source: UIViewController
@@ -36,7 +36,7 @@ extension AuxiliaryPreviewModalManager: UIViewControllerTransitioningDelegate {
     return self;
   };
 
-  func animationController(
+  public func animationController(
     forDismissed dismissed: UIViewController
   ) -> UIViewControllerAnimatedTransitioning? {
     

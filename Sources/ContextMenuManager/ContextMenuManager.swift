@@ -10,19 +10,19 @@ import UIKit
 
 public class ContextMenuManager {
 
-  static weak var auxPreview: UIView?;
+  static weak var auxiliaryPreview: UIView?;
   
   // MARK: - Properties
   // ------------------
   
-  public var menuAuxPreviewConfig: AuxiliaryPreviewConfig?;
+  public var auxiliaryPreviewConfig: AuxiliaryPreviewConfig?;
   
-  var auxPreviewManager: AuxiliaryPreviewMenuManager? {
+  var auxiliaryPreviewMenuManager: AuxiliaryPreviewMenuManager? {
     willSet {
       guard let newValue = newValue else { return };
       
       self.attachAndAnimateAuxiliaryPreviewUsingCustomAnimator(
-        usingAuxiliaryPreviewManager: newValue
+        usingAuxiliaryPreviewMenuManager: newValue
       );
     }
   };
@@ -30,7 +30,7 @@ public class ContextMenuManager {
   public var isAuxiliaryPreviewEnabled = true;
   public var isContextMenuVisible = false;
   
-  public var menuAuxiliaryPreviewView: UIView?;
+  public var auxiliaryPreviewView: UIView?;
   
   var auxiliaryPreviewModalManager: AuxiliaryPreviewModalManager?;
   var auxiliaryPreviewModalVC: AuxiliaryPreviewModalViewController?;
@@ -70,12 +70,12 @@ public class ContextMenuManager {
     };
   };
   
-  var isUsingCustomMenuPreview: Bool {
+  public var isUsingCustomMenuPreview: Bool {
     self.menuCustomPreviewController != nil
   };
 
   public var isAuxiliaryPreviewVisible: Bool {
-    self.auxPreviewManager?.isAuxPreviewVisible ?? false;
+    self.auxiliaryPreviewMenuManager?.isAuxiliaryPreviewVisible ?? false;
   };
   
   // MARK: - Init
@@ -93,11 +93,11 @@ public class ContextMenuManager {
   // -----------------
   
   func attachAndAnimateAuxiliaryPreviewUsingCustomAnimator(
-    usingAuxiliaryPreviewManager manager: AuxiliaryPreviewMenuManager
+    usingAuxiliaryPreviewMenuManager manager: AuxiliaryPreviewMenuManager
   ){
     guard self.isAuxiliaryPreviewEnabled,
-          self.menuAuxiliaryPreviewView != nil,
-          self.menuAuxPreviewConfig != nil
+          self.auxiliaryPreviewView != nil,
+          self.auxiliaryPreviewConfig != nil
     else { return };
     
     manager.attachAndAnimateInAuxiliaryPreviewUsingCustomAnimator();
@@ -110,14 +110,14 @@ public class ContextMenuManager {
     presentingViewController presentingVC: UIViewController
   ){
     guard !self.isContextMenuVisible,
-          let menuAuxPreviewConfig = self.menuAuxPreviewConfig,
+          let auxiliaryPreviewConfig = self.auxiliaryPreviewConfig,
           let menuTargetView = self.menuTargetView,
           
           let delegate = self.delegate
     else { return };
     
     let auxPreviewView = delegate.onRequestMenuAuxiliaryPreview(sender: self);
-    self.menuAuxiliaryPreviewView = auxPreviewView;
+    self.auxiliaryPreviewView = auxPreviewView;
     
     let modalVC = AuxiliaryPreviewModalViewController();
     modalVC.view = auxPreviewView;
@@ -125,7 +125,7 @@ public class ContextMenuManager {
     self.auxiliaryPreviewModalVC = modalVC;
     
     let modalManager = AuxiliaryPreviewModalManager(
-      menuAuxPreviewConfig: menuAuxPreviewConfig
+      auxiliaryPreviewConfig: auxiliaryPreviewConfig
     );
     
     self.auxiliaryPreviewModalManager = modalManager;
@@ -145,12 +145,12 @@ public class ContextMenuManager {
   ) {
     
     guard self.isAuxiliaryPreviewEnabled,
-          let menuAuxPreviewConfig = self.menuAuxPreviewConfig,
+          let auxiliaryPreviewConfig = self.auxiliaryPreviewConfig,
           let animator = animator,
           let delegate = self.delegate
     else { return };
     
-    self.menuAuxiliaryPreviewView =
+    self.auxiliaryPreviewView =
       delegate.onRequestMenuAuxiliaryPreview(sender: self);
       
     animator.addAnimations {
@@ -160,13 +160,13 @@ public class ContextMenuManager {
       );
       
       guard let auxPreviewManager = auxPreviewManager else { return };
-      self.auxPreviewManager = auxPreviewManager;
+      self.auxiliaryPreviewMenuManager = auxPreviewManager;
       
       auxPreviewManager.nudgeContextMenuIfNeeded();
       auxPreviewManager.notifyOnMenuWillShow();
       
       guard case .syncedToMenuEntranceTransition =
-              menuAuxPreviewConfig.transitionConfigEntrance
+              auxiliaryPreviewConfig.transitionConfigEntrance
       else { return };
       
       print(
@@ -186,7 +186,7 @@ public class ContextMenuManager {
         "- addCompletion block"
       );
       
-      self.auxPreviewManager?.debugPrintValues();
+      self.auxiliaryPreviewMenuManager?.debugPrintValues();
     };
   };
   
@@ -198,7 +198,7 @@ public class ContextMenuManager {
   
     guard self.isAuxiliaryPreviewEnabled,
           let animator = animator,
-          let auxPreviewManager = self.auxPreviewManager
+          let auxPreviewManager = self.auxiliaryPreviewMenuManager
     else { return };
     
     auxPreviewManager.notifyOnMenuWillHide();
@@ -208,8 +208,8 @@ public class ContextMenuManager {
     };
     
     animator.addCompletion {
-      self.auxPreviewManager = nil;
-      self.menuAuxiliaryPreviewView = nil;
+      self.auxiliaryPreviewMenuManager = nil;
+      self.auxiliaryPreviewView = nil;
     };
   };
 };

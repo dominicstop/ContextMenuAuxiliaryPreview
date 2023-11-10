@@ -8,7 +8,7 @@
 import UIKit
 
 
-class AuxiliaryPreviewModalManager: NSObject {
+public class AuxiliaryPreviewModalManager: NSObject {
 
   // MARK: - Embedded Types
   // ----------------------
@@ -21,8 +21,8 @@ class AuxiliaryPreviewModalManager: NSObject {
   // MARK: - Properties
   // ------------------
   
-  var menuAuxPreviewConfig: AuxiliaryPreviewConfig;
-  var verticalAnchorPosition: VerticalAnchorPosition?;
+  var auxiliaryPreviewConfig: AuxiliaryPreviewConfig;
+  var auxiliaryPreviewMetadata: AuxiliaryPreviewMetadata?;
 
   weak var presentingVC: UIViewController?;
   weak var targetView: UIView?;
@@ -35,13 +35,20 @@ class AuxiliaryPreviewModalManager: NSObject {
   
   var presentationState: PresentationState?;
 
-  init(menuAuxPreviewConfig: AuxiliaryPreviewConfig) {
-    self.menuAuxPreviewConfig = menuAuxPreviewConfig;
+  init(auxiliaryPreviewConfig: AuxiliaryPreviewConfig) {
+    self.auxiliaryPreviewConfig = auxiliaryPreviewConfig;
     super.init();
   };
   
   // MARK: - Functions - Setup
   // -------------------------
+  
+  func prepareForPresentation(){
+  
+    self.auxiliaryPreviewMetadata = .init(
+      auxiliaryPreviewModalManager: self
+    );
+  };
   
   func setupViews(){
     guard let modalRootView = self.modalRootView,
@@ -51,9 +58,11 @@ class AuxiliaryPreviewModalManager: NSObject {
           
           let targetViewSnapshot =
             targetView.snapshotView(afterScreenUpdates: true),
-            
-          let window = targetView.window
+
+          let auxiliaryPreviewMetadata = self.auxiliaryPreviewMetadata
     else { return };
+    
+    let auxiliaryPreviewConfig = self.auxiliaryPreviewConfig;
     
     modalWrapperVC.view.translatesAutoresizingMaskIntoConstraints = false;
     modalRootView.addSubview(modalWrapperVC.view)
@@ -110,113 +119,34 @@ class AuxiliaryPreviewModalManager: NSObject {
       ),
     ]);
     
-    targetViewSnapshot.frame = {
-      guard let targetSuperview = targetView.superview
-      else { return .zero };
-      
-      let globalPoint = targetSuperview.convert(
-        targetView.frame.origin,
-        to: nil
-      );
-      
-      return .init(
-        origin: globalPoint,
-        size: targetView.frame.size
-      );
-    }();
-    
+    targetViewSnapshot.frame = targetView.globalFrame ?? targetView.frame;
     modalWrapperVC.view.addSubview(targetViewSnapshot);
-    
-    targetView.alpha = 0;
     
     modalVC.view.translatesAutoresizingMaskIntoConstraints = false;
     modalWrapperVC.view.addSubview(modalVC.view);
-    
-    let sizeValueContext = AuxiliaryPreviewSizeValue.Context(
-      windowSize: window.bounds.size,
-      previewFrame: targetView.frame
-    );
-    
-    let auxiliaryPreviewViewWidth: CGFloat = {
-      let computedWidth = self.menuAuxPreviewConfig.auxiliaryPreviewPreferredWidth?.compute(
-        computingForSizeKey: \.width,
-        usingContext: sizeValueContext
-      );
-      
-      let fallbackWidth: CGFloat = {
-        switch self.menuAuxPreviewConfig.alignmentHorizontal {
-          case .stretch:
-            return modalWrapperVC.view.frame.width;
-        
-          case .stretchTarget:
-            return targetView.frame.size.width;
-            
-          default:
-            return max(
-              modalVC.preferredContentSize.width,
-              modalVC.view.frame.size.width
-            );
-        };
-      
-      }();
-      
-      return computedWidth ?? fallbackWidth;
-    }();
-    
-    let auxiliaryPreviewViewHeight: CGFloat = {
-      let computedHeight = self.menuAuxPreviewConfig.auxiliaryPreviewPreferredHeight?.compute(
-        computingForSizeKey: \.height,
-        usingContext: sizeValueContext
-      );
-      
-      let fallbackHeight = max(
-        modalVC.preferredContentSize.height,
-        modalVC.view.frame.size.height
-      );
-        
-      return computedHeight ?? fallbackHeight;
-    }();
-    
-    let verticalAnchorPosition: VerticalAnchorPosition = {
-      switch self.menuAuxPreviewConfig.anchorPosition {
-        case .top:
-          return .top;
-        
-        case .bottom:
-          return .bottom;
-          
-        case .automatic:
-          let targetViewY = targetView.frame.midY;
-          let rootViewY = modalWrapperVC.view.frame.midY;
-          
-          return targetViewY <= rootViewY ? .bottom : .top
-      };
-    }();
-    
-    self.verticalAnchorPosition = verticalAnchorPosition;
     
     let constraints: [NSLayoutConstraint] = {
       var constraints: [NSLayoutConstraint] = [];
       
       constraints.append(
         modalVC.view.heightAnchor.constraint(
-          equalToConstant: auxiliaryPreviewViewHeight
+          equalToConstant: auxiliaryPreviewMetadata.computedHeight
         )
       );
       
       constraints.append(
-        verticalAnchorPosition.createVerticalConstraints(
+        auxiliaryPreviewMetadata.verticalAnchorPosition.createVerticalConstraints(
           forView: modalVC.view,
           attachingTo: targetViewSnapshot,
-          margin: self.menuAuxPreviewConfig.auxiliaryPreviewMarginInner
+          margin: auxiliaryPreviewConfig.marginInner
         )
       );
       
-      constraints += self.menuAuxPreviewConfig.alignmentHorizontal.createHorizontalConstraints(
+      constraints += self.auxiliaryPreviewConfig.alignmentHorizontal.createHorizontalConstraints(
         forView: modalVC.view,
         attachingTo: targetViewSnapshot,
         enclosingView: modalWrapperVC.view,
-        preferredWidth: auxiliaryPreviewViewWidth
+        preferredWidth: auxiliaryPreviewMetadata.computedWidth
       );
     
       return constraints;
@@ -226,25 +156,23 @@ class AuxiliaryPreviewModalManager: NSObject {
   };
   
   func showModal(completion: (() -> Void)? = nil){
-    guard let modalRootView = self.modalRootView,
-          let modalWrapperVC = self.modalWrapperVC,
-          let modalVC = self.presentedVC,
+    guard let modalVC = self.presentedVC,
           let targetView = self.targetView,
-          let verticalAnchorPosition = self.verticalAnchorPosition,
-        
-          let window = targetView.window
+          
+          let auxiliaryPreviewMetadata = self.auxiliaryPreviewMetadata
     else { return };
     
-    let transitionConfigEntrance = self.menuAuxPreviewConfig.transitionConfigEntrance;
+    let transitionConfigEntrance = self.auxiliaryPreviewConfig.transitionConfigEntrance;
     let transitionAnimationConfig = transitionConfigEntrance.transitionAnimationConfig ?? .default;
     
     let keyframes = transitionAnimationConfig.transition.getKeyframes();
-    
     let animator = transitionAnimationConfig.animatorConfig.createAnimator(gestureInitialVelocity: .zero);
+    
     
     keyframes.keyframeStart.apply(
       toView: modalVC.view,
-      auxPreviewVerticalAnchorPosition: verticalAnchorPosition
+      auxPreviewVerticalAnchorPosition:
+        auxiliaryPreviewMetadata.verticalAnchorPosition
     );
     
     animator.addAnimations {
@@ -252,7 +180,8 @@ class AuxiliaryPreviewModalManager: NSObject {
     
       keyframes.keyframeEnd.apply(
         toView: modalVC.view,
-        auxPreviewVerticalAnchorPosition: verticalAnchorPosition
+        auxPreviewVerticalAnchorPosition:
+          auxiliaryPreviewMetadata.verticalAnchorPosition
       );
     };
     
@@ -260,20 +189,12 @@ class AuxiliaryPreviewModalManager: NSObject {
       completion?();
     };
     
+    targetView.alpha = 0;
     animator.startAnimation(afterDelay: transitionAnimationConfig.delay);
   };
   
   func hideModal(completion: (() -> Void)? = nil){
-    guard let modalRootView = self.modalRootView,
-          let modalWrapperVC = self.modalWrapperVC,
-          let modalVC = self.presentedVC,
-          let targetView = self.targetView,
-          
-          let window = targetView.window
-    else { return };
-    
-    targetView.alpha = 1;
-    
+    guard let targetView = self.targetView else { return };
     let animator = UIViewPropertyAnimator(duration: 0.3, curve: .linear);
     
     animator.addCompletion() { _ in
@@ -285,6 +206,7 @@ class AuxiliaryPreviewModalManager: NSObject {
       self.dimmingView?.isHidden = true;
     };
     
+    targetView.alpha = 1;
     animator.startAnimation();
   };
   
@@ -314,6 +236,7 @@ class AuxiliaryPreviewModalManager: NSObject {
     modalWrapperVC.modalPresentationStyle = .custom;
     modalWrapperVC.transitioningDelegate = self;
     
+    self.prepareForPresentation();
     self.presentationState = .presenting;
     
     presentingVC.present(modalWrapperVC, animated: true);

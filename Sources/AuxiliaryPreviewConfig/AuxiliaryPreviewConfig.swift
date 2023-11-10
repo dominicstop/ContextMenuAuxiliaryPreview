@@ -13,17 +13,17 @@ public struct AuxiliaryPreviewConfig {
   // MARK: - Properties
   // ------------------
 
-  public var anchorPosition: AuxiliaryPreviewAnchorPosition;
+  public var verticalAnchorPosition: AuxiliaryPreviewVerticalAnchorPosition;
   public var alignmentHorizontal: HorizontalAnchorPosition;
   
-  public var auxiliaryPreviewPreferredWidth: AuxiliaryPreviewSizeValue?;
-  public var auxiliaryPreviewPreferredHeight: AuxiliaryPreviewSizeValue?;
+  public var preferredWidth: AuxiliaryPreviewSizeValue?;
+  public var preferredHeight: AuxiliaryPreviewSizeValue?;
   
   /// The distance between the aux. preview, and the menu preview
-  public var auxiliaryPreviewMarginInner: CGFloat;
+  public var marginInner: CGFloat;
   
   /// The min. distance of the aux. preview from the edges of the window
-  public var auxiliaryPreviewMarginOuter: CGFloat;
+  public var marginOuter: CGFloat;
 
   public var transitionConfigEntrance: AuxiliaryPreviewEntranceTransitionConfig;
   
@@ -31,21 +31,21 @@ public struct AuxiliaryPreviewConfig {
   // ------------
   
   public init(
-    anchorPosition: AuxiliaryPreviewAnchorPosition,
+    verticalAnchorPosition: AuxiliaryPreviewVerticalAnchorPosition,
     alignmentHorizontal: HorizontalAnchorPosition,
-    auxiliaryPreviewPreferredWidth: AuxiliaryPreviewSizeValue?,
-    auxiliaryPreviewPreferredHeight: AuxiliaryPreviewSizeValue?,
-    auxiliaryPreviewMarginInner: CGFloat,
-    auxiliaryPreviewMarginOuter: CGFloat,
+    preferredWidth: AuxiliaryPreviewSizeValue? = nil,
+    preferredHeight: AuxiliaryPreviewSizeValue? = nil,
+    marginInner: CGFloat,
+    marginOuter: CGFloat,
     transitionConfigEntrance: AuxiliaryPreviewEntranceTransitionConfig
   ) {
   
-    self.anchorPosition = anchorPosition;
-    self.alignmentHorizontal = alignmentHorizontal;
-    self.auxiliaryPreviewPreferredWidth = auxiliaryPreviewPreferredWidth;
-    self.auxiliaryPreviewPreferredHeight = auxiliaryPreviewPreferredHeight;
-    self.auxiliaryPreviewMarginInner = auxiliaryPreviewMarginInner;
-    self.auxiliaryPreviewMarginOuter = auxiliaryPreviewMarginOuter;
-    self.transitionConfigEntrance = transitionConfigEntrance;
+    self.verticalAnchorPosition = verticalAnchorPosition
+    self.alignmentHorizontal = alignmentHorizontal
+    self.preferredWidth = preferredWidth
+    self.preferredHeight = preferredHeight
+    self.marginInner = marginInner
+    self.marginOuter = marginOuter
+    self.transitionConfigEntrance = transitionConfigEntrance
   };
 };

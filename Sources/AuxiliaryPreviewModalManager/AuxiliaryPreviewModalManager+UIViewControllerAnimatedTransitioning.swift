@@ -10,13 +10,19 @@ import UIKit
 
 
 extension AuxiliaryPreviewModalManager: UIViewControllerAnimatedTransitioning {
-  func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+
+  public func transitionDuration(
+    using transitionContext: UIViewControllerContextTransitioning?
+  ) -> TimeInterval {
     return 1;
   };
   
-  func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+  public func animateTransition(
+    using transitionContext: UIViewControllerContextTransitioning
+  ) {
+  
     guard let presentationState = self.presentationState,
-          let fromVC = transitionContext.viewController(forKey: .from)
+          let _ = transitionContext.viewController(forKey: .from)
     else { return };
     
     switch presentationState {

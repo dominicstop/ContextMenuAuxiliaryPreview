@@ -32,5 +32,4 @@ public enum AuxiliaryPreviewEntranceTransitionConfig {
         return config
     };
   };
-  
 };

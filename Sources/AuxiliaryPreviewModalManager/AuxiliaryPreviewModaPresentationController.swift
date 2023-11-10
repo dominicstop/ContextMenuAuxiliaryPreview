@@ -10,7 +10,6 @@ import UIKit
 class AuxiliaryPreviewModaPresentationController: UIPresentationController {
 
   weak var modalManager: AuxiliaryPreviewModalManager!;
-  
   var shouldPauseLayoutUpdates = false;
 
   init(

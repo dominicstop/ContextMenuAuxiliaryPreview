@@ -11,6 +11,7 @@ import Foundation
 public enum AuxiliaryPreviewSizeValue {
 
   struct Context {
+    // TODO: Add property `encolosingViewFrame`
     var windowSize: CGSize?;
     var previewFrame: CGRect;
   };
