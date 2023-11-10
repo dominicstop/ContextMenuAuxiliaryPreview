@@ -9,14 +9,21 @@
 
 <br>
 
+- [ ] `TODO:2023-11-10-12-59-55` - Refactor: Aux. Preview Popover - Cleanup + separate out logic for attaching the aux. preview + entrance/exit transitions.
 - [ ] `TODO:2023-11-10-07-11-39` - Refactor: Extract common/duplicated code - Code sharing/re-use between `AuxiliaryPreviewMenuManager` and `AuxiliaryPreviewModalManager`.
 - [ ] `TODO:2023-11-10-12-24-16` - Bug: Context Menu Aux. Preview - Fix the entrance transition not working properly when the aux. preview is located at the top half of the screen.
 - [ ] `TODO:2023-11-10-12-25-26` - Bug: Aux. Preview Modal - Fix: Cannot show aux. preview again after it has been prev. presented.
 - [ ] `TODO:2023-11-09-15-38-40` - Impl: Aux. Preview Modal - `backgroundTapInteraction` - Allow closing of aux. preview modal when the bg is tapped.
 - [ ] `TODO:2023-11-09-15-40-11` - Impl: Aux. Preview Modal - Update target view position on layout change.
+- [ ] `TODO:2023-11-10-12-36-58` - Refactor: Aux. Preview Keyframes - Add default start/end keyframes for entrance/exit Keyframes.
+- [ ] `TODO:2023-11-10-12-37-33` - Refactor: Aux. Preview Keyframes - Automatically set values for the start/end keyframes based on the aux. preview config.
 - [ ] `TODO:2023-11-09-15-49-09` - Refactor: Aux. Preview Modal - Move computed height/width of aux. preview to keyframe (i.e. `AuxiliaryPreviewTransitionKeyframe`).
 - [ ] `TODO:2023-11-10-12-24-03` - Impl: `ContextMenuManaer.presentContextMenu` - Add helper function that calls `ContextMenuInteractionWrapper.presentMenuAtLocation`. 
-- [ ] `TODO:2023-10-22-09-09-34` - Add: Examples - Add VC for testing the different possible combinations of aux. preview config.
+- [ ] `TODO:2023-10-22-09-09-34` - Impl: Examples - Add VC for testing the different possible combinations of aux. preview config.
+- [ ] `TODO:2023-11-10-12-39-29` - Impl: Aux. Preview Popover + ScrollView - Impl. logic for scrolling the target view into view before the aux. preview modal is presented, e.g. `minDistanceFromEdges`.
+- [ ] `TODO:2023-11-10-12-51-51 ` - Aux. Preview Popover: Impl. separate config for "Aux. Preview Popover" - Derive the base config from "Context Menu Aux. Preview", and implicitly override base values w/ the new ones.
+- [ ] `TODO:2023-11-10-12-57-44` - Impl: Aux. Preview Keyframes + Aux. Preview Popover - Add support for setting the background dimming color + opacity.
+- [ ] `TODO:2023-11-10-12-58-00` - Impl: Aux. Preview Keyframes + Aux. Preview Popover - Add support for background blur.
 
 <br><br>
 
