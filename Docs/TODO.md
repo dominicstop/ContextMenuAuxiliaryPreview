@@ -4,7 +4,6 @@
 
 ## WIP - Current
 
-- [ ] `TODO:2023-11-14-06-08-12` - Impl: Aux. Preview Popover - Use `AuxiliaryPreviewConfig.transitionConfigExit` for the modal exit transition.
 - [ ] `TODO:2023-11-09-15-38-40` - Impl: Aux. Preview Popover - `backgroundTapInteraction` - Defines what happens when the bg dimming view is tapped (e.g. close aux. preview modal).
 - [ ] `TODO:2023-11-09-15-40-11` - Impl: Aux. Preview Popover - Update target view position on layout change.
 - [ ] `TODO:2023-11-10-12-36-58` - Refactor: Aux. Preview Keyframes - Add default start/end keyframes for entrance/exit Keyframes.
