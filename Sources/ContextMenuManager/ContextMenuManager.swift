@@ -74,8 +74,17 @@ public class ContextMenuManager {
     self.menuCustomPreviewController != nil
   };
 
-  public var isAuxiliaryPreviewVisible: Bool {
+  public var isAuxiliaryPreviewMenuVisible: Bool {
     self.auxiliaryPreviewMenuManager?.isAuxiliaryPreviewVisible ?? false;
+  };
+  
+  public var isAuxiliaryPreviewModalVisible: Bool {
+    self.auxiliaryPreviewModalManager?.isPresenting ?? false;
+  };
+  
+  public var isAuxiliaryPreviewVisible: Bool {
+       self.isAuxiliaryPreviewMenuVisible
+    || self.isAuxiliaryPreviewModalVisible;
   };
   
   // MARK: - Init
@@ -109,10 +118,10 @@ public class ContextMenuManager {
   public func showAuxiliaryPreviewAsPopover(
     presentingViewController presentingVC: UIViewController
   ){
-    guard !self.isContextMenuVisible,
+    guard !self.isAuxiliaryPreviewVisible,
+    
           let auxiliaryPreviewConfig = self.auxiliaryPreviewConfig,
           let menuTargetView = self.menuTargetView,
-          
           let delegate = self.delegate
     else { return };
     
@@ -128,14 +137,18 @@ public class ContextMenuManager {
       auxiliaryPreviewConfig: auxiliaryPreviewConfig
     );
     
+    modalManager.delegate = self;
     self.auxiliaryPreviewModalManager = modalManager;
     
     modalManager.present(
       viewControllerToPresent: modalVC,
       presentingViewController: presentingVC,
       targetView: menuTargetView
-    )
+    );
   };
+  
+  // MARK: - Public Functions - UIContextMenuInteraction
+  // ---------------------------------------------------
   
   // context menu display begins
   public func notifyOnContextMenuInteraction(
@@ -181,8 +194,6 @@ public class ContextMenuManager {
     };
     
     animator.addCompletion {
-      self.isContextMenuVisible = true;
-      
       print(
         "notifyOnContextMenuInteraction",
         "- addCompletion block"
@@ -192,6 +203,7 @@ public class ContextMenuManager {
     };
   };
   
+  // context menu display ends
   public func notifyOnContextMenuInteraction(
     _ interaction: UIContextMenuInteraction,
     willEndFor configuration: UIContextMenuConfiguration,

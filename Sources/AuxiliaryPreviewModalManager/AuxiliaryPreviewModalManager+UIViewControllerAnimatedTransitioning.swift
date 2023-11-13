@@ -37,11 +37,10 @@ extension AuxiliaryPreviewModalManager: UIViewControllerAnimatedTransitioning {
         };
         
       case .dismissing:
-        self.hideModal() {
+        self.hideModal() { [unowned self] in
           transitionContext.completeTransition(true);
+          self.delegate?.onAuxiliaryPreviewModalDidHide(sender: self);
         };
-        
-        break;
     };
   };
 };

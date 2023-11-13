@@ -23,6 +23,8 @@ public class AuxiliaryPreviewModalManager: NSObject {
   
   var auxiliaryPreviewConfig: AuxiliaryPreviewConfig;
   var auxiliaryPreviewMetadata: AuxiliaryPreviewMetadata?;
+  
+  weak var delegate: AuxiliaryPreviewModalManagerDelegate?;
 
   weak var presentingVC: UIViewController?;
   weak var targetView: UIView?;
@@ -34,7 +36,23 @@ public class AuxiliaryPreviewModalManager: NSObject {
   var presentedVC: UIViewController?;
   
   var presentationState: PresentationState?;
-
+  
+  // MARK: - Computed Properties
+  // ---------------------------
+  
+  var isPresenting: Bool {
+    guard let modalWrapperVC = self.modalWrapperVC else { return false };
+    let presentingVC = modalWrapperVC.presentingViewController;
+    
+    let isPresentingModalWrapperVC =
+      presentingVC?.presentedViewController === modalWrapperVC;
+      
+    return modalWrapperVC.isBeingPresented || isPresentingModalWrapperVC;
+  };
+  
+  // MARK: - Init
+  // ------------
+  
   init(auxiliaryPreviewConfig: AuxiliaryPreviewConfig) {
     self.auxiliaryPreviewConfig = auxiliaryPreviewConfig;
     super.init();
