@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import DGSwiftUtilities
 
 public class AuxiliaryPreviewModalManager: NSObject {
 
@@ -186,7 +186,6 @@ public class AuxiliaryPreviewModalManager: NSObject {
     let keyframes = transitionAnimationConfig.transition.getKeyframes();
     let animator = transitionAnimationConfig.animatorConfig.createAnimator(gestureInitialVelocity: .zero);
     
-    
     keyframes.keyframeStart.apply(
       toView: modalVC.view,
       auxPreviewVerticalAnchorPosition:
@@ -212,16 +211,32 @@ public class AuxiliaryPreviewModalManager: NSObject {
   };
   
   func hideModal(completion: (() -> Void)? = nil){
-    guard let targetView = self.targetView else { return };
-    let animator = UIViewPropertyAnimator(duration: 0.3, curve: .linear);
+    guard let targetView = self.targetView,
+          let rootModalContainerView = self.modalWrapperVC?.view,
+          let auxiliaryPreviewMetadata = self.auxiliaryPreviewMetadata
+    else { return };
+    
+    let animatorConfig: AnimationConfig =
+      .presetCurve(duration: 0.3, curve: .easeOut);
+    
+    let animator =
+      animatorConfig.createAnimator(gestureInitialVelocity: .zero);
+    
+    let transitionConfigExit = self.auxiliaryPreviewConfig.transitionConfigExit;
+    let (exitKeyframe, _) = transitionConfigExit.getKeyframes();
+    
+    animator.addAnimations {
+      exitKeyframe.apply(
+        toView: rootModalContainerView,
+        auxPreviewVerticalAnchorPosition:
+          auxiliaryPreviewMetadata.verticalAnchorPosition
+      );
+      
+      self.dimmingView?.alpha = 0;
+    };
     
     animator.addCompletion() { _ in
       completion?();
-    };
-    
-    animator.addAnimations {
-      self.modalWrapperVC?.view.alpha = 0;
-      self.dimmingView?.isHidden = true;
     };
     
     targetView.alpha = 1;
