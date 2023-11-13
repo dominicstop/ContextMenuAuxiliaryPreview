@@ -143,6 +143,8 @@ public class ContextMenuManager {
     willDisplayMenuFor configuration: UIContextMenuConfiguration,
     animator: UIContextMenuInteractionAnimating?
   ) {
+  
+    self.isContextMenuVisible = true;
     
     guard self.isAuxiliaryPreviewEnabled,
           let auxiliaryPreviewConfig = self.auxiliaryPreviewConfig,
@@ -208,6 +210,7 @@ public class ContextMenuManager {
     };
     
     animator.addCompletion {
+      self.isContextMenuVisible = false;
       self.auxiliaryPreviewMenuManager = nil;
       self.auxiliaryPreviewView = nil;
     };
