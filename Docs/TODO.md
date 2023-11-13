@@ -4,16 +4,7 @@
 
 ## WIP - Current
 
-- [ ] `TODO:2023-11-08-14-01-55` - Impl: Aux. Preview Popover - `AuxiliaryPreviewModalManager` - Manager used to show/attach the auxiliary preview on the target view.
-  * Ideally, we would have a function like an `showAuxiliaryPreview` where it would use the existing auxiliary preview config to show the aux. preview.
-
-<br>
-
-- [ ] `TODO:2023-11-10-12-59-55` - Refactor: Aux. Preview Popover - Cleanup + separate out logic for attaching the aux. preview + entrance/exit transitions.
-- [ ] `TODO:2023-11-10-07-11-39` - Refactor: Extract common/duplicated code - Code sharing/re-use between `AuxiliaryPreviewMenuManager` and `AuxiliaryPreviewModalManager`.
-- [ ] `TODO:2023-11-10-12-24-16` - Bug: Context Menu Aux. Preview - Fix the entrance transition not working properly when the aux. preview is located at the top half of the screen.
-- [ ] `TODO:2023-11-10-12-25-26` - Bug: Aux. Preview Popover - Fix: Cannot show aux. preview again after it has been prev. presented.
-- [ ] `TODO:2023-11-09-15-38-40` - Impl: Aux. Preview Popover - `backgroundTapInteraction` - Allow closing of aux. preview modal when the bg is tapped.
+- [ ] `TODO:2023-11-09-15-38-40` - Impl: Aux. Preview Popover - `backgroundTapInteraction` - Defines what happens when the bg dimming view is tapped (e.g. close aux. preview modal).
 - [ ] `TODO:2023-11-09-15-40-11` - Impl: Aux. Preview Popover - Update target view position on layout change.
 - [ ] `TODO:2023-11-10-12-36-58` - Refactor: Aux. Preview Keyframes - Add default start/end keyframes for entrance/exit Keyframes.
 - [ ] `TODO:2023-11-10-12-37-33` - Refactor: Aux. Preview Keyframes - Automatically set values for the start/end keyframes based on the aux. preview config.
@@ -49,6 +40,15 @@
 <br><br>
 
 ## Completed
+
+- [x] `TODO:2023-11-10-12-24-16` - Bug: Context Menu Aux. Preview - Fix the entrance transition not working properly when the aux. preview is located at the top half of the screen.
+- [x] `TODO:2023-11-10-12-59-55` - Refactor: Aux. Preview Popover - Cleanup + separate out logic for attaching the aux. preview + entrance/exit transitions.
+- [x] `TODO:2023-11-10-07-11-39` - Refactor: Extract common/duplicated code - Code sharing/re-use between `AuxiliaryPreviewMenuManager` and `AuxiliaryPreviewModalManager`.
+- [x] `TODO:2023-11-10-12-25-26` - Bug: Aux. Preview Popover - Fix: Cannot show aux. preview again after it has been prev. presented.
+- [x] `TODO:2023-11-08-14-01-55` - Impl: Aux. Preview Popover - `AuxiliaryPreviewModalManager` - Manager used to show/attach the auxiliary preview on the target view.
+  * Ideally, we would have a function like an `showAuxiliaryPreview` where it would use the existing auxiliary preview config to show the aux. preview.
+
+<br>
 
 - [x] `TODO:2023-10-23-02-55-23` - Impl: Adjust transform based on the position of the menu.
   * Transforms that should be adjusted: translate, rotation.
