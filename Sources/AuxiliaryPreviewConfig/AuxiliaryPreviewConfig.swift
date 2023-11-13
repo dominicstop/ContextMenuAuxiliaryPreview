@@ -26,6 +26,7 @@ public struct AuxiliaryPreviewConfig {
   public var marginOuter: CGFloat;
 
   public var transitionConfigEntrance: AuxiliaryPreviewEntranceTransitionConfig;
+  public var transitionConfigExit: AuxiliaryPreviewTransitionConfig;
   
   // MARK: - Init
   // ------------
@@ -37,7 +38,8 @@ public struct AuxiliaryPreviewConfig {
     preferredHeight: AuxiliaryPreviewSizeValue? = nil,
     marginInner: CGFloat,
     marginOuter: CGFloat,
-    transitionConfigEntrance: AuxiliaryPreviewEntranceTransitionConfig
+    transitionConfigEntrance: AuxiliaryPreviewEntranceTransitionConfig,
+    transitionConfigExit: AuxiliaryPreviewTransitionConfig
   ) {
   
     self.verticalAnchorPosition = verticalAnchorPosition;
@@ -47,5 +49,6 @@ public struct AuxiliaryPreviewConfig {
     self.marginInner = marginInner;
     self.marginOuter = marginOuter;
     self.transitionConfigEntrance = transitionConfigEntrance;
+    self.transitionConfigExit = transitionConfigExit;
   };
 };

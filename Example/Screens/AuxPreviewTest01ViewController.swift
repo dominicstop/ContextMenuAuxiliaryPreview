@@ -43,7 +43,8 @@ class AuxPreviewTest01ViewController: UIViewController, ContextMenuManagerDelega
         preferredHeight: .constant(100),
         marginInner: 10,
         marginOuter: 10,
-        transitionConfigEntrance: .syncedToMenuEntranceTransition
+        transitionConfigEntrance: .syncedToMenuEntranceTransition,
+        transitionConfigExit: .fade
       );
 
       return view;

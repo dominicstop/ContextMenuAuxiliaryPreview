@@ -211,15 +211,14 @@ public class ContextMenuManager {
   ) {
   
     guard self.isAuxiliaryPreviewEnabled,
+          self.isAuxiliaryPreviewVisible,
+    
           let animator = animator,
           let auxPreviewManager = self.auxiliaryPreviewMenuManager
     else { return };
     
     auxPreviewManager.notifyOnMenuWillHide();
-    
-    animator.addAnimations {
-      auxPreviewManager.detachAndAnimateOutAuxiliaryPreview();
-    };
+    auxPreviewManager.detachAndAnimateOutAuxiliaryPreview(animator: animator);
     
     animator.addCompletion {
       self.isContextMenuVisible = false;

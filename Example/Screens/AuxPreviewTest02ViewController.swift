@@ -124,7 +124,8 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
             animatorConfig: .presetCurve(duration: 0.3, curve: .easeInOut),
             transition: .zoomAndSlide()
           )
-        )
+        ),
+        transitionConfigExit: .fade
       );
       
       return view;

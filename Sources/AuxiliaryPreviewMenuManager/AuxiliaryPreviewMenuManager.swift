@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import DGSwiftUtilities
 
 
 /// This class contains the logic for attaching the "context menu aux. preview"
@@ -256,37 +257,6 @@ public class AuxiliaryPreviewMenuManager {
     UIView.auxPreview = nil;
   };
   
-  // TODO: WIP
-  func createAuxiliaryPreviewTransitionOutBlock() -> (() -> ())? {
-    guard let manager = self.contextMenuManager,
-    
-          /// get the wrapper for the root view that hold the context menu
-          let auxiliaryPreviewView = manager.auxiliaryPreviewView
-    else { return nil };
-    
-    var transform = auxiliaryPreviewView.transform;
-    
-    return {
-      // transition - fade out
-      auxiliaryPreviewView.alpha = 0;
-      
-      // transition - zoom out
-      transform = transform.scaledBy(x: 0.7, y: 0.7);
-      
-      // transition - slide out
-      switch self.contextMenuMetadata.menuPreviewPosition {
-        case .top:
-          transform = transform.translatedBy(x: 0, y: 50);
-          
-        case .bottom:
-          transform = transform.translatedBy(x: 0, y: -50);
-      };
-      
-      // transition - apply transform
-      auxiliaryPreviewView.transform = transform;
-    };
-  };
-  
   func debugPrintValues(){
     guard let contextMenuContainerView = self.contextMenuContainerViewWrapper.wrappedObject,
           let contextMenuPlatterTransitionView = self.contextMenuPlatterTransitionViewWrapper.wrappedObject,
@@ -336,11 +306,10 @@ public class AuxiliaryPreviewMenuManager {
   };
   
   public func attachAndAnimateInAuxiliaryPreviewUsingCustomAnimator() {
-    guard let manager = self.contextMenuManager,
-          let menuAuxPreviewConfig = manager.auxiliaryPreviewConfig,
-          let auxiliaryPreviewMetadata = self.auxiliaryPreviewMetadata,
+    guard let auxiliaryPreviewMetadata = self.auxiliaryPreviewMetadata,
+          let manager = self.contextMenuManager,
           
-          /// get the wrapper for the root view that hold the context menu
+          let menuAuxPreviewConfig = manager.auxiliaryPreviewConfig,
           let auxiliaryPreviewView = manager.auxiliaryPreviewView
     else { return };
     
@@ -393,16 +362,31 @@ public class AuxiliaryPreviewMenuManager {
     };
   };
   
-  public func detachAndAnimateOutAuxiliaryPreview() {
-    guard let auxPreviewTransitionOutBlock =
-            self.createAuxiliaryPreviewTransitionOutBlock()
+  public func detachAndAnimateOutAuxiliaryPreview(
+    animator: UIContextMenuInteractionAnimating
+  ) {
+    guard let auxiliaryPreviewMetadata = self.auxiliaryPreviewMetadata,
+          let manager = self.contextMenuManager,
+          
+          let auxiliaryPreviewConfig = manager.auxiliaryPreviewConfig,
+          let auxiliaryPreviewView = manager.auxiliaryPreviewView
     else { return };
     
-    if let customAnimator = self.customAnimator {
+    let (exitKeyframe, _) =
+      auxiliaryPreviewConfig.transitionConfigExit.getKeyframes();
+    
+    if let customAnimator = self.customAnimator,
+       customAnimator.isRunning {
+       
       customAnimator.stopAnimation(true);
     };
     
-    auxPreviewTransitionOutBlock();
+    animator.addAnimations {
+      exitKeyframe.apply(
+        toView: auxiliaryPreviewView,
+        auxPreviewVerticalAnchorPosition: auxiliaryPreviewMetadata.verticalAnchorPosition
+      );
+    };
   };
 };
 
