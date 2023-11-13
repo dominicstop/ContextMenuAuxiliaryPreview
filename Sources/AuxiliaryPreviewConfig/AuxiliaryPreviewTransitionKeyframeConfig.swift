@@ -10,6 +10,12 @@ import DGSwiftUtilities
 
 
 public struct AuxiliaryPreviewTransitionKeyframeConfig {
+
+  static var propertyKeys: [PartialKeyPath<Self>] = [
+    \.opacity,
+    \.transform
+  ];
+
   public var opacity: CGFloat?;
   public var transform: Transform3D?;
   
@@ -20,5 +26,41 @@ public struct AuxiliaryPreviewTransitionKeyframeConfig {
   
     self.opacity = opacity;
     self.transform = transform;
+  };
+  
+  mutating func setNonNilValues(using newValue: Self){
+    Self.propertyKeys.forEach {
+      guard $0 is ExpressibleByNilLiteral,
+            let optionalValue = $0 as? OptionalUnwrappable,
+            !optionalValue.isSome()
+      else { return };
+
+      switch $0 {
+        case let key as WritableKeyPath<Self, Bool?>:
+          self[keyPath: key] = newValue[keyPath: key];
+      
+        case let key as WritableKeyPath<Self, CGFloat?>:
+          self[keyPath: key] = newValue[keyPath: key];
+        
+        case let key as WritableKeyPath<Self, UIColor?>:
+          self[keyPath: key] = newValue[keyPath: key];
+          
+        case let key as WritableKeyPath<Self, CGSize?>:
+          self[keyPath: key] = newValue[keyPath: key];
+          
+        case let key as WritableKeyPath<Self, CACornerMask?>:
+          self[keyPath: key] = newValue[keyPath: key];
+          
+        case let key as WritableKeyPath<Self, UIVisualEffect?>:
+          self[keyPath: key] = newValue[keyPath: key];
+          
+        case let key as WritableKeyPath<Self, Transform3D?>:
+          guard let otherValue = newValue[keyPath: key] else { break };
+          self[keyPath: key]?.setNonNilValues(with: otherValue);
+
+        default:
+          break;
+      };
+    };
   };
 };
