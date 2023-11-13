@@ -174,23 +174,6 @@ public class AuxiliaryPreviewMenuManager {
     let auxiliaryPreviewViewWidth =
          auxiliaryPreviewMetadata.computedWidthAdjusted
       ?? auxiliaryPreviewView.bounds.width;
-      
-    let auxiliaryPreviewViewSize = CGSize(
-      width: auxiliaryPreviewViewWidth,
-      height: auxiliaryPreviewViewHeight
-    );
-    
-    switch auxiliaryPreviewConfig.transitionConfigEntrance {
-      case .afterMenuEntranceTransition, .customDelay:
-        /// Set the initial height/width of the aux. preview
-        auxiliaryPreviewView.frame = .init(
-          origin: .zero,
-          size: auxiliaryPreviewViewSize
-        );
-      
-      default:
-        break;
-    };
     
     /// enable auto layout
     auxiliaryPreviewView.translatesAutoresizingMaskIntoConstraints = false;
@@ -230,6 +213,8 @@ public class AuxiliaryPreviewMenuManager {
     }();
     
     NSLayoutConstraint.activate(constraints);
+    auxiliaryPreviewView.layoutIfNeeded();
+    
     self.isAuxiliaryPreviewVisible = true;
   };
   
