@@ -4,7 +4,8 @@
 
 ## WIP - Current
 
-- [ ] `TODO:2023-11-13-11-07-59` - Impl: Aux. Preview - Impl. exit transition config + logic for aux. preview.
+- [ ] `TODO:2023-11-14-06-08-12` - Impl: Aux. Preview Popover - Use `AuxiliaryPreviewConfig.transitionConfigExit` for the modal exit transition.
+- [ ] `TODO:2023-11-13-11-07-59` - Impl: Aux. Preview Menu - Impl. exit transition config + logic for aux. preview.
 - [ ] `TODO:2023-11-09-15-38-40` - Impl: Aux. Preview Popover - `backgroundTapInteraction` - Defines what happens when the bg dimming view is tapped (e.g. close aux. preview modal).
 - [ ] `TODO:2023-11-09-15-40-11` - Impl: Aux. Preview Popover - Update target view position on layout change.
 - [ ] `TODO:2023-11-10-12-36-58` - Refactor: Aux. Preview Keyframes - Add default start/end keyframes for entrance/exit Keyframes.
@@ -16,7 +17,7 @@
 - [ ] `TODO:2023-11-10-12-51-51 ` - Aux. Preview Popover: Impl. separate config for "Aux. Preview Popover" - Derive the base config from "Context Menu Aux. Preview", and implicitly override base values w/ the new ones.
 - [ ] `TODO:2023-11-10-12-57-44` - Impl: Aux. Preview Keyframes + Aux. Preview Popover - Add support for setting the background dimming color + opacity.
 - [ ] `TODO:2023-11-10-12-58-00` - Impl: Aux. Preview Keyframes + Aux. Preview Popover - Add support for background blur.
-- [ ] `TODO:2023-11-13-13-50-14` Impl: Aux. Preview Manager - Impl. `AuxiliaryPreviewMenuManage` event delegate for notifying when the aux. preview is shown or hidden. 
+- [ ] `TODO:2023-11-13-13-50-14` Impl: Aux. Preview Manager - Impl. `AuxiliaryPreviewMenuManager` event delegate for notifying when the aux. preview is shown or hidden. 
 
 <br><br>
 
