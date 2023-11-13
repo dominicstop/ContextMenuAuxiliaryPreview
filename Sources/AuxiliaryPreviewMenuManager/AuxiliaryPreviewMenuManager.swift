@@ -249,12 +249,7 @@ public class AuxiliaryPreviewMenuManager {
   
   // TODO: WIP - TEMP
   func unSwizzleViews(){
-    guard UIView.isSwizzlingApplied,
-          let manager = self.contextMenuManager,
-          let auxiliaryPreviewView = manager.auxiliaryPreviewView
-    else { return };
-  
-    auxiliaryPreviewView.removeFromSuperview();
+    guard UIView.isSwizzlingApplied else { return };
 
     // undo swizzling
     UIView.swizzlePoint();
