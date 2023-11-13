@@ -14,7 +14,7 @@ public struct AuxiliaryPreviewTransitionAnimationConfig {
   public static var `default`: Self = .init(
     delay: .zero,
     animatorConfig: .presetCurve(duration: 0.3, curve: .linear),
-    transition: .init(transitionType: .fade)
+    transitionType: .fade
   );
 
   public var delay: TimeInterval;
@@ -24,10 +24,11 @@ public struct AuxiliaryPreviewTransitionAnimationConfig {
   public init(
     delay: TimeInterval,
     animatorConfig: AnimationConfig,
-    transition: AuxiliaryPreviewTransitionConfig
+    transitionType: AuxiliaryPreviewTransitionType
   ) {
+  
     self.delay = delay
     self.animatorConfig = animatorConfig
-    self.transition = transition
+    self.transition = .init(transitionType: transitionType);
   };
 };

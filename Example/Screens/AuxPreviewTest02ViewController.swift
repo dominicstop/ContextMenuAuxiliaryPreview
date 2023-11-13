@@ -122,10 +122,10 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
           AuxiliaryPreviewTransitionAnimationConfig(
             delay: 0.25,
             animatorConfig: .presetCurve(duration: 0.3, curve: .easeInOut),
-            transition: .init(transitionType: .zoomAndSlide())
+            transitionType: .zoomAndSlide()
           )
         ),
-        transitionConfigExit: .init(transitionType: .fade)
+        transitionExitType: .fade
       );
       
       return view;
