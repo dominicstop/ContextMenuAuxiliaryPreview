@@ -40,12 +40,12 @@ public struct AuxiliaryPreviewConfig {
     transitionConfigEntrance: AuxiliaryPreviewEntranceTransitionConfig
   ) {
   
-    self.verticalAnchorPosition = verticalAnchorPosition
-    self.alignmentHorizontal = alignmentHorizontal
-    self.preferredWidth = preferredWidth
-    self.preferredHeight = preferredHeight
-    self.marginInner = marginInner
-    self.marginOuter = marginOuter
-    self.transitionConfigEntrance = transitionConfigEntrance
+    self.verticalAnchorPosition = verticalAnchorPosition;
+    self.alignmentHorizontal = alignmentHorizontal;
+    self.preferredWidth = preferredWidth;
+    self.preferredHeight = preferredHeight;
+    self.marginInner = marginInner;
+    self.marginOuter = marginOuter;
+    self.transitionConfigEntrance = transitionConfigEntrance;
   };
 };

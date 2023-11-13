@@ -32,7 +32,7 @@ public enum AuxiliaryPreviewTransitionConfig {
   
   case custom(
     keyframeStart: AuxiliaryPreviewTransitionKeyframeConfig,
-    keyframeEnd  : AuxiliaryPreviewTransitionKeyframeConfig
+    keyframeEnd: AuxiliaryPreviewTransitionKeyframeConfig
   );
   
   // MARK: - Computed Properties
@@ -40,7 +40,7 @@ public enum AuxiliaryPreviewTransitionConfig {
   
   public var transitionKeyframeConfig: (
     keyframeStart: AuxiliaryPreviewTransitionKeyframeConfig,
-    keyframeEnd  : AuxiliaryPreviewTransitionKeyframeConfig
+    keyframeEnd: AuxiliaryPreviewTransitionKeyframeConfig
   ) {
     switch self {
       case .none:
@@ -118,7 +118,7 @@ public enum AuxiliaryPreviewTransitionConfig {
   
   public func getKeyframes() -> (
     keyframeStart: AuxiliaryPreviewTransitionKeyframe,
-    keyframeEnd  : AuxiliaryPreviewTransitionKeyframe
+    keyframeEnd: AuxiliaryPreviewTransitionKeyframe
   ) {
   
     let transitionKeyframeConfig = self.transitionKeyframeConfig;
