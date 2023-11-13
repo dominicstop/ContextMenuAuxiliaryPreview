@@ -152,19 +152,19 @@ public class AuxiliaryPreviewMenuManager {
   
   func attachAuxiliaryPreview(){
     guard let manager = self.contextMenuManager,
-          let menuAuxPreviewConfig = manager.auxiliaryPreviewConfig,
+          let auxiliaryPreviewConfig = manager.auxiliaryPreviewConfig,
           let auxiliaryPreviewMetadata = self.auxiliaryPreviewMetadata,
           
           /// get the wrapper for the root view that hold the context menu
-          let menuAuxiliaryPreviewView = manager.auxiliaryPreviewView,
-          let auxPreviewTargetView = self.auxiliaryPreviewParentView,
+          let auxiliaryPreviewView = manager.auxiliaryPreviewView,
+          let auxiliaryPreviewParentView = self.auxiliaryPreviewParentView,
           
           let morphingPlatterView = self.morphingPlatterViewWrapper.wrappedObject,
           let contextMenuContainerView = self.contextMenuContainerViewWrapper.wrappedObject
     else { return };
-    
+
     // Bugfix: Stop bubbling touch events from propagating to parent
-    menuAuxiliaryPreviewView.addGestureRecognizer(
+    auxiliaryPreviewView.addGestureRecognizer(
       UITapGestureRecognizer(target: nil, action: nil)
     );
         
@@ -173,17 +173,17 @@ public class AuxiliaryPreviewMenuManager {
     
     let auxiliaryPreviewViewWidth =
          auxiliaryPreviewMetadata.computedWidthAdjusted
-      ?? menuAuxiliaryPreviewView.bounds.width;
+      ?? auxiliaryPreviewView.bounds.width;
       
     let auxiliaryPreviewViewSize = CGSize(
       width: auxiliaryPreviewViewWidth,
       height: auxiliaryPreviewViewHeight
     );
     
-    switch menuAuxPreviewConfig.transitionConfigEntrance {
+    switch auxiliaryPreviewConfig.transitionConfigEntrance {
       case .afterMenuEntranceTransition, .customDelay:
         /// Set the initial height/width of the aux. preview
-        menuAuxiliaryPreviewView.frame = .init(
+        auxiliaryPreviewView.frame = .init(
           origin: .zero,
           size: auxiliaryPreviewViewSize
         );
@@ -193,10 +193,10 @@ public class AuxiliaryPreviewMenuManager {
     };
     
     /// enable auto layout
-    menuAuxiliaryPreviewView.translatesAutoresizingMaskIntoConstraints = false;
+    auxiliaryPreviewView.translatesAutoresizingMaskIntoConstraints = false;
     
     /// attach `auxiliaryView` to context menu preview
-    auxPreviewTargetView.addSubview(menuAuxiliaryPreviewView);
+    auxiliaryPreviewParentView.addSubview(auxiliaryPreviewView);
     
     // get layout constraints based on config
     let constraints: [NSLayoutConstraint] = {
@@ -204,7 +204,7 @@ public class AuxiliaryPreviewMenuManager {
     
       // set aux preview height
       constraints.append(
-        menuAuxiliaryPreviewView.heightAnchor.constraint(
+        auxiliaryPreviewView.heightAnchor.constraint(
           equalToConstant: auxiliaryPreviewViewHeight
         )
       );
@@ -212,15 +212,15 @@ public class AuxiliaryPreviewMenuManager {
       // set vertical alignment constraint - i.e. either...
       constraints.append(
         auxiliaryPreviewMetadata.verticalAnchorPosition.createVerticalConstraints(
-          forView: menuAuxiliaryPreviewView,
+          forView: auxiliaryPreviewView,
           attachingTo: morphingPlatterView,
-          margin: menuAuxPreviewConfig.marginInner
+          margin: auxiliaryPreviewConfig.marginInner
         )
       );
       
       // set horizontal alignment constraints based on config...
-      constraints += menuAuxPreviewConfig.alignmentHorizontal.createHorizontalConstraints(
-        forView: menuAuxiliaryPreviewView,
+      constraints += auxiliaryPreviewConfig.alignmentHorizontal.createHorizontalConstraints(
+        forView: auxiliaryPreviewView,
         attachingTo: morphingPlatterView,
         enclosingView: contextMenuContainerView,
         preferredWidth: auxiliaryPreviewViewWidth
@@ -255,10 +255,10 @@ public class AuxiliaryPreviewMenuManager {
   func swizzleViews(){
     guard !UIView.isSwizzlingApplied,
           let manager = self.contextMenuManager,
-          let menuAuxiliaryPreviewView = manager.auxiliaryPreviewView
+          let auxiliaryPreviewView = manager.auxiliaryPreviewView
     else { return };
   
-    UIView.auxPreview = menuAuxiliaryPreviewView;
+    UIView.auxPreview = auxiliaryPreviewView;
     UIView.swizzlePoint();
   };
   
@@ -266,10 +266,10 @@ public class AuxiliaryPreviewMenuManager {
   func unSwizzleViews(){
     guard UIView.isSwizzlingApplied,
           let manager = self.contextMenuManager,
-          let menuAuxiliaryPreviewView = manager.auxiliaryPreviewView
+          let auxiliaryPreviewView = manager.auxiliaryPreviewView
     else { return };
   
-    menuAuxiliaryPreviewView.removeFromSuperview();
+    auxiliaryPreviewView.removeFromSuperview();
 
     // undo swizzling
     UIView.swizzlePoint();
@@ -281,14 +281,14 @@ public class AuxiliaryPreviewMenuManager {
     guard let manager = self.contextMenuManager,
     
           /// get the wrapper for the root view that hold the context menu
-          let menuAuxiliaryPreviewView = manager.auxiliaryPreviewView
+          let auxiliaryPreviewView = manager.auxiliaryPreviewView
     else { return nil };
     
-    var transform = menuAuxiliaryPreviewView.transform;
+    var transform = auxiliaryPreviewView.transform;
     
     return {
       // transition - fade out
-      menuAuxiliaryPreviewView.alpha = 0;
+      auxiliaryPreviewView.alpha = 0;
       
       // transition - zoom out
       transform = transform.scaledBy(x: 0.7, y: 0.7);
@@ -303,7 +303,7 @@ public class AuxiliaryPreviewMenuManager {
       };
       
       // transition - apply transform
-      menuAuxiliaryPreviewView.transform = transform;
+      auxiliaryPreviewView.transform = transform;
     };
   };
   
@@ -361,7 +361,7 @@ public class AuxiliaryPreviewMenuManager {
           let auxiliaryPreviewMetadata = self.auxiliaryPreviewMetadata,
           
           /// get the wrapper for the root view that hold the context menu
-          let menuAuxiliaryPreviewView = manager.auxiliaryPreviewView
+          let auxiliaryPreviewView = manager.auxiliaryPreviewView
     else { return };
     
     let transitionConfigEntrance =
@@ -372,7 +372,7 @@ public class AuxiliaryPreviewMenuManager {
     else { return };
     
     self.attachAuxiliaryPreview();
-    menuAuxiliaryPreviewView.layoutIfNeeded();
+    auxiliaryPreviewView.layoutIfNeeded();
     
     let animator = transitionAnimationConfig.animatorConfig.createAnimator(
       gestureInitialVelocity: .zero
@@ -382,13 +382,13 @@ public class AuxiliaryPreviewMenuManager {
     let keyframes = transitionAnimationConfig.transition.getKeyframes();
     
     keyframes.keyframeStart.apply(
-      toView: menuAuxiliaryPreviewView,
+      toView: auxiliaryPreviewView,
       auxPreviewVerticalAnchorPosition: auxiliaryPreviewMetadata.verticalAnchorPosition
     );
     
     animator.addAnimations {
       keyframes.keyframeEnd.apply(
-        toView: menuAuxiliaryPreviewView,
+        toView: auxiliaryPreviewView,
         auxPreviewVerticalAnchorPosition: auxiliaryPreviewMetadata.verticalAnchorPosition
       );
     };
