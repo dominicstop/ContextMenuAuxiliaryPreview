@@ -10,10 +10,14 @@ import Foundation
 
 public struct AuxiliaryPreviewTransitionConfig {
 
-  public var transitionType: AuxiliaryPreviewTransitionType;
+  public var keyframeConfigStart: AuxiliaryPreviewTransitionKeyframeConfig;
+  public var keyframeConfigEnd: AuxiliaryPreviewTransitionKeyframeConfig;
   
-  public init(transitionType: AuxiliaryPreviewTransitionType) {
-    self.transitionType = transitionType;
+  public init(
+    transitionType: AuxiliaryPreviewTransitionType
+  ) {
+    (self.keyframeConfigStart, self.keyframeConfigEnd) =
+      transitionType.transitionKeyframeConfig;
   };
 
   // MARK: - Functions
@@ -24,19 +28,17 @@ public struct AuxiliaryPreviewTransitionConfig {
     keyframeEnd: AuxiliaryPreviewTransitionKeyframe
   ) {
   
-    let transitionKeyframeConfig = self.transitionType.transitionKeyframeConfig;
-  
     var keyframeStart = AuxiliaryPreviewTransitionKeyframe(
-      keyframeCurrent: transitionKeyframeConfig.keyframeStart
+      keyframeCurrent: self.keyframeConfigStart
     );
     
     let keyframeEnd = AuxiliaryPreviewTransitionKeyframe(
-      keyframeCurrent: transitionKeyframeConfig.keyframeEnd,
+      keyframeCurrent: self.keyframeConfigEnd,
       keyframePrevious: keyframeStart
     );
     
     keyframeStart = AuxiliaryPreviewTransitionKeyframe(
-      keyframeCurrent: transitionKeyframeConfig.keyframeStart,
+      keyframeCurrent: self.keyframeConfigStart,
       keyframePrevious: keyframeEnd
     );
     
