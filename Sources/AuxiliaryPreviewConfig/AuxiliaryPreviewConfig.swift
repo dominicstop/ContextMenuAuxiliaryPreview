@@ -39,7 +39,7 @@ public struct AuxiliaryPreviewConfig {
     marginInner: CGFloat,
     marginOuter: CGFloat,
     transitionConfigEntrance: AuxiliaryPreviewEntranceTransitionConfig,
-    transitionExitType: AuxiliaryPreviewTransitionType
+    transitionExitPreset: AuxiliaryPreviewTransitionPreset
   ) {
   
     self.verticalAnchorPosition = verticalAnchorPosition;
@@ -50,6 +50,6 @@ public struct AuxiliaryPreviewConfig {
     self.marginOuter = marginOuter;
     self.transitionConfigEntrance = transitionConfigEntrance;
     
-    self.transitionConfigExit = .init(transitionType: transitionExitType);
+    self.transitionConfigExit = .init(transitionPreset: transitionExitPreset);
   };
 };

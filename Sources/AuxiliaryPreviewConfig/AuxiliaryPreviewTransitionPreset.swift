@@ -1,5 +1,5 @@
 //
-//  AuxiliaryPreviewTransitionType.swift
+//  AuxiliaryPreviewTransitionPreset.swift
 //  
 //
 //  Created by Dominic Go on 11/14/23.
@@ -8,7 +8,7 @@
 import Foundation
 
 
-public enum AuxiliaryPreviewTransitionType {
+public enum AuxiliaryPreviewTransitionPreset {
 
   // MARK: - Static Properties
   // -------------------------

@@ -120,7 +120,7 @@ class Experiment02ViewController: UIViewController, ContextMenuManagerDelegate {
         marginInner: 10,
         marginOuter: 10,
         transitionConfigEntrance: .syncedToMenuEntranceTransition,
-        transitionExitType: .fade
+        transitionExitPreset: .fade
       );
       
       return view;

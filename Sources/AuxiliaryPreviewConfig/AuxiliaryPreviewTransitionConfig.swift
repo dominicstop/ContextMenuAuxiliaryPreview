@@ -14,10 +14,10 @@ public struct AuxiliaryPreviewTransitionConfig {
   public var keyframeConfigEnd: AuxiliaryPreviewTransitionKeyframeConfig;
   
   public init(
-    transitionType: AuxiliaryPreviewTransitionType
+    transitionPreset: AuxiliaryPreviewTransitionPreset
   ) {
     (self.keyframeConfigStart, self.keyframeConfigEnd) =
-      transitionType.transitionKeyframeConfig;
+      transitionPreset.transitionKeyframeConfig;
   };
 
   // MARK: - Functions
