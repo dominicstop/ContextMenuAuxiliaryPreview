@@ -57,13 +57,17 @@ fileprivate class TestAuxiliaryPreviewView: UIView {
   };
 };
 
-
 class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelegate {
 
-  var interaction: UIContextMenuInteraction?;
+  var presets = AuxiliaryPreviewPresets();
+
+  weak var boxView: UIView?;
+  weak var debugDataCardController: DebugDataCardViewController?;
+  
+  weak var interaction: UIContextMenuInteraction?;
   
   var contextMenuManager: ContextMenuManager?;
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white;
@@ -92,6 +96,18 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
       stackView.addArrangedSubview(label);
     };
     
+    let debugDataCardController: DebugDataCardViewController = {
+      let controller = DebugDataCardViewController();
+      
+      self.addChild(controller);
+      controller.didMove(toParent: self);
+      
+      return controller;
+    }();
+    
+    self.debugDataCardController = debugDataCardController;
+    stackView.addArrangedSubview(debugDataCardController.view);
+    
     let box: UIView = {
       let view = UIView();
       
@@ -102,35 +118,10 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
       self.interaction = interaction;
       
       view.addInteraction(interaction);
-      
-      let contextMenuManager = ContextMenuManager(
-        contextMenuInteraction: interaction,
-        menuTargetView: view
-      );
-      
-      self.contextMenuManager = contextMenuManager;
-      contextMenuManager.delegate = self;
-      
-      contextMenuManager.auxiliaryPreviewConfig = AuxiliaryPreviewConfig(
-        verticalAnchorPosition: .automatic,
-        alignmentHorizontal: .targetCenter,
-        preferredWidth: .constant(100),
-        preferredHeight: .constant(100),
-        marginInner: 10,
-        marginOuter: 10,
-        transitionConfigEntrance: .customDelay(
-          AuxiliaryPreviewTransitionAnimationConfig(
-            delay: 0.25,
-            animatorConfig: .presetCurve(duration: 0.3, curve: .easeInOut),
-            transitionPreset: .zoomAndSlide()
-          )
-        ),
-        transitionExitPreset: .fade
-      );
-      
       return view;
     }();
     
+    self.boxView = box;
     box.translatesAutoresizingMaskIntoConstraints = false;
     stackView.addArrangedSubview(box);
     
@@ -221,6 +212,31 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
       scrollView.leadingAnchor .constraint(equalTo: self.view.leadingAnchor ),
       scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
     ]);
+    
+    self.applyPresets();
+  };
+  
+  func applyPresets(){
+    guard let interaction = self.interaction,
+          let boxView = self.boxView
+    else { return };
+      
+    let contextMenuManager = ContextMenuManager(
+      contextMenuInteraction: interaction,
+      menuTargetView: boxView
+    );
+    
+    self.contextMenuManager = contextMenuManager;
+    contextMenuManager.delegate = self;
+    
+    contextMenuManager.auxiliaryPreviewConfig =
+      self.presets.currentAuxiliaryPreviewConfig;
+      
+    guard let debugDataCardController = self.debugDataCardController
+    else { return };
+      
+    debugDataCardController.debugData = self.presets.currentDataEntries;
+    debugDataCardController.updateViews();
   };
   
   @objc func onPressShowContextMenu(_ sender: UIButton){
@@ -265,7 +281,7 @@ extension AuxPreviewTest02ViewController: UIContextMenuInteractionDelegate {
     animator: UIContextMenuInteractionAnimating?
   ) {
     
-    self.contextMenuManager!.notifyOnContextMenuInteraction(
+    self.contextMenuManager?.notifyOnContextMenuInteraction(
       interaction,
       willDisplayMenuFor: configuration,
       animator: animator
@@ -278,7 +294,7 @@ extension AuxPreviewTest02ViewController: UIContextMenuInteractionDelegate {
     animator: UIContextMenuInteractionAnimating?
   ) {
     
-    self.contextMenuManager!.notifyOnContextMenuInteraction(
+    self.contextMenuManager?.notifyOnContextMenuInteraction(
       interaction,
       willEndFor: configuration,
       animator: animator
