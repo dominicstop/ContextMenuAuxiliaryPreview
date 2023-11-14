@@ -16,6 +16,10 @@ public class AuxiliaryPreviewMenuManager {
 
   // MARK: - Properties
   // ------------------
+  
+  lazy var auxiliaryPreviewMetadata: AuxiliaryPreviewMetadata? = .init(
+    auxiliaryPreviewMenuManager: self
+  );
 
   var contextMenuMetadata: ContextMenuMetadata;
   var customAnimator: UIViewPropertyAnimator?;
@@ -44,9 +48,9 @@ public class AuxiliaryPreviewMenuManager {
   // MARK: - Computed Properties
   // ---------------------------
   
-  lazy var auxiliaryPreviewMetadata: AuxiliaryPreviewMetadata? = .init(
-    auxiliaryPreviewMenuManager: self
-  );
+  var auxiliaryPreviewView: UIView? {
+    self.contextMenuManager?.auxiliaryPreviewView;
+  };
   
   // MARK: - Init
   // ------------
