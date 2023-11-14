@@ -54,6 +54,10 @@ public class AuxiliaryPreviewModalManager: NSObject {
   // MARK: - Computed Properties
   // ---------------------------
   
+  var auxiliaryPreviewView: UIView? {
+    self.auxiliaryPreviewController?.view
+  };
+  
   var isPresenting: Bool {
     guard let presentedController = self.presentedController else { return false };
     let presentingController = presentedController.presentingViewController;
