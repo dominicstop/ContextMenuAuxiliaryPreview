@@ -73,5 +73,29 @@ public struct AuxiliaryPreviewTransitionKeyframe {
       
       return transform.transform;
     }();
+    
+    block:
+    if let heightConstraint = auxiliaryPreviewView.heightConstraint {
+      let heightPrev = heightConstraint.constant;
+      
+      guard let heightNext = self.auxiliaryPreviewPreferredHeight,
+            heightNext != heightPrev
+      else { break block };
+      
+      heightConstraint.constant = heightNext;
+      auxiliaryPreviewView.setNeedsLayout();
+    };
+    
+    block:
+    if let widthConstraint = auxiliaryPreviewView.widthConstraint {
+      let widthPrev = widthConstraint.constant;
+      
+      guard let widthNext = self.auxiliaryPreviewPreferredWidth,
+            widthNext != widthPrev
+      else { break block };
+      
+      widthConstraint.constant = widthNext;
+      auxiliaryPreviewView.setNeedsLayout();
+    };
   };
 };
