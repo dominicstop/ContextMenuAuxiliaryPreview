@@ -100,3 +100,27 @@ public enum AuxiliaryPreviewTransitionPreset {
     };
   };
 };
+
+extension AuxiliaryPreviewTransitionPreset: CustomStringConvertible {
+  public var description: String {
+    switch self {
+      case .none:
+        return "none";
+        
+      case .fade:
+        return "fade";
+        
+      case .slide:
+        return "slide";
+        
+      case .zoom:
+        return "zoom";
+        
+      case .zoomAndSlide:
+        return "zoomAndSlide";
+        
+      case .custom:
+        return "custom";
+    };
+  };
+};
