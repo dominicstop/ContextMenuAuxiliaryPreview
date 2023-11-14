@@ -50,6 +50,13 @@ public struct AuxiliaryPreviewConfig {
     self.marginOuter = marginOuter;
     self.transitionConfigEntrance = transitionConfigEntrance;
     
-    self.transitionConfigExit = .init(transitionPreset: transitionExitPreset);
+    self.transitionConfigExit = {
+      var transitionConfigExit = AuxiliaryPreviewTransitionConfig(
+        transitionPreset: transitionExitPreset
+      );
+        
+      transitionConfigExit.reverseKeyframes();
+      return transitionConfigExit;
+    }();
   };
 };
