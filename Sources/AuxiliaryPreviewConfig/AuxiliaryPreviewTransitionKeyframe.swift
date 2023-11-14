@@ -36,15 +36,15 @@ public struct AuxiliaryPreviewTransitionKeyframe {
   };
   
   public func apply(
-    toView view: UIView,
-    auxPreviewVerticalAnchorPosition: VerticalAnchorPosition
+    auxiliaryPreviewView: UIView,
+    auxiliaryPreviewMetadata: AuxiliaryPreviewMetadata
   ){
-    view.alpha = self.opacity;
+    auxiliaryPreviewView.alpha = self.opacity;
     
-    view.layer.transform = {
+    auxiliaryPreviewView.layer.transform = {
       var transform = self.transform;
       
-      switch auxPreviewVerticalAnchorPosition {
+      switch auxiliaryPreviewMetadata.verticalAnchorPosition {
         case .top:
           transform.translateY = -transform.translateY;
           

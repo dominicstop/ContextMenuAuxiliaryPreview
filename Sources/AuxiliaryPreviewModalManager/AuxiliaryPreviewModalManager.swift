@@ -192,31 +192,33 @@ public class AuxiliaryPreviewModalManager: NSObject {
   };
   
   func showModal(completion: (() -> Void)? = nil){
-    guard let auxiliaryPreviewController = self.auxiliaryPreviewController,
+    guard let auxiliaryPreviewView = self.auxiliaryPreviewView,
           let targetView = self.targetView,
-          
           let auxiliaryPreviewMetadata = self.auxiliaryPreviewMetadata
     else { return };
     
-    let transitionConfigEntrance = self.auxiliaryPreviewConfig.transitionConfigEntrance;
-    let transitionAnimationConfig = transitionConfigEntrance.transitionAnimationConfig ?? .default;
+    let transitionConfigEntrance =
+      self.auxiliaryPreviewConfig.transitionConfigEntrance;
+    
+    let transitionAnimationConfig =
+      transitionConfigEntrance.transitionAnimationConfig ?? .default;
     
     let keyframes = transitionAnimationConfig.transition.getKeyframes();
-    let animator = transitionAnimationConfig.animatorConfig.createAnimator(gestureInitialVelocity: .zero);
+    let animator = transitionAnimationConfig.animatorConfig.createAnimator(
+      gestureInitialVelocity: .zero
+    );
     
     keyframes.keyframeStart.apply(
-      toView: auxiliaryPreviewController.view,
-      auxPreviewVerticalAnchorPosition:
-        auxiliaryPreviewMetadata.verticalAnchorPosition
+      auxiliaryPreviewView: auxiliaryPreviewView,
+      auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
     );
     
     animator.addAnimations {
       self.dimmingView?.isHidden = false;
     
       keyframes.keyframeEnd.apply(
-        toView: auxiliaryPreviewController.view,
-        auxPreviewVerticalAnchorPosition:
-          auxiliaryPreviewMetadata.verticalAnchorPosition
+        auxiliaryPreviewView: auxiliaryPreviewView,
+        auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
       );
     };
     
@@ -230,7 +232,7 @@ public class AuxiliaryPreviewModalManager: NSObject {
   
   func hideModal(completion: (() -> Void)? = nil){
     guard let targetView = self.targetView,
-          let rootModalContainerView = self.presentedController?.view,
+          let auxiliaryPreviewView = self.auxiliaryPreviewView,
           let auxiliaryPreviewMetadata = self.auxiliaryPreviewMetadata
     else { return };
     
@@ -245,9 +247,8 @@ public class AuxiliaryPreviewModalManager: NSObject {
     
     animator.addAnimations {
       exitKeyframe.apply(
-        toView: rootModalContainerView,
-        auxPreviewVerticalAnchorPosition:
-          auxiliaryPreviewMetadata.verticalAnchorPosition
+        auxiliaryPreviewView: auxiliaryPreviewView,
+        auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
       );
       
       self.dimmingView?.alpha = 0;

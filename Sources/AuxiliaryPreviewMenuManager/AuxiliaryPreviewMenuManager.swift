@@ -331,14 +331,14 @@ public class AuxiliaryPreviewMenuManager {
     let keyframes = transitionAnimationConfig.transition.getKeyframes();
     
     keyframes.keyframeStart.apply(
-      toView: auxiliaryPreviewView,
-      auxPreviewVerticalAnchorPosition: auxiliaryPreviewMetadata.verticalAnchorPosition
+      auxiliaryPreviewView: auxiliaryPreviewView,
+      auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
     );
     
     animator.addAnimations {
       keyframes.keyframeEnd.apply(
-        toView: auxiliaryPreviewView,
-        auxPreviewVerticalAnchorPosition: auxiliaryPreviewMetadata.verticalAnchorPosition
+        auxiliaryPreviewView: auxiliaryPreviewView,
+        auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
       );
     };
     
@@ -383,8 +383,8 @@ public class AuxiliaryPreviewMenuManager {
     
     animator.addAnimations {
       exitKeyframe.apply(
-        toView: auxiliaryPreviewView,
-        auxPreviewVerticalAnchorPosition: auxiliaryPreviewMetadata.verticalAnchorPosition
+        auxiliaryPreviewView: auxiliaryPreviewView,
+        auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
       );
     };
   };
