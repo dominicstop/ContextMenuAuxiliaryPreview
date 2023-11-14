@@ -24,6 +24,8 @@ extension AuxiliaryPreviewMetadata {
       previewFrame: targetView.frame
     );
     
+    self.sizeValueContext = sizeValueContext;
+    
     self.computedWidth = {
       let computedWidth = auxiliaryPreviewConfig.preferredWidth?.compute(
         computingForSizeKey: \.width,

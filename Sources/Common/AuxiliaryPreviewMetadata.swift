@@ -18,6 +18,8 @@ public struct AuxiliaryPreviewMetadata {
   
   var offsetY: CGFloat;
   
+  var sizeValueContext: AuxiliaryPreviewSizeValue.Context;
+  
   // MARK: - Init
   // ------------
   
@@ -25,12 +27,14 @@ public struct AuxiliaryPreviewMetadata {
     verticalAnchorPosition: VerticalAnchorPosition,
     computedHeight: CGFloat,
     computedWidth: CGFloat,
-    offsetY: CGFloat
+    offsetY: CGFloat,
+    sizeValueContext: AuxiliaryPreviewSizeValue.Context
   ) {
   
     self.verticalAnchorPosition = verticalAnchorPosition;
     self.computedHeight = computedHeight;
     self.computedWidth = computedWidth;
     self.offsetY = offsetY;
+    self.sizeValueContext = sizeValueContext;
   };
 };

@@ -34,10 +34,12 @@ extension AuxiliaryPreviewMetadata {
     
     let contextMenuMetadata = auxiliaryPreviewMenuManager.contextMenuMetadata;
   
-    let previewSizeContext = AuxiliaryPreviewSizeValue.Context(
+    let sizeValueContext = AuxiliaryPreviewSizeValue.Context(
       windowSize: window.bounds.size,
       previewFrame: auxiliaryPreviewView.frame
     );
+    
+    self.sizeValueContext = sizeValueContext;
     
     self.verticalAnchorPosition = {
       let preferredVerticalAnchorPosition = auxiliaryPreviewConfig.verticalAnchorPosition;
@@ -60,7 +62,7 @@ extension AuxiliaryPreviewMetadata {
     self.computedWidth = {
       let computedWidth = auxiliaryPreviewConfig.preferredWidth?.compute(
         computingForSizeKey: \.width,
-        usingContext: previewSizeContext
+        usingContext: sizeValueContext
       );
       
       let fallbackWidth: CGFloat = {
@@ -82,7 +84,7 @@ extension AuxiliaryPreviewMetadata {
     let computedHeight: CGFloat = {
       let computedHeight: CGFloat? = auxiliaryPreviewConfig.preferredHeight?.compute(
         computingForSizeKey: \.height,
-        usingContext: previewSizeContext
+        usingContext: sizeValueContext
       );
       
       let fallbackHeight = auxiliaryPreviewView.frame.height;
