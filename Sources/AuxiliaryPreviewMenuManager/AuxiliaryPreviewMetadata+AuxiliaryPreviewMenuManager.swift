@@ -12,7 +12,7 @@ extension AuxiliaryPreviewMetadata {
   // MARK: - Computed Properties
   // ---------------------------
   
-  var computedWidthAdjusted: CGFloat? {
+  var computedWidthAdjusted: CGFloat {
     /// adjust width - fix for layout bug
     ///
     /// if you use the actual width, it triggers a bug w/ autolayout where the

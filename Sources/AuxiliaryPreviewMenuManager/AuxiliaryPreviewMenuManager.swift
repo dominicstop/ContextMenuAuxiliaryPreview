@@ -38,6 +38,9 @@ public class AuxiliaryPreviewMenuManager {
   /// where should the aux. preview be attached to?
   weak var auxiliaryPreviewParentView: UIView?;
   
+  weak var auxiliaryPreviewWidthConstraint: NSLayoutConstraint?;
+  weak var auxiliaryPreviewHeightConstraint: NSLayoutConstraint?;
+  
   // MARK: - Computed Properties
   // ---------------------------
   
@@ -168,13 +171,38 @@ public class AuxiliaryPreviewMenuManager {
     auxiliaryPreviewView.addGestureRecognizer(
       UITapGestureRecognizer(target: nil, action: nil)
     );
-        
-    let auxiliaryPreviewViewHeight =
-      auxiliaryPreviewMetadata.computedHeight;
     
-    let auxiliaryPreviewViewWidth =
-         auxiliaryPreviewMetadata.computedWidthAdjusted
-      ?? auxiliaryPreviewView.bounds.width;
+    let keyframeStart: AuxiliaryPreviewTransitionKeyframe? = {
+      guard let transitionAnimationConfig = auxiliaryPreviewConfig
+              .transitionConfigEntrance.transitionAnimationConfig
+      else { return nil };
+      
+      let keyframes = transitionAnimationConfig.transition.getKeyframes(
+        auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
+      );
+        
+      return keyframes.keyframeStart;
+    }();
+    
+    let auxiliaryPreviewViewHeight: CGFloat = {
+      guard let keyframeStart = keyframeStart,
+            let height = keyframeStart.auxiliaryPreviewPreferredHeight
+      else {
+        return auxiliaryPreviewMetadata.computedHeight;
+      };
+      
+      return height;
+    }();
+    
+    let auxiliaryPreviewViewWidth = {
+      guard let keyframeStart = keyframeStart,
+            let width = keyframeStart.auxiliaryPreviewPreferredWidth
+      else {
+        return auxiliaryPreviewMetadata.computedWidthAdjusted;
+      };
+      
+      return width;
+    }();
     
     /// enable auto layout
     auxiliaryPreviewView.translatesAutoresizingMaskIntoConstraints = false;
@@ -187,13 +215,15 @@ public class AuxiliaryPreviewMenuManager {
       var constraints: [NSLayoutConstraint] = [];
     
       // set aux preview height
-      constraints.append(
-        auxiliaryPreviewView.heightAnchor.constraint(
+      constraints.append({
+        let heightConstraint = auxiliaryPreviewView.heightAnchor.constraint(
           equalToConstant: auxiliaryPreviewViewHeight
-        )
-      );
+        );
+        
+        return heightConstraint;
+      }());
       
-      // set vertical alignment constraint - i.e. either...
+      // set vertical alignment constraint
       constraints.append(
         auxiliaryPreviewMetadata.verticalAnchorPosition.createVerticalConstraints(
           forView: auxiliaryPreviewView,
@@ -203,12 +233,22 @@ public class AuxiliaryPreviewMenuManager {
       );
       
       // set horizontal alignment constraints based on config...
-      constraints += auxiliaryPreviewConfig.alignmentHorizontal.createHorizontalConstraints(
-        forView: auxiliaryPreviewView,
-        attachingTo: morphingPlatterView,
-        enclosingView: contextMenuContainerView,
-        preferredWidth: auxiliaryPreviewViewWidth
-      );
+      constraints += {
+        let alignmentHorizontal = auxiliaryPreviewConfig.alignmentHorizontal;
+        
+        let constraints = alignmentHorizontal.createHorizontalConstraints(
+          forView: auxiliaryPreviewView,
+          attachingTo: morphingPlatterView,
+          enclosingView: contextMenuContainerView,
+          preferredWidth: auxiliaryPreviewViewWidth
+        );
+        
+        self.auxiliaryPreviewWidthConstraint = constraints.first {
+          $0.firstAttribute == .width;
+        };
+        
+        return constraints;
+      }();
       
       return constraints;
     }();
@@ -328,7 +368,9 @@ public class AuxiliaryPreviewMenuManager {
     );
     
     self.customAnimator = animator;
-    let keyframes = transitionAnimationConfig.transition.getKeyframes();
+    let keyframes = transitionAnimationConfig.transition.getKeyframes(
+      auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
+    );
     
     keyframes.keyframeStart.apply(
       auxiliaryPreviewView: auxiliaryPreviewView,
@@ -372,8 +414,9 @@ public class AuxiliaryPreviewMenuManager {
           let auxiliaryPreviewView = manager.auxiliaryPreviewView
     else { return };
     
-    let (_, exitKeyframe) =
-      auxiliaryPreviewConfig.transitionConfigExit.getKeyframes();
+    let keyframes = auxiliaryPreviewConfig.transitionConfigExit.getKeyframes(
+      auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
+    );
     
     if let customAnimator = self.customAnimator,
        customAnimator.isRunning {
@@ -382,7 +425,7 @@ public class AuxiliaryPreviewMenuManager {
     };
     
     animator.addAnimations {
-      exitKeyframe.apply(
+      keyframes.keyframeEnd.apply(
         auxiliaryPreviewView: auxiliaryPreviewView,
         auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
       );

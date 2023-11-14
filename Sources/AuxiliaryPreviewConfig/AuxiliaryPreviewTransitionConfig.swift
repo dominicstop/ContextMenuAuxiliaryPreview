@@ -28,7 +28,9 @@ public struct AuxiliaryPreviewTransitionConfig {
     self.keyframeConfigStart = tempCopy.keyframeConfigStart;
   };
   
-  public func getKeyframes() -> (
+  public func getKeyframes(
+    auxiliaryPreviewMetadata: AuxiliaryPreviewMetadata
+  ) -> (
     keyframeStart: AuxiliaryPreviewTransitionKeyframe,
     keyframeEnd: AuxiliaryPreviewTransitionKeyframe
   ) {
@@ -37,9 +39,17 @@ public struct AuxiliaryPreviewTransitionConfig {
       keyframeCurrent: self.keyframeConfigStart
     );
     
-    let keyframeEnd = AuxiliaryPreviewTransitionKeyframe(
+    keyframeStart.setValuesIfNeeded(
+      usingAuxiliaryPreviewMetadata: auxiliaryPreviewMetadata
+    );
+    
+    var keyframeEnd = AuxiliaryPreviewTransitionKeyframe(
       keyframeCurrent: self.keyframeConfigEnd,
       keyframePrevious: keyframeStart
+    );
+    
+    keyframeEnd.setValuesIfNeeded(
+      usingAuxiliaryPreviewMetadata: auxiliaryPreviewMetadata
     );
     
     keyframeStart = AuxiliaryPreviewTransitionKeyframe(

@@ -12,6 +12,9 @@ import DGSwiftUtilities
 /// Derived from: `AuxiliaryPreviewTransitionKeyframeConfig`
 public struct AuxiliaryPreviewTransitionKeyframe {
 
+  public var auxiliaryPreviewPreferredWidth: CGFloat?;
+  public var auxiliaryPreviewPreferredHeight: CGFloat?;
+
   public var opacity: CGFloat;
   public var transform: Transform3D;
   
@@ -19,6 +22,7 @@ public struct AuxiliaryPreviewTransitionKeyframe {
     keyframeCurrent: AuxiliaryPreviewTransitionKeyframeConfig,
     keyframePrevious keyframePrev: Self? = nil
   ) {
+    
     self.opacity = keyframeCurrent.opacity
       ?? keyframePrev?.opacity
       ?? 1;
@@ -33,6 +37,21 @@ public struct AuxiliaryPreviewTransitionKeyframe {
       nextTransform.setNonNilValues(with: prevTransform);
       return nextTransform;
     }();
+  };
+  
+  mutating func setValuesIfNeeded(
+    usingAuxiliaryPreviewMetadata auxiliaryPreviewMetadata: AuxiliaryPreviewMetadata
+  ) {
+    
+    if self.auxiliaryPreviewPreferredWidth == nil {
+      self.auxiliaryPreviewPreferredWidth =
+        auxiliaryPreviewMetadata.computedWidthAdjusted;
+    };
+    
+    if self.auxiliaryPreviewPreferredHeight == nil {
+      self.auxiliaryPreviewPreferredHeight =
+        auxiliaryPreviewMetadata.computedHeight;
+    };
   };
   
   public func apply(

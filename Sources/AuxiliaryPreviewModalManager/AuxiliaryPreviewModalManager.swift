@@ -51,6 +51,9 @@ public class AuxiliaryPreviewModalManager: NSObject {
   
   var dimmingView: UIView?;
   
+  weak var auxiliaryPreviewWidthConstraint: NSLayoutConstraint?;
+  weak var auxiliaryPreviewHeightConstraint: NSLayoutConstraint?;
+  
   // MARK: - Computed Properties
   // ---------------------------
   
@@ -161,14 +164,44 @@ public class AuxiliaryPreviewModalManager: NSObject {
     auxiliaryPreviewController.view.translatesAutoresizingMaskIntoConstraints = false;
     presentedController.view.addSubview(auxiliaryPreviewController.view);
     
+    let keyframeStart: AuxiliaryPreviewTransitionKeyframe = {
+      let transitionAnimationConfig = auxiliaryPreviewConfig
+        .transitionConfigEntrance.transitionAnimationConfig ?? .default;
+        
+      let keyframes = transitionAnimationConfig.transition.getKeyframes(
+        auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
+      );
+        
+      return keyframes.keyframeStart;
+    }();
+    
+    let auxiliaryPreviewViewHeight: CGFloat = {
+      guard let height = keyframeStart.auxiliaryPreviewPreferredHeight else {
+        return auxiliaryPreviewMetadata.computedHeight;
+      };
+      
+      return height;
+    }();
+    
+    let auxiliaryPreviewViewWidth: CGFloat = {
+      guard let width = keyframeStart.auxiliaryPreviewPreferredWidth else {
+        return auxiliaryPreviewMetadata.computedWidthAdjusted;
+      };
+      
+      return width;
+    }();
+    
     let constraints: [NSLayoutConstraint] = {
       var constraints: [NSLayoutConstraint] = [];
       
-      constraints.append(
-        auxiliaryPreviewController.view.heightAnchor.constraint(
-          equalToConstant: auxiliaryPreviewMetadata.computedHeight
-        )
-      );
+      constraints.append({
+        let constraint = auxiliaryPreviewController.view.heightAnchor.constraint(
+          equalToConstant: auxiliaryPreviewViewHeight
+        );
+        
+        self.auxiliaryPreviewHeightConstraint = constraint;
+        return constraint;
+      }());
       
       constraints.append(
         auxiliaryPreviewMetadata.verticalAnchorPosition.createVerticalConstraints(
@@ -178,12 +211,23 @@ public class AuxiliaryPreviewModalManager: NSObject {
         )
       );
       
-      constraints += self.auxiliaryPreviewConfig.alignmentHorizontal.createHorizontalConstraints(
-        forView: auxiliaryPreviewController.view,
-        attachingTo: targetViewSnapshot,
-        enclosingView: presentedController.view,
-        preferredWidth: auxiliaryPreviewMetadata.computedWidth
-      );
+      constraints += {
+        let alignmentHorizontal =
+          self.auxiliaryPreviewConfig.alignmentHorizontal;
+          
+        let constraints = alignmentHorizontal.createHorizontalConstraints(
+          forView: auxiliaryPreviewController.view,
+          attachingTo: targetViewSnapshot,
+          enclosingView: presentedController.view,
+          preferredWidth: auxiliaryPreviewViewWidth
+        );
+        
+        self.auxiliaryPreviewWidthConstraint = constraints.first {
+          $0.firstAttribute == .width;
+        };
+        
+        return constraints;
+      }();
     
       return constraints;
     }();
@@ -203,7 +247,10 @@ public class AuxiliaryPreviewModalManager: NSObject {
     let transitionAnimationConfig =
       transitionConfigEntrance.transitionAnimationConfig ?? .default;
     
-    let keyframes = transitionAnimationConfig.transition.getKeyframes();
+    let keyframes = transitionAnimationConfig.transition.getKeyframes(
+      auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
+    );
+    
     let animator = transitionAnimationConfig.animatorConfig.createAnimator(
       gestureInitialVelocity: .zero
     );
@@ -243,7 +290,9 @@ public class AuxiliaryPreviewModalManager: NSObject {
       animatorConfig.createAnimator(gestureInitialVelocity: .zero);
     
     let transitionConfigExit = self.auxiliaryPreviewConfig.transitionConfigExit;
-    let (exitKeyframe, _) = transitionConfigExit.getKeyframes();
+    let (exitKeyframe, _) = transitionConfigExit.getKeyframes(
+      auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
+    );
     
     animator.addAnimations {
       exitKeyframe.apply(
