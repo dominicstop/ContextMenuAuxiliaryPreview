@@ -26,13 +26,10 @@ extension AuxiliaryPreviewMetadata {
 
   init?(auxiliaryPreviewMenuManager: AuxiliaryPreviewMenuManager) {
   
-    guard let contextMenuManager = auxiliaryPreviewMenuManager.contextMenuManager,
+    guard let window = auxiliaryPreviewMenuManager.window,
+          let contextMenuManager = auxiliaryPreviewMenuManager.contextMenuManager,
           let auxiliaryPreviewConfig = contextMenuManager.auxiliaryPreviewConfig,
-          
-          let window = auxiliaryPreviewMenuManager.window,
-
-          let auxiliaryPreviewView =
-            contextMenuManager.auxiliaryPreviewView
+          let auxiliaryPreviewView = contextMenuManager.auxiliaryPreviewView
     else { return nil };
     
     let contextMenuMetadata = auxiliaryPreviewMenuManager.contextMenuMetadata;
@@ -60,7 +57,7 @@ extension AuxiliaryPreviewMetadata {
         : .bottom;
     }();
     
-    let computedWidth: CGFloat = {
+    self.computedWidth = {
       let computedWidth = auxiliaryPreviewConfig.preferredWidth?.compute(
         computingForSizeKey: \.width,
         usingContext: previewSizeContext
@@ -81,8 +78,6 @@ extension AuxiliaryPreviewMetadata {
       
       return computedWidth ?? fallbackWidth;
     }();
-    
-    self.computedWidth = computedWidth;
     
     let computedHeight: CGFloat = {
       let computedHeight: CGFloat? = auxiliaryPreviewConfig.preferredHeight?.compute(

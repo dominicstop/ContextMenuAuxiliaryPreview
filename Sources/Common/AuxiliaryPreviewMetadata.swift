@@ -32,5 +32,5 @@ public struct AuxiliaryPreviewMetadata {
     self.computedHeight = computedHeight;
     self.computedWidth = computedWidth;
     self.offsetY = offsetY;
-  }
+  };
 };
