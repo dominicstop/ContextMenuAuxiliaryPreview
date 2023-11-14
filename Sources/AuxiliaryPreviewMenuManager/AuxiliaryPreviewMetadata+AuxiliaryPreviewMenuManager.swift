@@ -9,12 +9,6 @@ import UIKit
 
 extension AuxiliaryPreviewMetadata {
 
-  // MARK: - Static Properties
-  // -------------------------
-
-  
-  fileprivate static let computedWidthAdjusment = 0.5;
-  
   // MARK: - Computed Properties
   // ---------------------------
   
