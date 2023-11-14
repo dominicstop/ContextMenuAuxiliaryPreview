@@ -16,6 +16,19 @@ public enum HorizontalAnchorPosition {
   case targetTrailing;
   case targetCenter;
   
+  // MARK: - Computed Properties
+  // ---------------------------
+  
+  var shouldSetWidth: Bool {
+    switch self {
+      case .targetLeading, .targetTrailing, .targetCenter:
+        return true;
+      
+      default:
+        return false;
+    };
+  };
+  
   // MARK: - Functions
   // -----------------
   
@@ -23,67 +36,80 @@ public enum HorizontalAnchorPosition {
     forView view: UIView,
     attachingTo targetView: UIView,
     enclosingView: UIView,
-    preferredWidth: CGFloat,
+    preferredWidth: CGFloat?,
     marginLeading: CGFloat = 0,
     marginTrailing: CGFloat = 100
   ) -> [NSLayoutConstraint] {
   
-    let widthAnchor = view.widthAnchor.constraint(
-      equalToConstant: preferredWidth
-    );
+    var constraints: [NSLayoutConstraint?] = [];
+  
+    let widthAnchor: NSLayoutConstraint? = {
+      guard let preferredWidth = preferredWidth else { return nil };
+      
+      return view.widthAnchor.constraint(
+        equalToConstant: preferredWidth
+      );
+    }();
   
     switch self {
       // A - pin to left
-      case .targetLeading: return [
-        widthAnchor,
-        view.leadingAnchor.constraint(
-          equalTo: targetView.leadingAnchor,
-          constant: marginLeading
-        ),
-      ];
+      case .targetLeading:
+        constraints += [
+          widthAnchor,
+          view.leadingAnchor.constraint(
+            equalTo: targetView.leadingAnchor,
+            constant: marginLeading
+          ),
+        ];
       
       // B - pin to right
-      case .targetTrailing: return [
-        widthAnchor,
-        view.trailingAnchor.constraint(
-          equalTo: targetView.trailingAnchor,
-          constant: -marginTrailing
-        ),
-      ];
+      case .targetTrailing:
+        constraints += [
+          widthAnchor,
+          view.trailingAnchor.constraint(
+            equalTo: targetView.trailingAnchor,
+            constant: -marginTrailing
+          )
+        ];
       
       // C - pin to center
-      case .targetCenter: return [
-        widthAnchor,
-        view.centerXAnchor.constraint(
-          equalTo: targetView.centerXAnchor
-        ),
-      ];
+      case .targetCenter:
+        constraints +=  [
+          widthAnchor,
+          view.centerXAnchor.constraint(
+            equalTo: targetView.centerXAnchor
+          ),
+        ];
       
       // D - match preview size
-      case .stretchTarget: return [
-        view.leadingAnchor.constraint(
-          equalTo: targetView.leadingAnchor,
-          constant: marginLeading
-        ),
-        
-        view.trailingAnchor.constraint(
-          equalTo: targetView.trailingAnchor,
-          constant: marginTrailing
-        ),
-      ];
+      case .stretchTarget:
+        constraints += [
+          view.leadingAnchor.constraint(
+            equalTo: targetView.leadingAnchor,
+            constant: marginLeading
+          ),
+          
+          view.trailingAnchor.constraint(
+            equalTo: targetView.trailingAnchor,
+            constant: marginTrailing
+          ),
+        ];
       
       // E - stretch to edges of screen
-      case .stretch: return [
-        view.leadingAnchor.constraint(
-          equalTo: enclosingView.leadingAnchor,
-          constant: marginLeading
-        ),
-        
-        view.trailingAnchor.constraint(
-          equalTo: enclosingView.trailingAnchor,
-          constant: marginTrailing
-        ),
-      ];
+      case .stretch:
+        constraints += [
+          view.leadingAnchor.constraint(
+            equalTo: enclosingView.leadingAnchor,
+            constant: marginLeading
+          ),
+          
+          view.trailingAnchor.constraint(
+            equalTo: enclosingView.trailingAnchor,
+            constant: marginTrailing
+          ),
+        ];
     };
+    
+    return constraints.compactMap { $0 };
   };
 };
