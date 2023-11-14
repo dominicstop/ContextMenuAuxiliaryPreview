@@ -82,13 +82,6 @@ public class AuxiliaryPreviewModalManager: NSObject {
   // MARK: - Functions - Setup
   // -------------------------
   
-  func prepareForPresentation(){
-  
-    self.auxiliaryPreviewMetadata = .init(
-      auxiliaryPreviewModalManager: self
-    );
-  };
-  
   func setupViews(){
     guard let rootContainerView = self.rootContainerView,
           let presentedController = self.presentedController,
@@ -341,9 +334,11 @@ public class AuxiliaryPreviewModalManager: NSObject {
     presentedController.modalPresentationStyle = .custom;
     presentedController.transitioningDelegate = self;
     
-    self.prepareForPresentation();
-    self.presentationState = .presenting;
+    self.auxiliaryPreviewMetadata = .init(
+      auxiliaryPreviewModalManager: self
+    );
     
+    self.presentationState = .presenting;
     presentingController.present(presentedController, animated: true);
   };
 };
