@@ -18,7 +18,7 @@ extension UIView {
   
   public var widthConstraint: NSLayoutConstraint? {
     self.constraints.first {
-      $0.firstAttribute == .height
+      $0.firstAttribute == .width
     };
   };
 };
