@@ -11,6 +11,11 @@ import DGSwiftUtilities
 
 public struct AuxiliaryPreviewTransitionKeyframeConfig {
 
+  static var defaultEndKeyframe: Self = .init(
+    opacity: 1,
+    transform: .default
+  );
+
   static var propertyKeys: [PartialKeyPath<Self>] = [
     \.opacity,
     \.transform

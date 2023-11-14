@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import DGSwiftUtilities
 
 public enum AuxiliaryPreviewTransitionPreset {
 
@@ -32,7 +32,7 @@ public enum AuxiliaryPreviewTransitionPreset {
   
   case custom(
     keyframeStart: AuxiliaryPreviewTransitionKeyframeConfig,
-    keyframeEnd: AuxiliaryPreviewTransitionKeyframeConfig
+    keyframeEnd: AuxiliaryPreviewTransitionKeyframeConfig?
   );
   
   // MARK: - Computed Properties
@@ -48,9 +48,7 @@ public enum AuxiliaryPreviewTransitionPreset {
           keyframeStart: .init(
             opacity: 1
           ),
-          keyframeEnd: .init(
-            opacity: 1
-          )
+          keyframeEnd: .defaultEndKeyframe
         );
         
       case .fade:
@@ -58,9 +56,7 @@ public enum AuxiliaryPreviewTransitionPreset {
           keyframeStart: .init(
             opacity: 0
           ),
-          keyframeEnd: .init(
-            opacity: 1
-          )
+          keyframeEnd: .defaultEndKeyframe
         );
         
       case let .slide(slideOffset):
@@ -71,10 +67,7 @@ public enum AuxiliaryPreviewTransitionPreset {
               translateY: slideOffset
             )
           ),
-          keyframeEnd: .init(
-            opacity: 1,
-            transform: .default
-          )
+          keyframeEnd: .defaultEndKeyframe
         );
         
       case let .zoom(zoomOffset):
@@ -86,10 +79,7 @@ public enum AuxiliaryPreviewTransitionPreset {
               scaleY: zoomOffset
             )
           ),
-          keyframeEnd: .init(
-            opacity: 1,
-            transform: .default
-          )
+          keyframeEnd: .defaultEndKeyframe
         );
         
       case let .zoomAndSlide(slideOffset, zoomOffset):
@@ -102,14 +92,11 @@ public enum AuxiliaryPreviewTransitionPreset {
               scaleY: zoomOffset
             )
           ),
-          keyframeEnd: .init(
-            opacity: 1,
-            transform: .default
-          )
+          keyframeEnd: .defaultEndKeyframe
         );
         
       case let .custom(keyframeStart, keyframeEnd):
-        return(keyframeStart, keyframeEnd);
+        return(keyframeStart, keyframeEnd ?? .defaultEndKeyframe);
     };
   };
 };
