@@ -32,7 +32,7 @@ public enum AuxiliaryPreviewTransitionPreset {
   
   case custom(
     keyframeStart: AuxiliaryPreviewTransitionKeyframeConfig,
-    keyframeEnd: AuxiliaryPreviewTransitionKeyframeConfig?
+    keyframeEnd: AuxiliaryPreviewTransitionKeyframeConfig? = nil
   );
   
   // MARK: - Computed Properties
