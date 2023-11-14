@@ -258,8 +258,6 @@ public class AuxiliaryPreviewMenuManager {
     }();
     
     NSLayoutConstraint.activate(constraints);
-    auxiliaryPreviewView.layoutIfNeeded();
-    
     self.isAuxiliaryPreviewVisible = true;
   };
   
@@ -341,11 +339,13 @@ public class AuxiliaryPreviewMenuManager {
   public func attachAndAnimateInAuxiliaryPreviewTogetherWithContextMenu() {
     guard let manager = self.contextMenuManager,
           let menuAuxPreviewConfig = manager.auxiliaryPreviewConfig,
+          let auxiliaryPreviewView = self.auxiliaryPreviewView,
           
           case .syncedToMenuEntranceTransition =
             menuAuxPreviewConfig.transitionConfigEntrance
     else { return };
     
+    auxiliaryPreviewView.alpha = 1;
     self.attachAuxiliaryPreview();
   };
   

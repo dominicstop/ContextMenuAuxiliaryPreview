@@ -172,8 +172,14 @@ public class ContextMenuManager {
           let delegate = self.delegate
     else { return };
     
-    self.auxiliaryPreviewView =
+    let auxiliaryPreviewView =
       delegate.onRequestMenuAuxiliaryPreview(sender: self);
+      
+    self.auxiliaryPreviewView = auxiliaryPreviewView;
+    
+    if case .syncedToMenuEntranceTransition = auxiliaryPreviewConfig.transitionConfigEntrance {
+      auxiliaryPreviewView.alpha = 0;
+    };
       
     animator.addAnimations {
       let auxPreviewManager = AuxiliaryPreviewMenuManager(
