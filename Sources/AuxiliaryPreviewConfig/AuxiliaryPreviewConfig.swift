@@ -26,6 +26,8 @@ public struct AuxiliaryPreviewConfig {
   public var marginOuter: CGFloat;
 
   public var transitionConfigEntrance: AuxiliaryPreviewEntranceTransitionConfig;
+  
+  public var transitionExitPreset: AuxiliaryPreviewTransitionPreset;
   public var transitionConfigExit: AuxiliaryPreviewTransitionConfig;
   
   // MARK: - Init
@@ -50,6 +52,7 @@ public struct AuxiliaryPreviewConfig {
     self.marginOuter = marginOuter;
     self.transitionConfigEntrance = transitionConfigEntrance;
     
+    self.transitionExitPreset = transitionExitPreset;
     self.transitionConfigExit = {
       var transitionConfigExit = AuxiliaryPreviewTransitionConfig(
         transitionPreset: transitionExitPreset
