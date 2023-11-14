@@ -210,11 +210,15 @@ class Experiment02ViewController: UIViewController, ContextMenuManagerDelegate {
 };
 
 extension Experiment02ViewController: UIContextMenuInteractionDelegate {
-
   func contextMenuInteraction(
     _ interaction: UIContextMenuInteraction,
     configurationForMenuAtLocation location: CGPoint
   ) -> UIContextMenuConfiguration? {
+  
+    self.contextMenuManager!.notifyOnContextMenuInteraction(
+      interaction,
+      configurationForMenuAtLocation: location
+    );
     
     return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ -> UIMenu? in
       let shareAction = UIAction(

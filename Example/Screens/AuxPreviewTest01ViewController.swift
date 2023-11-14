@@ -72,6 +72,11 @@ extension AuxPreviewTest01ViewController: UIContextMenuInteractionDelegate {
     _ interaction: UIContextMenuInteraction,
     configurationForMenuAtLocation location: CGPoint
   ) -> UIContextMenuConfiguration? {
+  
+    self.contextMenuManager!.notifyOnContextMenuInteraction(
+      interaction,
+      configurationForMenuAtLocation: location
+    );
     
     return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ -> UIMenu? in
       let shareAction = UIAction(

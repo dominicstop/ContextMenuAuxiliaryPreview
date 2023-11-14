@@ -150,6 +150,13 @@ public class ContextMenuManager {
   // MARK: - Public Functions - UIContextMenuInteraction
   // ---------------------------------------------------
   
+  public func notifyOnContextMenuInteraction(
+    _ interaction: UIContextMenuInteraction,
+    configurationForMenuAtLocation location: CGPoint
+  ) {
+    // no-op
+  };
+  
   // context menu display begins
   public func notifyOnContextMenuInteraction(
     _ interaction: UIContextMenuInteraction,
