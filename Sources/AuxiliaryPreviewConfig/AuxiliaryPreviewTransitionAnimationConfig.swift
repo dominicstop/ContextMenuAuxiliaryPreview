@@ -19,6 +19,8 @@ public struct AuxiliaryPreviewTransitionAnimationConfig {
 
   public var delay: TimeInterval;
   public var animatorConfig: AnimationConfig;
+  
+  public var transitionPreset: AuxiliaryPreviewTransitionPreset;
   public var transition: AuxiliaryPreviewTransitionConfig;
   
   public init(
@@ -30,6 +32,7 @@ public struct AuxiliaryPreviewTransitionAnimationConfig {
     self.delay = delay;
     self.animatorConfig = animatorConfig;
     
+    self.transitionPreset = transitionPreset;
     self.transition = .init(transitionPreset: transitionPreset);
   };
 };
