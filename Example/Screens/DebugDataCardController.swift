@@ -10,15 +10,14 @@ import UIKit
 class DebugDataCardViewController: UIViewController {
 
   enum DataEntry {
+    case title(title: String);
     case labelDesc(label: String, desc: String);
+    case spacing(size: CGFloat);
   };
   
   weak var rootStack: UIStackView?;
   
   var debugData: [DataEntry] = [
-    .labelDesc(label: "Hello", desc: "World"),
-    .labelDesc(label: "Hello", desc: "World"),
-    .labelDesc(label: "Hello", desc: "World"),
   ];
   
   func updateViews(){
@@ -42,6 +41,7 @@ class DebugDataCardViewController: UIViewController {
           let label: UILabel = {
             let label = UILabel();
             label.text  = "\(labelString):";
+            label.font = UIFont.boldSystemFont(ofSize: 14);
             
             return label;
           }();
@@ -51,14 +51,25 @@ class DebugDataCardViewController: UIViewController {
           let desc: UILabel = {
             let label = UILabel();
             label.text  = descString;
+            label.font = UIFont.systemFont(ofSize: 14);
+            label.alpha = 0.75;
             
             return label;
           }();
           
           stack.addArrangedSubview(desc);
-          
           rootStack.addArrangedSubview(stack);
+        
+        case let .title(title):
+          let label = UILabel();
+          label.text = title;
+          label.font = UIFont.boldSystemFont(ofSize: 16);
           
+          rootStack.addArrangedSubview(label);
+          
+        case let .spacing(size):
+          guard let prevView = rootStack.subviews.last else { return };
+          rootStack.setCustomSpacing(size, after: prevView);
       };
     };
   };
@@ -78,6 +89,7 @@ class DebugDataCardViewController: UIViewController {
     let rootStack: UIStackView = {
       let stack = UIStackView();
       stack.axis = .vertical;
+      stack.alignment = .leading;
       
       return stack;
     }();
