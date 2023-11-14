@@ -15,6 +15,7 @@
 		8867D1B22AD16C870002961D /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8867D1B12AD16C870002961D /* Routes.swift */; };
 		8867D1B42AD16CF90002961D /* AuxPreviewTest01ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8867D1B32AD16CF90002961D /* AuxPreviewTest01ViewController.swift */; };
 		88816E5E2B03B37A00D8DDFF /* DebugDataCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88816E5D2B03B37A00D8DDFF /* DebugDataCardController.swift */; };
+		88816E602B03F5F300D8DDFF /* AuxiliaryPreviewPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88816E5F2B03F5F300D8DDFF /* AuxiliaryPreviewPresets.swift */; };
 		889879F12AE26BD30020D7C6 /* ContextMenuAuxiliaryPreview in Frameworks */ = {isa = PBXBuildFile; productRef = 889879F02AE26BD30020D7C6 /* ContextMenuAuxiliaryPreview */; };
 		889B47952AF72F4A006EB779 /* Experiment02ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889B47942AF72F4A006EB779 /* Experiment02ViewController.swift */; };
 		88E016E92AF6046F004BA22B /* Experiment01ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E016E82AF6046F004BA22B /* Experiment01ViewController.swift */; };
@@ -31,6 +32,7 @@
 		8867D1B12AD16C870002961D /* Routes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
 		8867D1B32AD16CF90002961D /* AuxPreviewTest01ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuxPreviewTest01ViewController.swift; sourceTree = "<group>"; };
 		88816E5D2B03B37A00D8DDFF /* DebugDataCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugDataCardController.swift; sourceTree = "<group>"; };
+		88816E5F2B03F5F300D8DDFF /* AuxiliaryPreviewPresets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuxiliaryPreviewPresets.swift; sourceTree = "<group>"; };
 		889879EF2AE26BC80020D7C6 /* ContextMenuAuxiliaryPreview */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ContextMenuAuxiliaryPreview; path = ..; sourceTree = "<group>"; };
 		889B47942AF72F4A006EB779 /* Experiment02ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Experiment02ViewController.swift; sourceTree = "<group>"; };
 		88E016E82AF6046F004BA22B /* Experiment01ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Experiment01ViewController.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				8867D1B32AD16CF90002961D /* AuxPreviewTest01ViewController.swift */,
 				884B0FF02AE8865400EB7E67 /* AuxPreviewTest02ViewController.swift */,
 				88816E5D2B03B37A00D8DDFF /* DebugDataCardController.swift */,
+				88816E5F2B03F5F300D8DDFF /* AuxiliaryPreviewPresets.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 				88441DF62AD15D6D008B64B1 /* AppDelegate.swift in Sources */,
 				884B0FF12AE8865400EB7E67 /* AuxPreviewTest02ViewController.swift in Sources */,
 				88441DF82AD15D6D008B64B1 /* SceneDelegate.swift in Sources */,
+				88816E602B03F5F300D8DDFF /* AuxiliaryPreviewPresets.swift in Sources */,
 				88816E5E2B03B37A00D8DDFF /* DebugDataCardController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
