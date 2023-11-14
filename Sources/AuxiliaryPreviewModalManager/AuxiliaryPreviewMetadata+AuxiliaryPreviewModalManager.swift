@@ -51,7 +51,7 @@ extension AuxiliaryPreviewMetadata {
     }();
     
     self.computedHeight = {
-      let computedHeight = auxiliaryPreviewConfig.preferredHeight?.compute(
+      let computedHeight = auxiliaryPreviewConfig.height.compute(
         computingForSizeKey: \.height,
         usingContext: sizeValueContext
       );
