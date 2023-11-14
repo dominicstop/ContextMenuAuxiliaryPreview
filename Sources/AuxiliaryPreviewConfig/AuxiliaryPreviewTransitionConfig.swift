@@ -21,14 +21,14 @@ public struct AuxiliaryPreviewTransitionConfig {
   // MARK: - Functions
   // -----------------
   
-  public mutating func reverseKeyframes(){
+  mutating func reverseKeyframes(){
     let tempCopy = self;
     
     self.keyframeConfigEnd = tempCopy.keyframeConfigStart;
     self.keyframeConfigStart = tempCopy.keyframeConfigStart;
   };
   
-  public func getKeyframes(
+  func getKeyframes(
     auxiliaryPreviewMetadata: AuxiliaryPreviewMetadata
   ) -> (
     keyframeStart: AuxiliaryPreviewTransitionKeyframe,
