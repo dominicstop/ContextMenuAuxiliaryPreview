@@ -20,12 +20,6 @@
 
 ## WIP - Queue
 
-- [ ] `TODO:2023-11-15-06-29-49`- Bug: Aux. Preview Menu - Entrance Transition - Cannot animate fade/transform/etc keyframes when using `syncedToMenuEntranceTransition`.
-  * `2023-11-15-06-31-40` - Attempted: `UIView.addKeyframe`, `isOpaque`, `DispatchQueue.main.async`.
-  * `2023-11-15-06-38-28` - In order to transition to work, the keyframe has to applied outside the `UIContextMenuInteractionAnimatin` animation block. 
-
-<br>
-
 - [ ] `TODO:2023-11-10-12-17-26` - Bug: Aux. Preview - Fix aux. preview not receiving touch events when it's at the very bottom of the screen.
   * This is likely caused by nudging the context menu container view.
 
@@ -46,6 +40,12 @@
 <br><br>
 
 ## Completed
+
+- [x] `TODO:2023-11-15-06-29-49`- Bug: Aux. Preview Menu - Entrance Transition - Cannot animate fade/transform/etc keyframes when using `syncedToMenuEntranceTransition`.
+  * `2023-11-15-06-31-40` - Attempted: `UIView.addKeyframe`, `isOpaque`, `DispatchQueue.main.async`.
+  * `2023-11-15-06-38-28` - In order to transition to work, the keyframe has to applied outside the `UIContextMenuInteractionAnimatin` animation block. 
+
+<br>
 
 - [x] `TODO:2023-11-09-15-49-09` - Refactor: Aux. Preview Popover - Move computed height/width of aux. preview to keyframe (i.e. `AuxiliaryPreviewTransitionKeyframe`).
 - [x] `TODO:2023-11-10-12-25-26` - Bug: Aux. Preview Popover - Fix: Cannot show aux. preview again after it has been prev. presented.
