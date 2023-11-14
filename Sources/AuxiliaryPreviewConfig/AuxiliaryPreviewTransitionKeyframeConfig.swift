@@ -18,20 +18,29 @@ public struct AuxiliaryPreviewTransitionKeyframeConfig {
 
   static var propertyKeys: [PartialKeyPath<Self>] = [
     \.opacity,
-    \.transform
+    \.transform,
+    \.auxiliaryPreviewPreferredWidth,
+    \.auxiliaryPreviewPreferredHeight,
   ];
 
   public var opacity: CGFloat?;
   public var transform: Transform3D?;
   
+  public var auxiliaryPreviewPreferredWidth: AuxiliaryPreviewSizeValue?;
+  public var auxiliaryPreviewPreferredHeight: AuxiliaryPreviewSizeValue?;
+  
   public init(
     opacity: CGFloat? = nil,
-    transform: Transform3D? = nil
+    transform: Transform3D? = nil,
+    auxiliaryPreviewPreferredWidth: AuxiliaryPreviewSizeValue? = nil,
+    auxiliaryPreviewPreferredHeight: AuxiliaryPreviewSizeValue? = nil
   ) {
   
     self.opacity = opacity;
     self.transform = transform;
-  };
+    self.auxiliaryPreviewPreferredWidth = auxiliaryPreviewPreferredWidth;
+    self.auxiliaryPreviewPreferredHeight = auxiliaryPreviewPreferredHeight;
+  }
   
   mutating func setNonNilValues(using newValue: Self){
     Self.propertyKeys.forEach {
