@@ -78,6 +78,9 @@ public struct AuxiliaryPreviewTransitionKeyframe {
     auxiliaryPreviewView: UIView,
     auxiliaryPreviewMetadata: AuxiliaryPreviewMetadata
   ){
+    
+    var shouldUpdateConstraints = false;
+  
     auxiliaryPreviewView.alpha = self.opacity;
     
     auxiliaryPreviewView.layer.transform = {
@@ -103,7 +106,7 @@ public struct AuxiliaryPreviewTransitionKeyframe {
       else { break block };
       
       heightConstraint.constant = heightNext;
-      auxiliaryPreviewView.setNeedsLayout();
+      shouldUpdateConstraints = true;
     };
     
     block:
@@ -115,6 +118,11 @@ public struct AuxiliaryPreviewTransitionKeyframe {
       else { break block };
       
       widthConstraint.constant = widthNext;
+      shouldUpdateConstraints = true;
+    };
+    
+    if shouldUpdateConstraints {
+      auxiliaryPreviewView.updateConstraints();
       auxiliaryPreviewView.setNeedsLayout();
     };
   };

@@ -46,7 +46,6 @@ public struct AuxiliaryPreviewTransitionConfig {
     
     var keyframeEnd = AuxiliaryPreviewTransitionKeyframe(
       keyframeCurrent: self.keyframeConfigEnd,
-      keyframePrevious: keyframeStart,
       auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
     );
     
@@ -54,8 +53,8 @@ public struct AuxiliaryPreviewTransitionConfig {
       usingAuxiliaryPreviewMetadata: auxiliaryPreviewMetadata
     );
     
-    keyframeStart = AuxiliaryPreviewTransitionKeyframe(
-      keyframeCurrent: self.keyframeConfigStart,
+    keyframeEnd = AuxiliaryPreviewTransitionKeyframe(
+      keyframeCurrent: self.keyframeConfigEnd,
       keyframePrevious: keyframeEnd,
       auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
     );

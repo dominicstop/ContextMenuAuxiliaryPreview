@@ -267,6 +267,8 @@ public class AuxiliaryPreviewModalManager: NSObject {
         auxiliaryPreviewView: auxiliaryPreviewView,
         auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
       );
+      
+      auxiliaryPreviewView.layoutIfNeeded();
     };
     
     animator.addCompletion { _ in
@@ -295,12 +297,14 @@ public class AuxiliaryPreviewModalManager: NSObject {
     );
     
     animator.addAnimations {
+      self.dimmingView?.alpha = 0;
+      
       exitKeyframe.apply(
         auxiliaryPreviewView: auxiliaryPreviewView,
         auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
       );
       
-      self.dimmingView?.alpha = 0;
+      auxiliaryPreviewView.layoutIfNeeded();
     };
     
     animator.addCompletion() { _ in

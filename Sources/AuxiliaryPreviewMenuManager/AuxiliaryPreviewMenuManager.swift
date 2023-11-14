@@ -382,6 +382,8 @@ public class AuxiliaryPreviewMenuManager {
         auxiliaryPreviewView: auxiliaryPreviewView,
         auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
       );
+      
+      auxiliaryPreviewView.layoutIfNeeded();
     };
     
     switch menuAuxPreviewConfig.transitionConfigEntrance {
@@ -429,6 +431,8 @@ public class AuxiliaryPreviewMenuManager {
         auxiliaryPreviewView: auxiliaryPreviewView,
         auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
       );
+      
+      auxiliaryPreviewView.layoutIfNeeded();
     };
   };
 };
