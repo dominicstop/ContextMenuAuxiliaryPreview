@@ -8,7 +8,7 @@
 import UIKit
 
 // TODO: Move to `DGSwiftUtilities`
-public enum HorizontalAnchorPosition {
+public enum HorizontalAnchorPosition: String {
   case stretch;
   case stretchTarget;
   

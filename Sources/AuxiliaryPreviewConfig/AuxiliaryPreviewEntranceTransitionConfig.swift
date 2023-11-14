@@ -9,7 +9,7 @@ import UIKit
 import DGSwiftUtilities
 
 
-public enum AuxiliaryPreviewEntranceTransitionConfig {
+public enum AuxiliaryPreviewEntranceTransitionConfig: CustomStringConvertible {
 
   case syncedToMenuEntranceTransition;
   
@@ -19,6 +19,19 @@ public enum AuxiliaryPreviewEntranceTransitionConfig {
   
   // MARK: - Computed Properties
   // ---------------------------
+ 
+ public var description: String {
+  switch self {
+    case .syncedToMenuEntranceTransition:
+      return "syncedToMenuEntranceTransition";
+      
+    case .customDelay:
+      return "customDelay";
+      
+    case .afterMenuEntranceTransition:
+      return "afterMenuEntranceTransition";
+  };
+ };
   
   public var transitionAnimationConfig: AuxiliaryPreviewTransitionAnimationConfig? {
     switch self {
