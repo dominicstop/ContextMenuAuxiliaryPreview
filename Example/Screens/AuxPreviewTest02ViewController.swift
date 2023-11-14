@@ -114,8 +114,8 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
       contextMenuManager.auxiliaryPreviewConfig = AuxiliaryPreviewConfig(
         verticalAnchorPosition: .automatic,
         alignmentHorizontal: .targetCenter,
-        height: .constant(100),
         preferredWidth: .constant(100),
+        preferredHeight: .constant(100),
         marginInner: 10,
         marginOuter: 10,
         transitionConfigEntrance: .customDelay(

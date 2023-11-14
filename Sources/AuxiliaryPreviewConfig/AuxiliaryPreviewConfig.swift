@@ -16,8 +16,8 @@ public struct AuxiliaryPreviewConfig {
   public var verticalAnchorPosition: AuxiliaryPreviewVerticalAnchorPosition;
   public var alignmentHorizontal: HorizontalAnchorPosition;
   
-  public var height: AuxiliaryPreviewSizeValue;
   public var preferredWidth: AuxiliaryPreviewSizeValue?;
+  public var preferredHeight: AuxiliaryPreviewSizeValue?;
   
   /// The distance between the aux. preview, and the menu preview
   public var marginInner: CGFloat;
@@ -34,8 +34,8 @@ public struct AuxiliaryPreviewConfig {
   public init(
     verticalAnchorPosition: AuxiliaryPreviewVerticalAnchorPosition,
     alignmentHorizontal: HorizontalAnchorPosition,
-    height: AuxiliaryPreviewSizeValue,
     preferredWidth: AuxiliaryPreviewSizeValue? = nil,
+    preferredHeight: AuxiliaryPreviewSizeValue? = nil,
     marginInner: CGFloat,
     marginOuter: CGFloat,
     transitionConfigEntrance: AuxiliaryPreviewEntranceTransitionConfig,
@@ -45,7 +45,7 @@ public struct AuxiliaryPreviewConfig {
     self.verticalAnchorPosition = verticalAnchorPosition;
     self.alignmentHorizontal = alignmentHorizontal;
     self.preferredWidth = preferredWidth;
-    self.height = height;
+    self.preferredHeight = preferredHeight;
     self.marginInner = marginInner;
     self.marginOuter = marginOuter;
     self.transitionConfigEntrance = transitionConfigEntrance;

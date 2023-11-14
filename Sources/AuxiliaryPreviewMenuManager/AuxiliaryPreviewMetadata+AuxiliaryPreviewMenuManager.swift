@@ -85,7 +85,7 @@ extension AuxiliaryPreviewMetadata {
     self.computedWidth = computedWidth;
     
     let computedHeight: CGFloat = {
-      let computedHeight = auxiliaryPreviewConfig.height.compute(
+      let computedHeight: CGFloat? = auxiliaryPreviewConfig.preferredHeight?.compute(
         computingForSizeKey: \.height,
         usingContext: previewSizeContext
       );
