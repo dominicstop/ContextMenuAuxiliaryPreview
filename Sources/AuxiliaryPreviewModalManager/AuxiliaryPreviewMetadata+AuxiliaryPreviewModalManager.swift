@@ -11,8 +11,8 @@ extension AuxiliaryPreviewMetadata {
 
   init?(auxiliaryPreviewModalManager manager: AuxiliaryPreviewModalManager) {
   
-    guard let modalWrapperVC = manager.modalWrapperVC,
-          let modalVC = manager.presentedVC,
+    guard let presentedController = manager.presentedController,
+          let auxiliaryPreviewController = manager.auxiliaryPreviewController,
           let targetView = manager.targetView,
           let window = targetView.window
     else { return nil };
@@ -33,15 +33,15 @@ extension AuxiliaryPreviewMetadata {
       let fallbackWidth: CGFloat = {
         switch auxiliaryPreviewConfig.alignmentHorizontal {
           case .stretch:
-            return modalWrapperVC.view.frame.width;
+            return presentedController.view.frame.width;
         
           case .stretchTarget:
             return targetView.frame.size.width;
             
           default:
             return max(
-              modalVC.preferredContentSize.width,
-              modalVC.view.frame.size.width
+              auxiliaryPreviewController.preferredContentSize.width,
+              auxiliaryPreviewController.view.frame.size.width
             );
         };
       
@@ -57,8 +57,8 @@ extension AuxiliaryPreviewMetadata {
       );
       
       let fallbackHeight = max(
-        modalVC.preferredContentSize.height,
-        modalVC.view.frame.size.height
+        auxiliaryPreviewController.preferredContentSize.height,
+        auxiliaryPreviewController.view.frame.size.height
       );
         
       return computedHeight ?? fallbackHeight;
@@ -80,7 +80,7 @@ extension AuxiliaryPreviewMetadata {
           
         case .automatic:
           let targetViewY = targetView.frame.midY;
-          let rootViewY = modalWrapperVC.view.frame.midY;
+          let rootViewY = presentedController.view.frame.midY;
           
           return targetViewY <= rootViewY ? .bottom : .top
       };

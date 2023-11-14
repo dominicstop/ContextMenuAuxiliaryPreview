@@ -116,7 +116,7 @@ public class ContextMenuManager {
   // ------------------------
   
   public func showAuxiliaryPreviewAsPopover(
-    presentingViewController presentingVC: UIViewController
+    presentingViewController presentingController: UIViewController
   ){
     guard !self.isAuxiliaryPreviewVisible,
     
@@ -142,7 +142,7 @@ public class ContextMenuManager {
     
     modalManager.present(
       viewControllerToPresent: modalVC,
-      presentingViewController: presentingVC,
+      presentingViewController: presentingController,
       targetView: menuTargetView
     );
   };

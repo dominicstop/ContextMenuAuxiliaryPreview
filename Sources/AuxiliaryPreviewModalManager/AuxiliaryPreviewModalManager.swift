@@ -26,28 +26,42 @@ public class AuxiliaryPreviewModalManager: NSObject {
   
   weak var delegate: AuxiliaryPreviewModalManagerDelegate?;
 
-  weak var presentingVC: UIViewController?;
+  var presentationState: PresentationState?;
+  
+  // MARK: - Layout Related
+  // ----------------------
+  
+  /// A ref. to the view controller that presented `presentedController`
+  weak var presentingController: UIViewController?;
+  
+  /// This is the view controller that was presented by `presentingController`
+  /// Note: This is the parent controller of `auxiliaryPreviewController`/
+  var presentedController: AuxiliaryPreviewModalWrapperViewController?;
+  
+  /// The view controller that holds the "auxiliary preview view".
+  /// Note: This is a child controller of `presentedController`
+  var auxiliaryPreviewController: UIViewController?;
+  
+  /// A ref. to the "original" view where the "auxiliary preview view" will be
+  /// anchored/attached to
   weak var targetView: UIView?;
   
-  var modalRootView: UIView?;
+  /// The view where `presentedController` will be attached to
+  var rootContainerView: UIView?;
+  
   var dimmingView: UIView?;
-  
-  var modalWrapperVC: AuxiliaryPreviewModalWrapperViewController?;
-  var presentedVC: UIViewController?;
-  
-  var presentationState: PresentationState?;
   
   // MARK: - Computed Properties
   // ---------------------------
   
   var isPresenting: Bool {
-    guard let modalWrapperVC = self.modalWrapperVC else { return false };
-    let presentingVC = modalWrapperVC.presentingViewController;
+    guard let presentedController = self.presentedController else { return false };
+    let presentingController = presentedController.presentingViewController;
     
     let isPresentingModalWrapperVC =
-      presentingVC?.presentedViewController === modalWrapperVC;
+      presentingController?.presentedViewController === presentedController;
       
-    return modalWrapperVC.isBeingPresented || isPresentingModalWrapperVC;
+    return presentedController.isBeingPresented || isPresentingModalWrapperVC;
   };
   
   // MARK: - Init
@@ -69,9 +83,9 @@ public class AuxiliaryPreviewModalManager: NSObject {
   };
   
   func setupViews(){
-    guard let modalRootView = self.modalRootView,
-          let modalWrapperVC = self.modalWrapperVC,
-          let modalVC = self.presentedVC,
+    guard let rootContainerView = self.rootContainerView,
+          let presentedController = self.presentedController,
+          let auxiliaryPreviewController = self.auxiliaryPreviewController,
           let targetView = self.targetView,
           
           let targetViewSnapshot =
@@ -82,21 +96,21 @@ public class AuxiliaryPreviewModalManager: NSObject {
     
     let auxiliaryPreviewConfig = self.auxiliaryPreviewConfig;
     
-    modalWrapperVC.view.translatesAutoresizingMaskIntoConstraints = false;
-    modalRootView.addSubview(modalWrapperVC.view)
+    presentedController.view.translatesAutoresizingMaskIntoConstraints = false;
+    rootContainerView.addSubview(presentedController.view)
     
     NSLayoutConstraint.activate([
-      modalWrapperVC.view.leadingAnchor.constraint(
-        equalTo: modalRootView.leadingAnchor
+      presentedController.view.leadingAnchor.constraint(
+        equalTo: rootContainerView.leadingAnchor
       ),
-      modalWrapperVC.view.trailingAnchor.constraint(
-        equalTo: modalRootView.trailingAnchor
+      presentedController.view.trailingAnchor.constraint(
+        equalTo: rootContainerView.trailingAnchor
       ),
-      modalWrapperVC.view.topAnchor.constraint(
-        equalTo: modalRootView.topAnchor
+      presentedController.view.topAnchor.constraint(
+        equalTo: rootContainerView.topAnchor
       ),
-      modalWrapperVC.view.bottomAnchor.constraint(
-        equalTo: modalRootView.bottomAnchor
+      presentedController.view.bottomAnchor.constraint(
+        equalTo: rootContainerView.bottomAnchor
       ),
     ]);
     
@@ -120,50 +134,50 @@ public class AuxiliaryPreviewModalManager: NSObject {
     self.dimmingView = dimmingView;
     
     dimmingView.translatesAutoresizingMaskIntoConstraints = false;
-    modalWrapperVC.view.addSubview(dimmingView)
+    presentedController.view.addSubview(dimmingView)
     
     NSLayoutConstraint.activate([
       dimmingView.leadingAnchor.constraint(
-        equalTo: modalWrapperVC.view.leadingAnchor
+        equalTo: presentedController.view.leadingAnchor
       ),
       dimmingView.trailingAnchor.constraint(
-        equalTo: modalWrapperVC.view.trailingAnchor
+        equalTo: presentedController.view.trailingAnchor
       ),
       dimmingView.topAnchor.constraint(
-        equalTo: modalWrapperVC.view.topAnchor
+        equalTo: presentedController.view.topAnchor
       ),
       dimmingView.bottomAnchor.constraint(
-        equalTo: modalWrapperVC.view.bottomAnchor
+        equalTo: presentedController.view.bottomAnchor
       ),
     ]);
     
     targetViewSnapshot.frame = targetView.globalFrame ?? targetView.frame;
-    modalWrapperVC.view.addSubview(targetViewSnapshot);
+    presentedController.view.addSubview(targetViewSnapshot);
     
-    modalVC.view.translatesAutoresizingMaskIntoConstraints = false;
-    modalWrapperVC.view.addSubview(modalVC.view);
+    auxiliaryPreviewController.view.translatesAutoresizingMaskIntoConstraints = false;
+    presentedController.view.addSubview(auxiliaryPreviewController.view);
     
     let constraints: [NSLayoutConstraint] = {
       var constraints: [NSLayoutConstraint] = [];
       
       constraints.append(
-        modalVC.view.heightAnchor.constraint(
+        auxiliaryPreviewController.view.heightAnchor.constraint(
           equalToConstant: auxiliaryPreviewMetadata.computedHeight
         )
       );
       
       constraints.append(
         auxiliaryPreviewMetadata.verticalAnchorPosition.createVerticalConstraints(
-          forView: modalVC.view,
+          forView: auxiliaryPreviewController.view,
           attachingTo: targetViewSnapshot,
           margin: auxiliaryPreviewConfig.marginInner
         )
       );
       
       constraints += self.auxiliaryPreviewConfig.alignmentHorizontal.createHorizontalConstraints(
-        forView: modalVC.view,
+        forView: auxiliaryPreviewController.view,
         attachingTo: targetViewSnapshot,
-        enclosingView: modalWrapperVC.view,
+        enclosingView: presentedController.view,
         preferredWidth: auxiliaryPreviewMetadata.computedWidth
       );
     
@@ -174,7 +188,7 @@ public class AuxiliaryPreviewModalManager: NSObject {
   };
   
   func showModal(completion: (() -> Void)? = nil){
-    guard let modalVC = self.presentedVC,
+    guard let auxiliaryPreviewController = self.auxiliaryPreviewController,
           let targetView = self.targetView,
           
           let auxiliaryPreviewMetadata = self.auxiliaryPreviewMetadata
@@ -187,7 +201,7 @@ public class AuxiliaryPreviewModalManager: NSObject {
     let animator = transitionAnimationConfig.animatorConfig.createAnimator(gestureInitialVelocity: .zero);
     
     keyframes.keyframeStart.apply(
-      toView: modalVC.view,
+      toView: auxiliaryPreviewController.view,
       auxPreviewVerticalAnchorPosition:
         auxiliaryPreviewMetadata.verticalAnchorPosition
     );
@@ -196,7 +210,7 @@ public class AuxiliaryPreviewModalManager: NSObject {
       self.dimmingView?.isHidden = false;
     
       keyframes.keyframeEnd.apply(
-        toView: modalVC.view,
+        toView: auxiliaryPreviewController.view,
         auxPreviewVerticalAnchorPosition:
           auxiliaryPreviewMetadata.verticalAnchorPosition
       );
@@ -212,7 +226,7 @@ public class AuxiliaryPreviewModalManager: NSObject {
   
   func hideModal(completion: (() -> Void)? = nil){
     guard let targetView = self.targetView,
-          let rootModalContainerView = self.modalWrapperVC?.view,
+          let rootModalContainerView = self.presentedController?.view,
           let auxiliaryPreviewMetadata = self.auxiliaryPreviewMetadata
     else { return };
     
@@ -244,34 +258,34 @@ public class AuxiliaryPreviewModalManager: NSObject {
   };
   
   @objc func handleOnTapDimmingView(_ sender: UITapGestureRecognizer){
-    self.modalWrapperVC?.dismiss(animated: true);
+    self.presentedController?.dismiss(animated: true);
   };
   
   // MARK: - Functions
   // -----------------
   
   func present(
-    viewControllerToPresent presentedVC: UIViewController,
-    presentingViewController presentingVC: UIViewController,
+    viewControllerToPresent auxiliaryPreviewController: UIViewController,
+    presentingViewController presentingController: UIViewController,
     targetView: UIView
   ) {
     
-    self.presentedVC = presentedVC;
-    self.presentingVC = presentingVC;
+    self.auxiliaryPreviewController = auxiliaryPreviewController;
+    self.presentingController = presentingController;
     self.targetView = targetView;
     
-    let modalWrapperVC = AuxiliaryPreviewModalWrapperViewController();
-    self.modalWrapperVC = modalWrapperVC;
+    let presentedController = AuxiliaryPreviewModalWrapperViewController();
+    self.presentedController = presentedController;
     
-    modalWrapperVC.addChild(presentedVC);
-    modalWrapperVC.didMove(toParent: presentedVC);
+    presentedController.addChild(auxiliaryPreviewController);
+    presentedController.didMove(toParent: auxiliaryPreviewController);
     
-    modalWrapperVC.modalPresentationStyle = .custom;
-    modalWrapperVC.transitioningDelegate = self;
+    presentedController.modalPresentationStyle = .custom;
+    presentedController.transitioningDelegate = self;
     
     self.prepareForPresentation();
     self.presentationState = .presenting;
     
-    presentingVC.present(modalWrapperVC, animated: true);
+    presentingController.present(presentedController, animated: true);
   };
 };

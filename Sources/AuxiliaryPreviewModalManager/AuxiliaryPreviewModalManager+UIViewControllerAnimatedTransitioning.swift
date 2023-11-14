@@ -28,7 +28,7 @@ extension AuxiliaryPreviewModalManager: UIViewControllerAnimatedTransitioning {
     switch presentationState {
       case .presenting:
         let containerView = transitionContext.containerView;
-        self.modalRootView = containerView;
+        self.rootContainerView = containerView;
         
         self.setupViews();
         
