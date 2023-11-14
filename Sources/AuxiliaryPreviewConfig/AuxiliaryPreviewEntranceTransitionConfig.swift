@@ -25,10 +25,12 @@ public enum AuxiliaryPreviewEntranceTransitionConfig {
       case .syncedToMenuEntranceTransition:
         return nil;
         
-      case let .customDelay(config):
+      case var .customDelay(config):
+        config.transition.reverseKeyframes();
         return config;
         
-      case let .afterMenuEntranceTransition(config):
+      case var .afterMenuEntranceTransition(config):
+        config.transition.reverseKeyframes();
         return config
     };
   };

@@ -13,15 +13,20 @@ public struct AuxiliaryPreviewTransitionConfig {
   public var keyframeConfigStart: AuxiliaryPreviewTransitionKeyframeConfig;
   public var keyframeConfigEnd: AuxiliaryPreviewTransitionKeyframeConfig;
   
-  public init(
-    transitionPreset: AuxiliaryPreviewTransitionPreset
-  ) {
+  public init(transitionPreset: AuxiliaryPreviewTransitionPreset) {
     (self.keyframeConfigStart, self.keyframeConfigEnd) =
       transitionPreset.transitionKeyframeConfig;
   };
 
   // MARK: - Functions
   // -----------------
+  
+  public mutating func reverseKeyframes(){
+    let tempCopy = self;
+    
+    self.keyframeConfigEnd = tempCopy.keyframeConfigStart;
+    self.keyframeConfigStart = tempCopy.keyframeConfigStart;
+  };
   
   public func getKeyframes() -> (
     keyframeStart: AuxiliaryPreviewTransitionKeyframe,

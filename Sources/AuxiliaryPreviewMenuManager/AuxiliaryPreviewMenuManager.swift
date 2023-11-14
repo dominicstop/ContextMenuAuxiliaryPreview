@@ -372,7 +372,7 @@ public class AuxiliaryPreviewMenuManager {
           let auxiliaryPreviewView = manager.auxiliaryPreviewView
     else { return };
     
-    let (exitKeyframe, _) =
+    let (_, exitKeyframe) =
       auxiliaryPreviewConfig.transitionConfigExit.getKeyframes();
     
     if let customAnimator = self.customAnimator,
