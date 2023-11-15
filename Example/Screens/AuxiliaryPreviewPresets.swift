@@ -8,6 +8,8 @@
 import UIKit
 import ContextMenuAuxiliaryPreview
 
+private let DEFAULT_DELAY: TimeInterval = 0.325;
+
 struct AuxiliaryPreviewPresets {
 
   typealias PresetItem = (
@@ -18,7 +20,7 @@ struct AuxiliaryPreviewPresets {
   var presets: [PresetItem] = [(
     config: AuxiliaryPreviewConfig(
       verticalAnchorPosition: .automatic,
-      alignmentHorizontal: .targetCenter,
+      alignmentHorizontal: .targetLeading,
       preferredWidth: .constant(100),
       preferredHeight: .constant(100),
       marginInner: 10,
@@ -27,7 +29,160 @@ struct AuxiliaryPreviewPresets {
       transitionExitPreset: .fade
     ),
     dataEntries: []
-  ),];
+  ), (
+    config: AuxiliaryPreviewConfig(
+      verticalAnchorPosition: .automatic,
+      alignmentHorizontal: .targetCenter,
+      preferredWidth: .constant(150),
+      preferredHeight: .constant(100),
+      marginInner: 12,
+      marginOuter: 10,
+      transitionConfigEntrance: .syncedToMenuEntranceTransition(
+        shouldAnimateSize: true
+      ),
+      transitionExitPreset: .fade
+    ),
+    dataEntries: []
+  ),    (
+    config: AuxiliaryPreviewConfig(
+      verticalAnchorPosition: .automatic,
+      alignmentHorizontal: .targetTrailing,
+      preferredWidth: .constant(100),
+      preferredHeight: .constant(125),
+      marginInner: 10,
+      marginOuter: 10,
+      transitionConfigEntrance: .afterMenuEntranceTransition(
+        AuxiliaryPreviewTransitionAnimationConfig(
+          delay: 0,
+          animatorConfig: .presetCurve(
+            duration: 0.3,
+            curve: .linear
+          ),
+          transitionPreset: .fade
+        )
+      ),
+      transitionExitPreset: .fade
+    ),
+    dataEntries: []
+  ), (
+    config: AuxiliaryPreviewConfig(
+      verticalAnchorPosition: .automatic,
+      alignmentHorizontal: .targetCenter,
+      preferredWidth: .constant(100),
+      preferredHeight: .constant(100),
+      marginInner: 10,
+      marginOuter: 10,
+      transitionConfigEntrance: .afterMenuEntranceTransition(
+        AuxiliaryPreviewTransitionAnimationConfig(
+          delay: 0,
+          animatorConfig: .presetCurve(
+            duration: 0.3,
+            curve: .linear
+          ),
+          transitionPreset: .fade
+        )
+      ),
+      transitionExitPreset: .fade
+    ),
+    dataEntries: []
+  ), (
+    config: AuxiliaryPreviewConfig(
+      verticalAnchorPosition: .automatic,
+      alignmentHorizontal: .stretchTarget,
+      preferredHeight: .constant(90),
+      marginInner: 10,
+      marginOuter: 10,
+      transitionConfigEntrance: .customDelay(
+        AuxiliaryPreviewTransitionAnimationConfig(
+          delay: DEFAULT_DELAY,
+          animatorConfig: .presetCurve(
+            duration: 0.3,
+            curve: .easeIn
+          ),
+          transitionPreset: .slide()
+        )
+      ),
+      transitionExitPreset: .slide()
+    ),
+    dataEntries: []
+  ), (
+    config: AuxiliaryPreviewConfig(
+      verticalAnchorPosition: .automatic,
+      alignmentHorizontal: .targetCenter,
+      preferredWidth: .constant(120),
+      preferredHeight: .constant(80),
+      marginInner: 10,
+      marginOuter: 10,
+      transitionConfigEntrance: .customDelay(
+        AuxiliaryPreviewTransitionAnimationConfig(
+          delay: DEFAULT_DELAY,
+          animatorConfig: .presetCurve(
+            duration: 0.3,
+            curve: .easeIn
+          ),
+          transitionPreset: .zoom()
+        )
+      ),
+      transitionExitPreset: .zoom()
+    ),
+    dataEntries: []
+  ), (
+    config: AuxiliaryPreviewConfig(
+      verticalAnchorPosition: .automatic,
+      alignmentHorizontal: .targetTrailing,
+      preferredWidth: .constant(150),
+      preferredHeight: .constant(100),
+      marginInner: 10,
+      marginOuter: 10,
+      transitionConfigEntrance: .customDelay(
+        AuxiliaryPreviewTransitionAnimationConfig(
+          delay: DEFAULT_DELAY,
+          animatorConfig: .presetCurve(
+            duration: 0.3,
+            curve: .easeIn
+          ),
+          transitionPreset: .zoomAndSlide()
+        )
+      ),
+      transitionExitPreset: .zoomAndSlide()
+    ),
+    dataEntries: []
+  ), (
+    config: AuxiliaryPreviewConfig(
+      verticalAnchorPosition: .automatic,
+      alignmentHorizontal: .targetLeading,
+      preferredWidth: .constant(125),
+      preferredHeight: .constant(75),
+      marginInner: 15,
+      marginOuter: 10,
+      transitionConfigEntrance: .customDelay(
+        AuxiliaryPreviewTransitionAnimationConfig(
+          delay: DEFAULT_DELAY,
+          animatorConfig: .presetCurve(
+            duration: 0.3,
+            curve: .easeOut
+          ),
+          transitionPreset: .custom(
+            keyframeStart: .init(
+              opacity: 0,
+              transform: .init(
+                translateX: -40,
+                translateY: 7,
+                scaleX: 0.90,
+                scaleY: 0.95
+              ),
+              auxiliaryPreviewPreferredWidth: .constant(20)
+            )
+          )
+        )
+      ),
+      transitionExitPreset: .fade
+    ),
+    dataEntries: [
+      .body("Custom entrance transition keyframe"),
+      .body("height/width, transform, opacity")
+    ]
+  )];
   
   var presetCounter = 0;
   
@@ -133,6 +288,15 @@ struct AuxiliaryPreviewPresets {
         desc: currentConfig.transitionConfigEntrance.description
       )
     );
+    
+    if case let .syncedToMenuEntranceTransition(shouldAnimateSize) = currentConfig.transitionConfigEntrance {
+      baseEntries.append(
+        .labelDesc(
+          label: "shouldAnimateSize",
+          desc: shouldAnimateSize.description
+        )
+      );
+    };
     
     if let transitionAnimationConfig = currentConfig.transitionConfigEntrance.transitionAnimationConfig {
       baseEntries.append(
