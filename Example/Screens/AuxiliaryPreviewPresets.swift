@@ -23,7 +23,7 @@ struct AuxiliaryPreviewPresets {
       preferredHeight: .constant(100),
       marginInner: 10,
       marginOuter: 10,
-      transitionConfigEntrance: .syncedToMenuEntranceTransition,
+      transitionConfigEntrance: .syncedToMenuEntranceTransition(),
       transitionExitPreset: .fade
     ),
     dataEntries: []

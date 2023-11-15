@@ -11,11 +11,20 @@ import DGSwiftUtilities
 
 public enum AuxiliaryPreviewEntranceTransitionConfig: CustomStringConvertible {
 
-  case syncedToMenuEntranceTransition;
+  // MARK: - Enum Cases
+  // ------------------
+
+  case syncedToMenuEntranceTransition(
+    shouldAnimateSize: Bool = false
+  );
   
-  case customDelay(AuxiliaryPreviewTransitionAnimationConfig);
+  case customDelay(
+    AuxiliaryPreviewTransitionAnimationConfig
+  );
   
-  case afterMenuEntranceTransition(AuxiliaryPreviewTransitionAnimationConfig);
+  case afterMenuEntranceTransition(
+    AuxiliaryPreviewTransitionAnimationConfig
+  );
   
   // MARK: - Computed Properties
   // ---------------------------

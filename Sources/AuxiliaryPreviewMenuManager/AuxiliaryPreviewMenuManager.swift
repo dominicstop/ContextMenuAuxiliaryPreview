@@ -341,12 +341,16 @@ public class AuxiliaryPreviewMenuManager {
           let menuAuxPreviewConfig = manager.auxiliaryPreviewConfig,
           let auxiliaryPreviewView = self.auxiliaryPreviewView,
           
-          case .syncedToMenuEntranceTransition =
+          case let .syncedToMenuEntranceTransition(shouldAnimateSize) =
             menuAuxPreviewConfig.transitionConfigEntrance
     else { return };
     
     auxiliaryPreviewView.alpha = 1;
     self.attachAuxiliaryPreview();
+    
+    if shouldAnimateSize {
+      auxiliaryPreviewView.layoutIfNeeded();
+    };
   };
   
   public func attachAndAnimateInAuxiliaryPreviewUsingCustomAnimator() {
