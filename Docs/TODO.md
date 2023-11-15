@@ -4,6 +4,7 @@
 
 ## WIP - Current
 
+- [ ] `TODO:2023-11-15-19-30-08` - Impl: Aux. Preview Config - Add property `marginLeading` + `marginTrailing` to set the aux. preview horizontal constraint margins.
 - [ ] `TODO:2023-11-15-15-17-15` - Bug: Aux. Preview Menu - Aux. preview sometimes not appearing when shown too fast in succession (e.g. via the programmatic `presentMenuAtLocation`).
   * This might be due to a guard check failing; e.g. the manager might still be saying the context menu has already been hidden.
   * Potential cause: Stale flag (e.g. `isAuxiliaryPreviewVisible`).
