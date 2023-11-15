@@ -21,7 +21,7 @@ struct AuxiliaryPreviewPresets {
     // Preset Index: 0
     config: AuxiliaryPreviewConfig(
       verticalAnchorPosition: .automatic,
-      alignmentHorizontal: .targetLeading,
+      horizontalAlignment: .targetLeading,
       preferredWidth: .constant(100),
       preferredHeight: .constant(100),
       marginInner: 10,
@@ -34,7 +34,7 @@ struct AuxiliaryPreviewPresets {
     // Preset Index: 1
     config: AuxiliaryPreviewConfig(
       verticalAnchorPosition: .automatic,
-      alignmentHorizontal: .targetCenter,
+      horizontalAlignment: .targetCenter,
       preferredWidth: .constant(150),
       preferredHeight: .constant(100),
       marginInner: 12,
@@ -49,7 +49,7 @@ struct AuxiliaryPreviewPresets {
     // Preset Index: 2
     config: AuxiliaryPreviewConfig(
       verticalAnchorPosition: .automatic,
-      alignmentHorizontal: .targetTrailing,
+      horizontalAlignment: .targetTrailing,
       preferredWidth: .constant(100),
       preferredHeight: .constant(125),
       marginInner: 10,
@@ -71,7 +71,7 @@ struct AuxiliaryPreviewPresets {
     // Preset Index: 3
     config: AuxiliaryPreviewConfig(
       verticalAnchorPosition: .automatic,
-      alignmentHorizontal: .targetCenter,
+      horizontalAlignment: .targetCenter,
       preferredWidth: .constant(100),
       preferredHeight: .constant(100),
       marginInner: 10,
@@ -93,7 +93,7 @@ struct AuxiliaryPreviewPresets {
     // Preset Index: 4
     config: AuxiliaryPreviewConfig(
       verticalAnchorPosition: .automatic,
-      alignmentHorizontal: .stretchTarget,
+      horizontalAlignment: .stretchTarget,
       preferredHeight: .constant(90),
       marginInner: 10,
       marginOuter: 10,
@@ -114,7 +114,7 @@ struct AuxiliaryPreviewPresets {
     // Preset Index: 5
     config: AuxiliaryPreviewConfig(
       verticalAnchorPosition: .automatic,
-      alignmentHorizontal: .targetCenter,
+      horizontalAlignment: .targetCenter,
       preferredWidth: .constant(120),
       preferredHeight: .constant(80),
       marginInner: 10,
@@ -136,7 +136,7 @@ struct AuxiliaryPreviewPresets {
     // Preset Index: 6
     config: AuxiliaryPreviewConfig(
       verticalAnchorPosition: .automatic,
-      alignmentHorizontal: .targetTrailing,
+      horizontalAlignment: .targetTrailing,
       preferredWidth: .constant(150),
       preferredHeight: .constant(100),
       marginInner: 10,
@@ -158,7 +158,7 @@ struct AuxiliaryPreviewPresets {
     // Preset Index: 7
     config: AuxiliaryPreviewConfig(
       verticalAnchorPosition: .automatic,
-      alignmentHorizontal: .targetLeading,
+      horizontalAlignment: .targetLeading,
       preferredWidth: .constant(125),
       preferredHeight: .constant(75),
       marginInner: 15,
@@ -242,8 +242,8 @@ struct AuxiliaryPreviewPresets {
     
     baseEntries.append(
       .labelDesc(
-        label: "alignmentHorizontal",
-        desc: currentConfig.alignmentHorizontal.rawValue
+        label: "horizontalAlignment",
+        desc: currentConfig.horizontalAlignment.rawValue
       )
     );
     

@@ -66,7 +66,7 @@ extension AuxiliaryPreviewMetadata {
       );
       
       let fallbackWidth: CGFloat = {
-        switch auxiliaryPreviewConfig.alignmentHorizontal {
+        switch auxiliaryPreviewConfig.horizontalAlignment {
           case .stretch:
             return contextMenuMetadata.rootContainerFrame.size.width;
         

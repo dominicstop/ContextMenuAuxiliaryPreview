@@ -205,10 +205,10 @@ public class AuxiliaryPreviewModalManager: NSObject {
       );
       
       constraints += {
-        let alignmentHorizontal =
-          self.auxiliaryPreviewConfig.alignmentHorizontal;
+        let horizontalAlignment =
+          self.auxiliaryPreviewConfig.horizontalAlignment;
           
-        let constraints = alignmentHorizontal.createHorizontalConstraints(
+        let constraints = horizontalAlignment.createHorizontalConstraints(
           forView: auxiliaryPreviewController.view,
           attachingTo: targetViewSnapshot,
           enclosingView: presentedController.view,

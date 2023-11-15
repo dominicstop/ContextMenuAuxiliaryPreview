@@ -238,9 +238,9 @@ public class AuxiliaryPreviewMenuManager {
       
       // set horizontal alignment constraints based on config...
       constraints += {
-        let alignmentHorizontal = auxiliaryPreviewConfig.alignmentHorizontal;
+        let horizontalAlignment = auxiliaryPreviewConfig.horizontalAlignment;
         
-        let constraints = alignmentHorizontal.createHorizontalConstraints(
+        let constraints = horizontalAlignment.createHorizontalConstraints(
           forView: auxiliaryPreviewView,
           attachingTo: morphingPlatterView,
           enclosingView: contextMenuContainerView,

@@ -33,7 +33,7 @@ extension AuxiliaryPreviewMetadata {
       );
       
       let fallbackWidth: CGFloat = {
-        switch auxiliaryPreviewConfig.alignmentHorizontal {
+        switch auxiliaryPreviewConfig.horizontalAlignment {
           case .stretch:
             return presentedController.view.frame.width;
         

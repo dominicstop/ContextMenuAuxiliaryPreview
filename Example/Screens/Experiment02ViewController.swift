@@ -114,7 +114,7 @@ class Experiment02ViewController: UIViewController, ContextMenuManagerDelegate {
       
       contextMenuManager.auxiliaryPreviewConfig = AuxiliaryPreviewConfig(
         verticalAnchorPosition: .automatic,
-        alignmentHorizontal: .targetCenter,
+        horizontalAlignment: .targetCenter,
         preferredWidth: .constant(100),
         preferredHeight: .constant(100),
         marginInner: 10,
