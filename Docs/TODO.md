@@ -22,7 +22,6 @@
 - [ ] `TODO:2023-11-10-12-36-58` - Refactor: Aux. Preview Keyframes - Add default start/end keyframes for entrance/exit Keyframes.
 - [ ] `TODO:2023-11-10-12-37-33` - Refactor: Aux. Preview Keyframes - Automatically set values for the start/end keyframes based on the aux. preview config.
 - [ ] `TODO:2023-11-10-12-24-03` - Impl: `ContextMenuManaer.presentContextMenu` - Add helper function that calls `ContextMenuInteractionWrapper.presentMenuAtLocation`. 
-- [ ] `TODO:2023-10-22-09-09-34` - Impl: Examples - Add VC for testing the different possible combinations of aux. preview config.
 - [ ] `TODO:2023-11-10-12-39-29` - Impl: Aux. Preview Popover + ScrollView - Impl. logic for scrolling the target view into view before the aux. preview modal is presented, e.g. `minDistanceFromEdges`.
 - [ ] `TODO:2023-11-10-12-51-51 ` - Aux. Preview Popover: Impl. separate config for "Aux. Preview Popover" - Derive the base config from "Context Menu Aux. Preview", and implicitly override base values w/ the new ones.
 - [ ] `TODO:2023-11-10-12-57-44` - Impl: Aux. Preview Keyframes + Aux. Preview Popover - Add support for setting the background dimming color + opacity.
@@ -54,6 +53,7 @@
 
 ## Completed
 
+- [x] `TODO:2023-10-22-09-09-34` - Impl: Examples - Add VC for testing the different possible combinations of aux. preview config.
 - [x] `TODO:2023-11-15-17-32-59` - Bug: Layout Bug - Aux. Preview Menu + Aux. Preview Popover - `AuxiliaryPreviewConfig.alignmentHorizontal` - The horizontal alignment is wrong for: `targetTrailing`, `stretchTarget`.
   * Might be cause by attaching the constraint to the wrong target?
   * `targetTrailing` and `stretchTarget` is wrong for both: Aux. Preview Menu + Aux. Preview Popover.
