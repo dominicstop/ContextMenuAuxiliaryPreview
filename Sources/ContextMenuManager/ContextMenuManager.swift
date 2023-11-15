@@ -106,7 +106,9 @@ public class ContextMenuManager {
   ){
     guard self.isAuxiliaryPreviewEnabled,
           self.auxiliaryPreviewView != nil,
-          self.auxiliaryPreviewConfig != nil
+          
+          let auxiliaryPreviewConfig = self.auxiliaryPreviewConfig,
+          case .customDelay = auxiliaryPreviewConfig.transitionConfigEntrance
     else { return };
     
     manager.attachAndAnimateInAuxiliaryPreviewUsingCustomAnimator();
@@ -182,16 +184,18 @@ public class ContextMenuManager {
     };
       
     animator.addAnimations {
-      let auxPreviewManager = AuxiliaryPreviewMenuManager(
+      let auxiliaryPreviewMenuManager = AuxiliaryPreviewMenuManager(
         usingContextMenuManager: self,
         contextMenuAnimator: animator
       );
       
-      guard let auxPreviewManager = auxPreviewManager else { return };
-      self.auxiliaryPreviewMenuManager = auxPreviewManager;
+      guard let auxiliaryPreviewMenuManager = auxiliaryPreviewMenuManager
+      else { return };
       
-      auxPreviewManager.nudgeContextMenuIfNeeded();
-      auxPreviewManager.notifyOnMenuWillShow();
+      self.auxiliaryPreviewMenuManager = auxiliaryPreviewMenuManager;
+
+      auxiliaryPreviewMenuManager.nudgeContextMenuIfNeeded();
+      auxiliaryPreviewMenuManager.notifyOnMenuWillShow();
       
       guard case .syncedToMenuEntranceTransition =
               auxiliaryPreviewConfig.transitionConfigEntrance
@@ -202,18 +206,24 @@ public class ContextMenuManager {
         "- addAnimations block"
       );
       
-      auxPreviewManager.debugPrintValues();
-      auxPreviewManager.attachAndAnimateInAuxiliaryPreviewTogetherWithContextMenu();
+      auxiliaryPreviewMenuManager.debugPrintValues();
+      auxiliaryPreviewMenuManager.attachAndAnimateInAuxiliaryPreviewTogetherWithContextMenu();
     };
     
     animator.addCompletion {
-      print(
-        "notifyOnContextMenuInteraction",
-        "- addCompletion block"
-      );
+      guard case .afterMenuEntranceTransition = auxiliaryPreviewConfig.transitionConfigEntrance,
+            let auxiliaryPreviewMenuManager = self.auxiliaryPreviewMenuManager
+      else { return };
       
+      auxiliaryPreviewMenuManager.attachAndAnimateInAuxiliaryPreviewUsingCustomAnimator();
+    };
+    
+    #if DEBUG
+    animator.addCompletion {
+      print("UIContextMenuInteractionAnimating - completion:");
       self.auxiliaryPreviewMenuManager?.debugPrintValues();
     };
+    #endif
   };
   
   // context menu display ends

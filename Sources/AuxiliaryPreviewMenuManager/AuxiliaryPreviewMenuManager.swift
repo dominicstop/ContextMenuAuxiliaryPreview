@@ -357,12 +357,12 @@ public class AuxiliaryPreviewMenuManager {
     guard let auxiliaryPreviewMetadata = self.auxiliaryPreviewMetadata,
           let manager = self.contextMenuManager,
           
-          let menuAuxPreviewConfig = manager.auxiliaryPreviewConfig,
+          let auxiliaryPreviewConfig = manager.auxiliaryPreviewConfig,
           let auxiliaryPreviewView = manager.auxiliaryPreviewView
     else { return };
     
     let transitionConfigEntrance =
-      menuAuxPreviewConfig.transitionConfigEntrance;
+      auxiliaryPreviewConfig.transitionConfigEntrance;
     
     guard let transitionAnimationConfig =
             transitionConfigEntrance.transitionAnimationConfig
@@ -394,24 +394,9 @@ public class AuxiliaryPreviewMenuManager {
       auxiliaryPreviewView.layoutIfNeeded();
     };
     
-    switch menuAuxPreviewConfig.transitionConfigEntrance {
-      case .customDelay:
-        animator.startAnimation(
-          afterDelay: transitionAnimationConfig.delay
-        );
-        
-      case .afterMenuEntranceTransition:
-        guard let contextMenuAnimator = self.contextMenuAnimator else { return };
-        
-        contextMenuAnimator.addCompletion {
-          animator.startAnimation(
-            afterDelay: transitionAnimationConfig.delay
-          );
-        };
-        
-      default:
-        break;
-    };
+    animator.startAnimation(
+      afterDelay: transitionAnimationConfig.delay
+    );
   };
   
   public func detachAndAnimateOutAuxiliaryPreview(
