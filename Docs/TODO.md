@@ -4,6 +4,12 @@
 
 ## WIP - Current
 
+- [ ] `TODO:2023-11-15-15-17-15` - Bug: Aux. Preview Menu - Aux. preview sometimes not appearing when shown too fast in succession (e.g. via the programmatic `presentMenuAtLocation`).
+  * This might be due to a guard check failing; e.g. the manager might still be saying the context menu has already been hidden.
+  * Potential cause: Stale flag (e.g. `isAuxiliaryPreviewVisible`).
+
+<br>
+
 - [ ] `TODO:2023-11-09-15-38-40` - Impl: Aux. Preview Popover - `backgroundTapInteraction` - Defines what happens when the bg dimming view is tapped (e.g. close aux. preview modal).
 - [ ] `TODO:2023-11-09-15-40-11` - Impl: Aux. Preview Popover - Update target view position on layout change.
 - [ ] `TODO:2023-11-10-12-36-58` - Refactor: Aux. Preview Keyframes - Add default start/end keyframes for entrance/exit Keyframes.
