@@ -10,8 +10,9 @@ import UIKit
 class DebugDataCardViewController: UIViewController {
 
   enum DataEntry {
-    case title(title: String);
+    case title(String);
     case labelDesc(label: String, desc: String);
+    case body(String);
     case spacing(size: CGFloat);
   };
   
@@ -64,6 +65,13 @@ class DebugDataCardViewController: UIViewController {
           let label = UILabel();
           label.text = title;
           label.font = UIFont.boldSystemFont(ofSize: 16);
+          
+          rootStack.addArrangedSubview(label);
+          
+        case let .body(bodyString):
+          let label = UILabel();
+          label.text = bodyString;
+          label.font = UIFont.boldSystemFont(ofSize: 14);
           
           rootStack.addArrangedSubview(label);
           

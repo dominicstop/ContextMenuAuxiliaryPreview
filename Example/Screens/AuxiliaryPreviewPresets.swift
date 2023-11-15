@@ -67,7 +67,7 @@ struct AuxiliaryPreviewPresets {
     );
     
     baseEntries.append(
-      .title(title: "AuxiliaryPreviewConfig")
+      .title("AuxiliaryPreviewConfig")
     );
     
     baseEntries.append(
