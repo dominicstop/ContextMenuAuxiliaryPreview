@@ -190,6 +190,39 @@ struct AuxiliaryPreviewPresets {
       .body("Custom entrance transition keyframe"),
       .body("height/width, transform, opacity")
     ]
+  ), (
+    // Preset Index: 8
+    config: AuxiliaryPreviewConfig(
+      verticalAnchorPosition: .automatic,
+      horizontalAlignment: .targetLeading,
+      preferredWidth: .constant(125),
+      preferredHeight: .constant(75),
+      marginInner: 15,
+      marginOuter: 10,
+      transitionConfigEntrance: .customDelay(
+        AuxiliaryPreviewTransitionAnimationConfig(
+          delay: DEFAULT_DELAY,
+          animatorConfig: .presetCurve(
+            duration: 0.3,
+            curve: .easeOut
+          ),
+          transitionPreset: .custom(
+            keyframeStart: .init(
+              opacity: 0,
+              transform: .init(
+                rotateX: .degrees(45),
+                perspective: 1 / 500
+              )
+            )
+          )
+        )
+      ),
+      transitionExitPreset: .fade
+    ),
+    dataEntries: [
+      .body("Custom entrance transition keyframe"),
+      .body("transform: rotateX, perspective")
+    ]
   )];
   
   var presetCounter = 0;
