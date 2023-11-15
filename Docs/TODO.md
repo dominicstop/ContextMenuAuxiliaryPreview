@@ -4,6 +4,11 @@
 
 ## WIP - Current
 
+- [ ] `TODO:2023-11-15-21-27-37` - Bug: Aux. Preview Popover - Transition/Keyframes - 3D rotations don't work properly when used for the entrance transition.
+  * Note: 3D rotations works on "Aux. Preview Menu", but not in "Aux. Preview Popover".
+
+<br>
+
 - [ ] `TODO:2023-11-15-19-49-32` - Impl. Aux. Preview Config + Aux. Preview Menu - Add property `shouldImmediatelyNudgeContextMenu`.
 - [ ] `TODO:2023-11-15-19-30-08` - Impl: Aux. Preview Config - Add property `marginLeading` + `marginTrailing` to set the aux. preview horizontal constraint margins.
 - [ ] `TODO:2023-11-15-15-17-15` - Bug: Aux. Preview Menu - Aux. preview sometimes not appearing when shown too fast in succession (e.g. via the programmatic `presentMenuAtLocation`).
