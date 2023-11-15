@@ -19,8 +19,6 @@
 
 - [ ] `TODO:2023-11-09-15-38-40` - Impl: Aux. Preview Popover - `backgroundTapInteraction` - Defines what happens when the bg dimming view is tapped (e.g. close aux. preview modal).
 - [ ] `TODO:2023-11-09-15-40-11` - Impl: Aux. Preview Popover - Update target view position on layout change.
-- [ ] `TODO:2023-11-10-12-36-58` - Refactor: Aux. Preview Keyframes - Add default start/end keyframes for entrance/exit Keyframes.
-- [ ] `TODO:2023-11-10-12-37-33` - Refactor: Aux. Preview Keyframes - Automatically set values for the start/end keyframes based on the aux. preview config.
 - [ ] `TODO:2023-11-10-12-24-03` - Impl: `ContextMenuManaer.presentContextMenu` - Add helper function that calls `ContextMenuInteractionWrapper.presentMenuAtLocation`. 
 - [ ] `TODO:2023-11-10-12-39-29` - Impl: Aux. Preview Popover + ScrollView - Impl. logic for scrolling the target view into view before the aux. preview modal is presented, e.g. `minDistanceFromEdges`.
 - [ ] `TODO:2023-11-10-12-51-51 ` - Aux. Preview Popover: Impl. separate config for "Aux. Preview Popover" - Derive the base config from "Context Menu Aux. Preview", and implicitly override base values w/ the new ones.
