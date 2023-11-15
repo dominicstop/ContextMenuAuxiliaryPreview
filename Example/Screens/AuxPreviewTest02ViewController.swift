@@ -16,8 +16,11 @@ fileprivate class TestAuxiliaryPreviewView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame);
     
+    self.layer.cornerRadius = 10;
+    self.clipsToBounds = true;
+    
     let button = UIButton(frame: .zero);
-    button.setTitle("Press Me", for: .normal);
+    button.setTitle("Button", for: .normal);
     
     if #available(iOS 15.0, *) {
       button.configuration = .filled()
@@ -48,7 +51,21 @@ fileprivate class TestAuxiliaryPreviewView: UIView {
   };
   
   func setBackgroundColor(){
-    self.backgroundColor = self.flag ? .blue : .red;
+    let colorInactive = UIColor(
+      hue: 0,
+      saturation: 0.3,
+      brightness: 1,
+      alpha: 1
+    );
+    
+    let colorActive = UIColor(
+      hue: 0.5,
+      saturation: 0.3,
+      brightness: 1,
+      alpha: 1
+    );
+  
+    self.backgroundColor = self.flag ? colorActive : colorInactive;
   };
   
   @objc func handleButtonPress(sender: UIButton){
