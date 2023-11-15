@@ -116,9 +116,8 @@ public class AuxiliaryPreviewModalManager: NSObject {
     
     let dimmingView: UIView = {
       let view = UIView();
+      view.alpha = 0;
       view.backgroundColor = .black;
-      view.alpha = 0.25;
-      view.isHidden = true;
       
       let tapGesture = UITapGestureRecognizer(
         target: self,
@@ -254,7 +253,7 @@ public class AuxiliaryPreviewModalManager: NSObject {
     );
     
     animator.addAnimations {
-      self.dimmingView?.isHidden = false;
+      self.dimmingView?.alpha = 0.25;
     
       keyframes.keyframeEnd.apply(
         auxiliaryPreviewView: auxiliaryPreviewView,
