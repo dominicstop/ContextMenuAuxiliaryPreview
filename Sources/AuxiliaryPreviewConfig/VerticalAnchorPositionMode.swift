@@ -8,7 +8,7 @@
 import Foundation
 
 
-public enum AuxiliaryPreviewVerticalAnchorPosition: String {
+public enum VerticalAnchorPositionMode: String {
   case top;
   case bottom;
   case automatic;

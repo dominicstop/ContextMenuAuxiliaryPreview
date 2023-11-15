@@ -13,7 +13,7 @@ public struct AuxiliaryPreviewConfig {
   // MARK: - Properties
   // ------------------
 
-  public var verticalAnchorPosition: AuxiliaryPreviewVerticalAnchorPosition;
+  public var verticalAnchorPosition: VerticalAnchorPositionMode;
   public var horizontalAlignment: HorizontalAlignmentPosition;
   
   public var preferredWidth: AuxiliaryPreviewSizeValue?;
@@ -34,7 +34,7 @@ public struct AuxiliaryPreviewConfig {
   // ------------
   
   public init(
-    verticalAnchorPosition: AuxiliaryPreviewVerticalAnchorPosition,
+    verticalAnchorPosition: VerticalAnchorPositionMode,
     horizontalAlignment: HorizontalAlignmentPosition,
     preferredWidth: AuxiliaryPreviewSizeValue? = nil,
     preferredHeight: AuxiliaryPreviewSizeValue? = nil,
