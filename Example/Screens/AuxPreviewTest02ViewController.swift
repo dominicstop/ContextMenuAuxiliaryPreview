@@ -166,6 +166,24 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
     
     stackView.addArrangedSubview(showAuxPreviewButton);
     
+    let nextPresetButton: UIView = {
+      let button = UIButton(frame: .zero);
+      button.setTitle("Next Preset", for: .normal);
+      
+      if #available(iOS 15.0, *) {
+        button.configuration = .filled()
+      };
+      
+      button.addTarget(self,
+        action: #selector(Self.onPressNextPreset(_:)),
+        for: .touchUpInside
+      );
+      
+      return button;
+    }();
+    
+    stackView.addArrangedSubview(nextPresetButton);
+    
     for index in itemCountMid...itemCount {
       let label = UILabel();
       
@@ -253,6 +271,11 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
     contextMenuManager.showAuxiliaryPreviewAsPopover(
       presentingViewController: self
     );
+  };
+  
+  @objc func onPressNextPreset(_ sender: UIButton){
+    self.presets.nextPreset();
+    self.applyPresets();
   };
 };
 
