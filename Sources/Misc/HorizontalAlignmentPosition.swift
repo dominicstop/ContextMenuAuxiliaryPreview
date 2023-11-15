@@ -1,5 +1,5 @@
 //
-//  HorizontalAnchorPosition.swift
+//  HorizontalAlignmentPosition.swift
 //  
 //
 //  Created by Dominic Go on 10/25/23.
@@ -8,7 +8,7 @@
 import UIKit
 
 // TODO: Move to `DGSwiftUtilities`
-public enum HorizontalAnchorPosition: String {
+public enum HorizontalAlignmentPosition: String {
   case stretch;
   case stretchTarget;
   
