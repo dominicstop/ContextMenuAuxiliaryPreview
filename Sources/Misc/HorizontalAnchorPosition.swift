@@ -38,7 +38,7 @@ public enum HorizontalAnchorPosition: String {
     enclosingView: UIView,
     preferredWidth: CGFloat?,
     marginLeading: CGFloat = 0,
-    marginTrailing: CGFloat = 100
+    marginTrailing: CGFloat = 0
   ) -> [NSLayoutConstraint] {
   
     var constraints: [NSLayoutConstraint?] = [];
