@@ -71,7 +71,7 @@ class DebugDataCardViewController: UIViewController {
         case let .body(bodyString):
           let label = UILabel();
           label.text = bodyString;
-          label.font = UIFont.boldSystemFont(ofSize: 14);
+          label.font = UIFont.systemFont(ofSize: 14);
           
           rootStack.addArrangedSubview(label);
           
