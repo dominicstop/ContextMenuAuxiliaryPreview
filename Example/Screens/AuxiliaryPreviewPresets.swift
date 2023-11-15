@@ -18,6 +18,7 @@ struct AuxiliaryPreviewPresets {
   );
 
   var presets: [PresetItem] = [(
+    // Preset Index: 0
     config: AuxiliaryPreviewConfig(
       verticalAnchorPosition: .automatic,
       alignmentHorizontal: .targetLeading,
@@ -30,6 +31,7 @@ struct AuxiliaryPreviewPresets {
     ),
     dataEntries: []
   ), (
+    // Preset Index: 1
     config: AuxiliaryPreviewConfig(
       verticalAnchorPosition: .automatic,
       alignmentHorizontal: .targetCenter,
@@ -43,7 +45,8 @@ struct AuxiliaryPreviewPresets {
       transitionExitPreset: .fade
     ),
     dataEntries: []
-  ),    (
+  ), (
+    // Preset Index: 2
     config: AuxiliaryPreviewConfig(
       verticalAnchorPosition: .automatic,
       alignmentHorizontal: .targetTrailing,
@@ -65,6 +68,7 @@ struct AuxiliaryPreviewPresets {
     ),
     dataEntries: []
   ), (
+    // Preset Index: 3
     config: AuxiliaryPreviewConfig(
       verticalAnchorPosition: .automatic,
       alignmentHorizontal: .targetCenter,
@@ -86,6 +90,7 @@ struct AuxiliaryPreviewPresets {
     ),
     dataEntries: []
   ), (
+    // Preset Index: 4
     config: AuxiliaryPreviewConfig(
       verticalAnchorPosition: .automatic,
       alignmentHorizontal: .stretchTarget,
@@ -106,6 +111,7 @@ struct AuxiliaryPreviewPresets {
     ),
     dataEntries: []
   ), (
+    // Preset Index: 5
     config: AuxiliaryPreviewConfig(
       verticalAnchorPosition: .automatic,
       alignmentHorizontal: .targetCenter,
@@ -127,6 +133,7 @@ struct AuxiliaryPreviewPresets {
     ),
     dataEntries: []
   ), (
+    // Preset Index: 6
     config: AuxiliaryPreviewConfig(
       verticalAnchorPosition: .automatic,
       alignmentHorizontal: .targetTrailing,
@@ -148,6 +155,7 @@ struct AuxiliaryPreviewPresets {
     ),
     dataEntries: []
   ), (
+    // Preset Index: 7
     config: AuxiliaryPreviewConfig(
       verticalAnchorPosition: .automatic,
       alignmentHorizontal: .targetLeading,
