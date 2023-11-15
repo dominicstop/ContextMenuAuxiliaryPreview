@@ -4,13 +4,6 @@
 
 ## WIP - Current
 
-- [ ] `TODO:2023-11-15-17-32-59` - Bug: Layout Bug - Aux. Preview Menu + Aux. Preview Popover - `AuxiliaryPreviewConfig.alignmentHorizontal` - The horizontal alignment is wrong for: `targetTrailing`, `stretchTarget`.
-  * Might be cause by attaching the constraint to the wrong target?
-  * `targetTrailing` and `stretchTarget` is wrong for both: Aux. Preview Menu + Aux. Preview Popover.
-  * Might be a problem with shared anchor + constraint attachment logic.
-
-<br>
-
 - [ ] `TODO:2023-11-15-15-17-15` - Bug: Aux. Preview Menu - Aux. preview sometimes not appearing when shown too fast in succession (e.g. via the programmatic `presentMenuAtLocation`).
   * This might be due to a guard check failing; e.g. the manager might still be saying the context menu has already been hidden.
   * Potential cause: Stale flag (e.g. `isAuxiliaryPreviewVisible`).
@@ -54,9 +47,18 @@
 
 ## Completed
 
+- [x] `TODO:2023-11-15-17-32-59` - Bug: Layout Bug - Aux. Preview Menu + Aux. Preview Popover - `AuxiliaryPreviewConfig.alignmentHorizontal` - The horizontal alignment is wrong for: `targetTrailing`, `stretchTarget`.
+  * Might be cause by attaching the constraint to the wrong target?
+  * `targetTrailing` and `stretchTarget` is wrong for both: Aux. Preview Menu + Aux. Preview Popover.
+  * Might be a problem with shared anchor + constraint attachment logic.
+
+<br>
+
 - [x] `TODO:2023-11-15-06-29-49`- Bug: Aux. Preview Menu - Entrance Transition - Cannot animate fade/transform/etc keyframes when using `syncedToMenuEntranceTransition`.
   * `2023-11-15-06-31-40` - Attempted: `UIView.addKeyframe`, `isOpaque`, `DispatchQueue.main.async`.
   * `2023-11-15-06-38-28` - In order to transition to work, the keyframe has to applied outside the `UIContextMenuInteractionAnimatin` animation block. 
+
+<br>
 
 <br>
 
