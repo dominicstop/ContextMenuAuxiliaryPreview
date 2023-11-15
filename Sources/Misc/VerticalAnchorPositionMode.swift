@@ -7,7 +7,8 @@
 
 import Foundation
 
-
+// TODO: Move to `DGSwiftUtilities`
+/// Note: `VerticalAnchorPositionMode` -> `VerticalAnchorPosition`
 public enum VerticalAnchorPositionMode: String {
   case top;
   case bottom;
