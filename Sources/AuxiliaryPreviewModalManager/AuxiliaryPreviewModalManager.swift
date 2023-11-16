@@ -280,7 +280,7 @@ public class AuxiliaryPreviewModalManager: NSObject {
     else { return };
     
     let animatorConfig: AnimationConfig =
-      .presetCurve(duration: 0.3, curve: .easeOut);
+      .presetCurve(duration: 0.2, curve: .easeOut);
     
     let animator =
       animatorConfig.createAnimator(gestureInitialVelocity: .zero);
@@ -344,28 +344,32 @@ public class AuxiliaryPreviewModalManager: NSObject {
     
     self.auxiliaryPreviewMetadata = auxiliaryPreviewMetadata;
     
-    let present = {
+    let beginModalPresentation = {
       self.presentationState = .presenting;
       presentingController.present(presentedController, animated: true);
     };
     
     if let targetViewParentScrollView = targetViewParentScrollView,
        auxiliaryPreviewMetadata.offsetY != 0 {
-       
-      UIView.animate(
-        withDuration: 0.3,
-        delay: 0.0,
-        options: .curveEaseIn,
-        animations: {
-          targetViewParentScrollView.contentOffset.y += auxiliaryPreviewMetadata.offsetY;
-        },
-        completion: { _ in
-          present();
-        }
-      );
       
+      let animatorConfig: AnimationConfig =
+        .presetCurve(duration: 0.2, curve: .easeInOut);
+    
+      let animator =
+        animatorConfig.createAnimator(gestureInitialVelocity: .zero);
+        
+      animator.addAnimations {
+        targetViewParentScrollView.contentOffset.y += auxiliaryPreviewMetadata.offsetY;
+      };
+      
+      animator.addCompletion { _ in
+        beginModalPresentation();
+      };
+      
+      animator.startAnimation();
+         
     } else {
-      present();
+      beginModalPresentation();
     };
   };
 };
