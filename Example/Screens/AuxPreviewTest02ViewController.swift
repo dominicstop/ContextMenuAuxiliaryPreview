@@ -281,7 +281,7 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
   @objc func onPressShowAuxPreviewButton(_ sender: UIButton){
     guard let contextMenuManager = self.contextMenuManager else { return };
     
-    contextMenuManager.showAuxiliaryPreviewAsPopover(
+    try? contextMenuManager.showAuxiliaryPreviewAsPopover(
       presentingViewController: self
     );
   };

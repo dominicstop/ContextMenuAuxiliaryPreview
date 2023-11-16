@@ -140,13 +140,36 @@ public class ContextMenuManager {
   
   public func showAuxiliaryPreviewAsPopover(
     presentingViewController presentingController: UIViewController
-  ){
-    guard !self.isAuxiliaryPreviewVisible,
+  ) throws {
+    guard !self.isAuxiliaryPreviewVisible else { return };
     
-          let auxiliaryPreviewConfig = self.auxiliaryPreviewConfig,
-          let menuTargetView = self.menuTargetView,
-          let delegate = self.delegate
-    else { return };
+    guard let auxiliaryPreviewConfig = self.auxiliaryPreviewConfig else {
+      throw AuxiliaryPreviewError(
+        errorCode: .unexpectedNilValue,
+        description: "`auxiliaryPreviewConfig` is not set"
+      );
+    };
+    
+    guard let menuTargetView = self.menuTargetView else {
+      throw AuxiliaryPreviewError(
+        errorCode: .unexpectedNilValue,
+        description: "Ref. to `menuTargetView` is nil"
+      );
+    };
+    
+    guard menuTargetView.superview != nil || menuTargetView.window != nil else {
+      throw AuxiliaryPreviewError(
+        errorCode: .guardCheckFailed,
+        description: "`menuTargetView` is not in the view hierarchy"
+      );
+    };
+    
+    guard let delegate = self.delegate else {
+      throw AuxiliaryPreviewError(
+        errorCode: .unexpectedNilValue,
+        description: "`delegate` is not set"
+      );
+    };
     
     let auxPreviewView = delegate.onRequestMenuAuxiliaryPreview(sender: self);
     self.auxiliaryPreviewView = auxPreviewView;
