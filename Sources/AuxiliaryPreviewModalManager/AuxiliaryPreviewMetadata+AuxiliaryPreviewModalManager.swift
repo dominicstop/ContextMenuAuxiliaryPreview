@@ -13,7 +13,10 @@ extension AuxiliaryPreviewMetadata {
   
     guard let presentedController = manager.presentedController,
           let auxiliaryPreviewController = manager.auxiliaryPreviewController,
+          
           let targetView = manager.targetView,
+          let targetViewGlobalFrame = targetView.globalFrame,
+          
           let window = targetView.window
     else { return nil };
     
@@ -21,7 +24,7 @@ extension AuxiliaryPreviewMetadata {
   
     let sizeValueContext = AuxiliaryPreviewSizeValue.Context(
       windowSize: window.bounds.size,
-      previewFrame: targetView.frame
+      previewFrame: targetViewGlobalFrame
     );
     
     self.sizeValueContext = sizeValueContext;
@@ -38,7 +41,7 @@ extension AuxiliaryPreviewMetadata {
             return presentedController.view.frame.width;
         
           case .stretchTarget:
-            return targetView.frame.size.width;
+            return targetViewGlobalFrame.size.width;
             
           default:
             return max(
@@ -46,7 +49,6 @@ extension AuxiliaryPreviewMetadata {
               auxiliaryPreviewController.view.frame.size.width
             );
         };
-      
       }();
       
       return computedWidth ?? fallbackWidth;
@@ -85,7 +87,7 @@ extension AuxiliaryPreviewMetadata {
           return .bottom;
           
         case .automatic:
-          let targetViewY = targetView.frame.midY;
+          let targetViewY = targetViewGlobalFrame.midY;
           let rootViewY = presentedController.view.frame.midY;
           
           return targetViewY <= rootViewY ? .bottom : .top
@@ -94,7 +96,6 @@ extension AuxiliaryPreviewMetadata {
     
     self.verticalAnchorPosition = verticalAnchorPosition;
     
-    // TODO: WIP - To be implemented
     self.offsetY = {
       // Make a partial/incomplete dummy copy
       let auxiliaryPreviewMetadata = AuxiliaryPreviewMetadata(
