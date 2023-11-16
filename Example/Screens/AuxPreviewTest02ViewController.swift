@@ -113,6 +113,24 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
       stackView.addArrangedSubview(label);
     };
     
+    let showAuxPreviewButton1: UIView = {
+      let button = UIButton(frame: .zero);
+      button.setTitle("Show Aux. Preview", for: .normal);
+      
+      if #available(iOS 15.0, *) {
+        button.configuration = .filled()
+      };
+      
+      button.addTarget(self,
+        action: #selector(Self.onPressShowAuxPreviewButton(_:)),
+        for: .touchUpInside
+      );
+      
+      return button;
+    }();
+    
+    stackView.addArrangedSubview(showAuxPreviewButton1);
+    
     let debugDataCardController: DebugDataCardViewController = {
       let controller = DebugDataCardViewController();
       
@@ -165,7 +183,7 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
     
     stackView.addArrangedSubview(showContextMenuButton);
     
-    let showAuxPreviewButton: UIView = {
+    let showAuxPreviewButton2: UIView = {
       let button = UIButton(frame: .zero);
       button.setTitle("Show Aux. Preview", for: .normal);
       
@@ -181,7 +199,7 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
       return button;
     }();
     
-    stackView.addArrangedSubview(showAuxPreviewButton);
+    stackView.addArrangedSubview(showAuxPreviewButton2);
     
     let nextPresetButton: UIView = {
       let button = UIButton(frame: .zero);
