@@ -13,7 +13,7 @@ public struct AuxiliaryPreviewTransitionAnimationConfig {
 
   public static var `default`: Self = .init(
     delay: .zero,
-    animatorConfig: .presetCurve(duration: 0.3, curve: .linear),
+    animatorConfig: .presetCurve(duration: 0.2, curve: .linear),
     transitionPreset: .fade
   );
 
