@@ -101,8 +101,8 @@ struct AuxiliaryPreviewPresets {
         AuxiliaryPreviewTransitionAnimationConfig(
           delay: DEFAULT_DELAY,
           animatorConfig: .presetCurve(
-            duration: 0.3,
-            curve: .easeIn
+            duration: 0.2,
+            curve: .easeInOut
           ),
           transitionPreset: .slide()
         )
@@ -110,6 +110,7 @@ struct AuxiliaryPreviewPresets {
       transitionExitPreset: .slide()
     ),
     dataEntries: []
+    
   ), (
     // Preset Index: 5
     config: AuxiliaryPreviewConfig(
