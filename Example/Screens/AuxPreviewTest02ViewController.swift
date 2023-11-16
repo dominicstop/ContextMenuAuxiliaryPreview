@@ -275,11 +275,7 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
   };
   
   @objc func onPressShowContextMenu(_ sender: UIButton){
-    guard let interaction = self.interaction,
-          let interactionWrapper = ContextMenuInteractionWrapper(objectToWrap: interaction)
-    else { return };
-    
-    try? interactionWrapper.presentMenuAtLocation(point: .zero);
+    try? self.contextMenuManager?.presentMenu(atLocation: .zero);
   };
   
   @objc func onPressShowAuxPreviewButton(_ sender: UIButton){
