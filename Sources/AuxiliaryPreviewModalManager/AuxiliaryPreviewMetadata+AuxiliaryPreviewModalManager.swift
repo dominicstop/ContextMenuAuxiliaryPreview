@@ -26,7 +26,7 @@ extension AuxiliaryPreviewMetadata {
     
     self.sizeValueContext = sizeValueContext;
     
-    self.computedWidth = {
+    let computedWidth: CGFloat = {
       let computedWidth = auxiliaryPreviewConfig.preferredWidth?.compute(
         computingForSizeKey: \.width,
         usingContext: sizeValueContext
@@ -52,7 +52,9 @@ extension AuxiliaryPreviewMetadata {
       return computedWidth ?? fallbackWidth;
     }();
     
-    self.computedHeight = {
+    self.computedWidth = computedWidth;
+    
+    let computedHeight = {
       let computedHeight = auxiliaryPreviewConfig.preferredHeight?.compute(
         computingForSizeKey: \.height,
         usingContext: sizeValueContext
@@ -66,7 +68,9 @@ extension AuxiliaryPreviewMetadata {
       return computedHeight ?? fallbackHeight;
     }();
     
-    self.verticalAnchorPosition = {
+    self.computedHeight = computedHeight;
+    
+    let verticalAnchorPosition = {
       let preferredAnchorPosition = auxiliaryPreviewConfig.verticalAnchorPosition;
       
       if let preferredAnchorPosition = preferredAnchorPosition.verticalAnchorPosition {
@@ -88,7 +92,26 @@ extension AuxiliaryPreviewMetadata {
       };
     }();
     
+    self.verticalAnchorPosition = verticalAnchorPosition;
+    
     // TODO: WIP - To be implemented
-    self.offsetY = 0;
+    self.offsetY = {
+      // Make a partial/incomplete dummy copy
+      let auxiliaryPreviewMetadata = AuxiliaryPreviewMetadata(
+        verticalAnchorPosition: verticalAnchorPosition,
+        computedHeight: computedHeight,
+        computedWidth: computedWidth,
+        offsetY: 0,
+        sizeValueContext: sizeValueContext
+      );
+    
+      let targetOffsetMetadata = try? AuxiliaryPreviewPopoverTargetMetadata(
+        auxiliaryPreviewModalManager: manager,
+        auxiliaryPreviewMetadata: auxiliaryPreviewMetadata
+      );
+      
+      guard let targetOffsetMetadata = targetOffsetMetadata else { return 0 };
+      return targetOffsetMetadata.scrollViewContentOffsetAdjY;
+    }();
   };
 };

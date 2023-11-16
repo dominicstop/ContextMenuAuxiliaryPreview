@@ -21,7 +21,6 @@ import DGSwiftUtilities
 //
 struct AuxiliaryPreviewPopoverTargetMetadata {
 
-  weak var parentScrollView: UIScrollView?;
   var parentScrollViewFrame: CGRect;
   var parentScrollViewGlobalFrame: CGRect;
       
@@ -47,11 +46,23 @@ struct AuxiliaryPreviewPopoverTargetMetadata {
   let scrollViewContentOffsetAdjY: CGFloat;
   
   init(
-    targetView: UIView,
-    auxiliaryPreviewConfig: AuxiliaryPreviewConfig,
+    auxiliaryPreviewModalManager: AuxiliaryPreviewModalManager,
     auxiliaryPreviewMetadata: AuxiliaryPreviewMetadata
   ) throws {
-  
+    
+    let auxiliaryPreviewConfig =
+      auxiliaryPreviewModalManager.auxiliaryPreviewConfig;
+    
+    guard let targetView = auxiliaryPreviewModalManager.targetView else {
+      throw AuxiliaryPreviewError(
+        errorCode: .unexpectedNilValue,
+        description: "`AuxiliaryPreviewModalManager.targetView` is nil"
+      );
+    };
+    
+    let targetFrame = targetView.frame;
+    self.targetFrame = targetFrame;
+    
     guard let _ = targetView.window else {
       throw AuxiliaryPreviewError(
         errorCode: .unexpectedNilValue,
@@ -59,13 +70,9 @@ struct AuxiliaryPreviewPopoverTargetMetadata {
       );
     };
   
-    let targetFrame = targetView.frame;
-    self.targetFrame = targetFrame;
-  
-    let parentScrollView =
-      targetView.recursivelyFindParentView(whereType: UIScrollView.self);
-  
-    guard let parentScrollView = parentScrollView else {
+    guard let parentScrollView =
+            auxiliaryPreviewModalManager.targetViewParentScrollView else {
+            
       throw AuxiliaryPreviewError(
         errorCode: .unexpectedNilValue,
         description: "Could not find parent scroll view instance for `targetView`"
@@ -187,7 +194,7 @@ struct AuxiliaryPreviewPopoverTargetMetadata {
           ? (minDistanceFromTopEdge - targetGlobalFrame.minY)
           : minDistanceFromTopEdge;
         
-        return offScreenAdj + baseAdj;
+        return -(offScreenAdj + baseAdj);
       };
       
       if isTargetBelowBottomEdge {
@@ -199,7 +206,7 @@ struct AuxiliaryPreviewPopoverTargetMetadata {
           ? targetGlobalFrame.maxY - bottomEdgeMin
           : bottomEdgeMax - bottomEdgeMin;
           
-        return -(offScreenAdj + baseAdj);
+        return offScreenAdj + baseAdj;
       };
       
       return 0;
@@ -211,7 +218,6 @@ struct AuxiliaryPreviewPopoverTargetMetadata {
   func debugPrint(){
     print(
       "AuxiliaryPreviewPopoverScrolViewMetadata",
-      "\n- parentScrollView == nil:", self.parentScrollView == nil,
       "\n- parentScrollViewFrame:", self.parentScrollViewFrame,
       "\n- parentScrollViewGlobalFrame:", self.parentScrollViewGlobalFrame,
       "\n- targetFrame:", self.targetFrame,

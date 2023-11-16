@@ -8,6 +8,8 @@
 import UIKit
 import DGSwiftUtilities
 
+
+
 public class AuxiliaryPreviewModalManager: NSObject {
 
   // MARK: - Embedded Types
@@ -53,6 +55,8 @@ public class AuxiliaryPreviewModalManager: NSObject {
   
   weak var auxiliaryPreviewWidthConstraint: NSLayoutConstraint?;
   weak var auxiliaryPreviewHeightConstraint: NSLayoutConstraint?;
+  
+  weak var targetViewParentScrollView: UIScrollView?;
   
   // MARK: - Computed Properties
   // ---------------------------
@@ -320,18 +324,6 @@ public class AuxiliaryPreviewModalManager: NSObject {
     self.presentingController = presentingController;
     self.targetView = targetView;
     
-    
-    
-    
-    
-    guard let parentScrollView = targetView.recursivelyFindParentView(whereType: UIScrollView.self)
-    else { return };
-    
-    print("parentScrollView.contentOffset:", parentScrollView.contentOffset);
-    print("targetView.frame:", targetView.frame);
-    print("parentScrollView.globalFrame:", targetView.globalFrame);
-    
-    
     let presentedController = AuxiliaryPreviewModalWrapperViewController();
     self.presentedController = presentedController;
     
@@ -341,11 +333,39 @@ public class AuxiliaryPreviewModalManager: NSObject {
     presentedController.modalPresentationStyle = .custom;
     presentedController.transitioningDelegate = self;
     
-    self.auxiliaryPreviewMetadata = .init(
-      auxiliaryPreviewModalManager: self
-    );
+    let targetViewParentScrollView =
+      targetView.recursivelyFindParentView(whereType: UIScrollView.self);
+      
+    self.targetViewParentScrollView = targetViewParentScrollView;
     
-    self.presentationState = .presenting;
-    presentingController.present(presentedController, animated: true);
+    guard let auxiliaryPreviewMetadata =
+            AuxiliaryPreviewMetadata(auxiliaryPreviewModalManager: self)
+    else { return };
+    
+    self.auxiliaryPreviewMetadata = auxiliaryPreviewMetadata;
+    
+    let present = {
+      self.presentationState = .presenting;
+      presentingController.present(presentedController, animated: true);
+    };
+    
+    if let targetViewParentScrollView = targetViewParentScrollView,
+       auxiliaryPreviewMetadata.offsetY != 0 {
+       
+      UIView.animate(
+        withDuration: 0.3,
+        delay: 0.0,
+        options: .curveEaseIn,
+        animations: {
+          targetViewParentScrollView.contentOffset.y += auxiliaryPreviewMetadata.offsetY;
+        },
+        completion: { _ in
+          present();
+        }
+      );
+      
+    } else {
+      present();
+    };
   };
 };
