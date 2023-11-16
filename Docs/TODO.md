@@ -4,6 +4,25 @@
 
 ## WIP - Current
 
+- [ ] `TODO:2023-11-10-12-39-29` - Impl: Aux. Preview Popover + ScrollView - Impl. logic for scrolling the target view into view before the aux. preview modal is presented, e.g. `minDistanceFromEdges`.
+  * `2023-11-16-11-18-12` 
+    * **Note A**: Origin is at top left edge, so negative/smaller y is up, positive/bigger y is down.
+    * **Note B**: The height/`minY `/`maxY` of a scrollview will be the same regardless of safe area insets.
+    * **Note C**: Safe area should only be included in computation if the scrollview matches the window size.
+    * "Target min y" < 0 (or "scrollview min y") means it's offscreen top, and "target max y" > "scrollview height" (or "scrollview maxY") means it's offscreen bottom.
+    * **Offscreen Top Amount**: "target min y" - "scrollview min y"
+      * 0 means touching top edge, negative means offscreen top, and positive means inside.
+    * **Offscreen Bottom Amount**: "target max y" - "scrollview max y"
+      * 0 means touching bottom edge, negative means inside, positive means offscreen bottom.
+    * **Offscreen Top - Anchor Bottom**:
+      * "Min. distance from top" = "safeArea top" + "margin inner" + "margin outer".
+    * **Offscreen Top - Anchor Top**:  
+      * "Min. distance from top" =  "safeArea top" + "aux preview height" + "margin inner" + "margin outer".
+    * **Offscreen Bottom - Anchor Top**: 
+    * **Offscreen Bottom - Anchor Bottom**:
+
+<br>
+
 - [ ] `TODO:2023-11-16-08-44-03`  - Bug: Aux. Preview Popover - Entrance Transition/Keyframes - Ignore delay when using `customDelay`. 
 - [ ] `TODO:2023-11-15-21-27-37` - Bug: Aux. Preview Popover - Transition/Keyframes - 3D rotations don't work properly when used for the entrance transition.
   * Note: 3D rotations works on "Aux. Preview Menu", but not in "Aux. Preview Popover".
@@ -20,7 +39,6 @@
 
 - [ ] `TODO:2023-11-09-15-38-40` - Impl: Aux. Preview Popover - `backgroundTapInteraction` - Defines what happens when the bg dimming view is tapped (e.g. close aux. preview modal).
 - [ ] `TODO:2023-11-09-15-40-11` - Impl: Aux. Preview Popover - Update target view position on layout change.
-- [ ] `TODO:2023-11-10-12-39-29` - Impl: Aux. Preview Popover + ScrollView - Impl. logic for scrolling the target view into view before the aux. preview modal is presented, e.g. `minDistanceFromEdges`.
 - [ ] `TODO:2023-11-10-12-51-51 ` - Aux. Preview Popover: Impl. separate config for "Aux. Preview Popover" - Derive the base config from "Context Menu Aux. Preview", and implicitly override base values w/ the new ones.
 - [ ] `TODO:2023-11-10-12-57-44` - Impl: Aux. Preview Keyframes + Aux. Preview Popover - Add support for setting the background dimming color + opacity.
 - [ ] `TODO:2023-11-10-12-58-00` - Impl: Aux. Preview Keyframes + Aux. Preview Popover - Add support for background blur.
