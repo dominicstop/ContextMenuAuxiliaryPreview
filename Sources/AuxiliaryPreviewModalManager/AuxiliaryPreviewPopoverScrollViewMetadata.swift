@@ -9,18 +9,15 @@ import UIKit
 import DGSwiftUtilities
 
 //
-// +---------------+ topEdgeMax
+// +---------------+ 0   - topEdgeMax
 // |               |
+// +---------------+ 100 - topEdgeMin
 // |               |
-// +---------------+ topEdgeMin
+// |               | 200
 // |               |
+// +---------------+ 300 - bottomEdgeMin
 // |               |
-// |               |
-// |               |
-// +---------------+ bottomEdgeMin
-// |               |
-// |               |
-// +---------------+ bottomEdgeMax
+// +---------------+ 400 - bottomEdgeMax
 //
 struct AuxiliaryPreviewPopoverScrollViewMetadata {
 
@@ -119,14 +116,11 @@ struct AuxiliaryPreviewPopoverScrollViewMetadata {
     let minDistanceFromBottomEdge: CGFloat = {
       switch auxiliaryPreviewMetadata.verticalAnchorPosition {
         case .top:
-          return
-              safeAreaInsets.top
-            + auxiliaryPreviewConfig.marginOuter;
+          return auxiliaryPreviewConfig.marginOuter;
             
         case .bottom:
           return
-              safeAreaInsets.top
-            + auxiliaryPreviewMetadata.computedHeight
+              auxiliaryPreviewMetadata.computedHeight
             + auxiliaryPreviewConfig.marginInner
             + auxiliaryPreviewConfig.marginOuter;
       };
