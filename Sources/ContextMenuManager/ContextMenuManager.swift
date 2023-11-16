@@ -117,6 +117,27 @@ public class ContextMenuManager {
   // MARK: - Public Functions
   // ------------------------
   
+  public func presentMenu(atLocation location: CGPoint) throws {
+    guard let interaction = self.contextMenuInteraction else {
+      throw AuxiliaryPreviewError(
+        errorCode: .unexpectedNilValue,
+        description: "Ref. to `contextMenuInteraction` is nil"
+      );
+    };
+    
+    let interactionWrapper =
+      ContextMenuInteractionWrapper(objectToWrap: interaction);
+    
+    guard let interactionWrapper = interactionWrapper else {
+      throw AuxiliaryPreviewError(
+        errorCode: .unexpectedNilValue,
+        description: "Unable to create `ContextMenuInteractionWrapper` instance"
+      );
+    };
+    
+    try? interactionWrapper.presentMenuAtLocation(point: .zero);
+  };
+  
   public func showAuxiliaryPreviewAsPopover(
     presentingViewController presentingController: UIViewController
   ){
