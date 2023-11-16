@@ -1,5 +1,5 @@
 //
-//  AuxiliaryPreviewPopoverScrollViewMetadata.swift
+//  AuxiliaryPreviewPopoverTargetMetadata.swift
 //  
 //
 //  Created by Dominic Go on 11/16/23.
@@ -19,7 +19,7 @@ import DGSwiftUtilities
 // |               |
 // +---------------+ 400 - bottomEdgeMax
 //
-struct AuxiliaryPreviewPopoverScrollViewMetadata {
+struct AuxiliaryPreviewPopoverTargetMetadata {
 
   weak var parentScrollView: UIScrollView?;
   var parentScrollViewFrame: CGRect;
