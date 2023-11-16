@@ -3,21 +3,21 @@
   "version": "0.1.0",
   "summary": "TBA",
   "source": {
-    "git": "https://github.com/dominicstop@gmail.com/ContextMenuAuxiliaryPreview.git",
+    "git": "https://github.com/dominicstop/ContextMenuAuxiliaryPreview.git",
     "tag": "0.1.0"
   },
   "license": {
     "type": "MIT",
     "file": "LICENSE"
   },
-  "homepage": "https://github.com/dominicstop@gmail.com/ContextMenuAuxiliaryPreview",
+  "homepage": "https://github.com/dominicstop/ContextMenuAuxiliaryPreview",
   "authors": {
     "Dominic Go": "dominic@dominicgo.dev"
   },
   "social_media_url": "https://twitter.com/@GoDominic",
   "dependencies": {
     "DGSwiftUtilities": [
-      "~> 0.1"
+      "~> 0"
     ]
   },
   "platforms": {

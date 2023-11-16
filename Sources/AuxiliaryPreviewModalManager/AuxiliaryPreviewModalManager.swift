@@ -320,6 +320,18 @@ public class AuxiliaryPreviewModalManager: NSObject {
     self.presentingController = presentingController;
     self.targetView = targetView;
     
+    
+    
+    
+    
+    guard let parentScrollView = targetView.recursivelyFindParentView(whereType: UIScrollView.self)
+    else { return };
+    
+    print("parentScrollView.contentOffset:", parentScrollView.contentOffset);
+    print("targetView.frame:", targetView.frame);
+    print("parentScrollView.globalFrame:", targetView.globalFrame);
+    
+    
     let presentedController = AuxiliaryPreviewModalWrapperViewController();
     self.presentedController = presentedController;
     
