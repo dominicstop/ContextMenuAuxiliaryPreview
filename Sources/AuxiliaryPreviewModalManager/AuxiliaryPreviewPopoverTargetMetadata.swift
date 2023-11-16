@@ -142,11 +142,19 @@ struct AuxiliaryPreviewPopoverTargetMetadata {
     self.bottomEdgeMax = bottomEdgeMax;
     
     // TODO: WIP - does not account for top nav bar
-    let topEdgeMin = topEdgeMax + safeAreaInsets.top;
+    let topEdgeMin =
+        topEdgeMax
+      + minDistanceFromTopEdge
+      + safeAreaInsets.top;
+      
     self.topEdgeMin = topEdgeMin;
      
     // TODO: WIP - does not account for bottom tab bar
-    let bottomEdgeMin = bottomEdgeMax - safeAreaInsets.bottom;
+    let bottomEdgeMin =
+        bottomEdgeMax
+      - minDistanceFromBottomEdge
+      - safeAreaInsets.bottom;
+    
     self.bottomEdgeMin = bottomEdgeMin;
     
     /// "target min y" - "scrollview min y"
@@ -184,15 +192,14 @@ struct AuxiliaryPreviewPopoverTargetMetadata {
     
     let scrollViewContentOffsetAdjY: CGFloat = {
       if isTargetAboveTopEdge {
-        
         /// Note: This assumes that `topEdgeMax` is 0
         let offScreenAdj = targetGlobalFrame.minY < 0
           ? abs(targetGlobalFrame.minY)
           : 0;
           
         let baseAdj = targetGlobalFrame.minY >= 0
-          ? (minDistanceFromTopEdge - targetGlobalFrame.minY)
-          : minDistanceFromTopEdge;
+          ? (topEdgeMin - targetGlobalFrame.minY)
+          : topEdgeMin;
         
         return -(offScreenAdj + baseAdj);
       };
@@ -213,9 +220,11 @@ struct AuxiliaryPreviewPopoverTargetMetadata {
     }();
     
     self.scrollViewContentOffsetAdjY = scrollViewContentOffsetAdjY;
+    self.debugPrint();
   };
   
   func debugPrint(){
+    #if DEBUG
     print(
       "AuxiliaryPreviewPopoverScrolViewMetadata",
       "\n- parentScrollViewFrame:", self.parentScrollViewFrame,
@@ -236,5 +245,6 @@ struct AuxiliaryPreviewPopoverTargetMetadata {
       "\n- scrollViewContentOffsetAdjY:", self.scrollViewContentOffsetAdjY,
       "\n"
     );
+    #endif
   };
 };
