@@ -4,6 +4,7 @@
 
 ## WIP - Current
 
+- [ ] `TODO:2023-11-16-08-44-03`  - Bug: Aux. Preview Popover - Entrance Transition/Keyframes - Ignore delay when using `customDelay`. 
 - [ ] `TODO:2023-11-15-21-27-37` - Bug: Aux. Preview Popover - Transition/Keyframes - 3D rotations don't work properly when used for the entrance transition.
   * Note: 3D rotations works on "Aux. Preview Menu", but not in "Aux. Preview Popover".
 
