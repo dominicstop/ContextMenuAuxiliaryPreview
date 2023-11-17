@@ -258,9 +258,7 @@ extension Experiment02ViewController: UIContextMenuInteractionDelegate {
     );
   };
   
-  func onRequestMenuAuxiliaryPreview(
-    sender: ContextMenuAuxiliaryPreview.ContextMenuManager
-  ) -> UIView {
+  func onRequestMenuAuxiliaryPreview(sender: ContextMenuManager) -> UIView? {
   
     let auxPreviewView = TestAuxiliaryPreviewView(frame: .zero);
     return auxPreviewView;

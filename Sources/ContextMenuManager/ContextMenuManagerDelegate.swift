@@ -10,5 +10,5 @@ import UIKit
 
 public protocol ContextMenuManagerDelegate: AnyObject {
   
-  func onRequestMenuAuxiliaryPreview(sender: ContextMenuManager) -> UIView;
+  func onRequestMenuAuxiliaryPreview(sender: ContextMenuManager) -> UIView?
 };

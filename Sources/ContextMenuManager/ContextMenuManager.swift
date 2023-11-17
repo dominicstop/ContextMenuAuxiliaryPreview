@@ -215,11 +215,11 @@ public class ContextMenuManager {
     guard self.isAuxiliaryPreviewEnabled,
           let auxiliaryPreviewConfig = self.auxiliaryPreviewConfig,
           let animator = animator,
-          let delegate = self.delegate
+          
+          let delegate = self.delegate,
+          let auxiliaryPreviewView =
+            delegate.onRequestMenuAuxiliaryPreview(sender: self)
     else { return };
-    
-    let auxiliaryPreviewView =
-      delegate.onRequestMenuAuxiliaryPreview(sender: self);
       
     self.auxiliaryPreviewView = auxiliaryPreviewView;
     

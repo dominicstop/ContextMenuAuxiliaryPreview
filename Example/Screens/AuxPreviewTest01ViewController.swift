@@ -116,7 +116,7 @@ extension AuxPreviewTest01ViewController: UIContextMenuInteractionDelegate {
     );
   };
   
-  func onRequestMenuAuxiliaryPreview(sender: ContextMenuAuxiliaryPreview.ContextMenuManager) -> UIView {
+  func onRequestMenuAuxiliaryPreview(sender: ContextMenuManager) -> UIView? {
     let view = UIView(frame: .zero);
     view.backgroundColor = .red;
     
