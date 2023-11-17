@@ -17,7 +17,7 @@ public class ContextMenuManager {
   
   public var auxiliaryPreviewConfig: AuxiliaryPreviewConfig?;
   
-  var auxiliaryPreviewMenuManager: AuxiliaryPreviewMenuManager? {
+  internal(set) public var auxiliaryPreviewMenuManager: AuxiliaryPreviewMenuManager? {
     willSet {
       guard let newValue = newValue else { return };
       
@@ -28,12 +28,12 @@ public class ContextMenuManager {
   };
   
   public var isAuxiliaryPreviewEnabled = true;
-  public var isContextMenuVisible = false;
+  internal(set) public var isContextMenuVisible = false;
   
-  public var auxiliaryPreviewView: UIView?;
+  internal(set) public var auxiliaryPreviewView: UIView?;
   
   var auxiliaryPreviewModalManager: AuxiliaryPreviewModalManager?;
-  var auxiliaryPreviewModalVC: AuxiliaryPreviewModalViewController?;
+  var auxiliaryPreviewModalController: AuxiliaryPreviewModalViewController?;
   
   // MARK: - Properties - References
   // -------------------------------
@@ -60,7 +60,7 @@ public class ContextMenuManager {
   /// **Note**: This `UIView` instance  only exists whenever there's a
   /// context menu interaction.
   ///
-  var contextMenuContainerViewWrapper: ContextMenuContainerViewWrapper? {
+  public var contextMenuContainerViewWrapper: ContextMenuContainerViewWrapper? {
     guard let targetView = self.menuTargetView,
           let window = targetView.window
     else { return nil };
@@ -91,8 +91,8 @@ public class ContextMenuManager {
   // ------------
   
   public init(
-    contextMenuInteraction: UIContextMenuInteraction,
-    menuTargetView: UIView
+    contextMenuInteraction: UIContextMenuInteraction?,
+    menuTargetView: UIView?
   ) {
     self.contextMenuInteraction = contextMenuInteraction;
     self.menuTargetView = menuTargetView;
@@ -177,7 +177,7 @@ public class ContextMenuManager {
     let modalVC = AuxiliaryPreviewModalViewController();
     modalVC.view = auxPreviewView;
     
-    self.auxiliaryPreviewModalVC = modalVC;
+    self.auxiliaryPreviewModalController = modalVC;
     
     let modalManager = AuxiliaryPreviewModalManager(
       auxiliaryPreviewConfig: auxiliaryPreviewConfig
