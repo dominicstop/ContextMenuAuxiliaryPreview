@@ -442,13 +442,11 @@ fileprivate extension UIView {
     with event: UIEvent?
   ) -> Bool {
     
-  
     guard let auxPreview = Self.auxPreview else {
       // call original impl.
       return self._point(inside: point, with: event);
     };
     
-    // TODO:
     let isPointInsideFrameOfAuxPreview: Bool = {
       guard let window = auxPreview.window else { return false };
     
@@ -457,14 +455,8 @@ fileprivate extension UIView {
     
       return auxPreviewFrameAdj.contains(pointAdj);
     }();
-    
-    let isParentOfAuxPreview = self.subviews.contains {
-      $0 === auxPreview;
-    };
-    
-    print("isParentOfAuxPreview:", isParentOfAuxPreview);
-    
-    guard isParentOfAuxPreview else {
+        
+    guard isPointInsideFrameOfAuxPreview else {
       // call original impl.
       return self._point(inside: point, with: event);
     };
