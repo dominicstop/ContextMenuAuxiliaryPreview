@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import DGSwiftUtilities
 
 public class ContextMenuManager {
 
@@ -225,6 +225,9 @@ public class ContextMenuManager {
     
     if case .syncedToMenuEntranceTransition = auxiliaryPreviewConfig.transitionConfigEntrance {
       auxiliaryPreviewView.alpha = 0;
+      
+      let transformConfig = Transform3D(scaleX: 0.9, scaleY: 0.9);
+      auxiliaryPreviewView.layer.transform = transformConfig.transform;
     };
       
     animator.addAnimations {

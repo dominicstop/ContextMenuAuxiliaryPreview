@@ -338,12 +338,15 @@ public class AuxiliaryPreviewMenuManager {
   
   public func attachAndAnimateInAuxiliaryPreviewTogetherWithContextMenu() {
     guard let manager = self.contextMenuManager,
-          let menuAuxPreviewConfig = manager.auxiliaryPreviewConfig,
+          let auxiliaryPreviewConfig = manager.auxiliaryPreviewConfig,
           let auxiliaryPreviewView = self.auxiliaryPreviewView,
           
           case let .syncedToMenuEntranceTransition(shouldAnimateSize) =
-            menuAuxPreviewConfig.transitionConfigEntrance
+            auxiliaryPreviewConfig.transitionConfigEntrance
     else { return };
+    
+    auxiliaryPreviewView.transform = .identity;
+    auxiliaryPreviewView.updateConstraints();
     
     auxiliaryPreviewView.alpha = 1;
     self.attachAuxiliaryPreview();
