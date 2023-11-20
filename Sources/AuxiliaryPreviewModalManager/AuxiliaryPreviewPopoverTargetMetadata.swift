@@ -63,7 +63,7 @@ struct AuxiliaryPreviewPopoverTargetMetadata {
     let targetFrame = targetView.frame;
     self.targetFrame = targetFrame;
     
-    guard let _ = targetView.window else {
+    guard let window = targetView.window else {
       throw AuxiliaryPreviewError(
         errorCode: .unexpectedNilValue,
         description: "`targetView.window` is nil"
@@ -142,18 +142,28 @@ struct AuxiliaryPreviewPopoverTargetMetadata {
     self.bottomEdgeMax = bottomEdgeMax;
     
     // TODO: WIP - does not account for top nav bar
-    let topEdgeMin =
-        topEdgeMax
-      + minDistanceFromTopEdge
-      + safeAreaInsets.top;
+    let topEdgeMin: CGFloat = {
+      var topEdgeMin = topEdgeMax + minDistanceFromTopEdge;
+      
+      if topEdgeMax == 0 {
+        topEdgeMin += safeAreaInsets.top;
+      };
+      
+      return topEdgeMin;
+    }();
       
     self.topEdgeMin = topEdgeMin;
      
     // TODO: WIP - does not account for bottom tab bar
-    let bottomEdgeMin =
-        bottomEdgeMax
-      - minDistanceFromBottomEdge
-      - safeAreaInsets.bottom;
+    let bottomEdgeMin: CGFloat = {
+      var bottomEdgeMin = bottomEdgeMax - minDistanceFromBottomEdge;
+      
+      if bottomEdgeMax != window.frame.maxY {
+        bottomEdgeMin -= safeAreaInsets.bottom;
+      };
+      
+      return bottomEdgeMin;
+    }();
     
     self.bottomEdgeMin = bottomEdgeMin;
     
