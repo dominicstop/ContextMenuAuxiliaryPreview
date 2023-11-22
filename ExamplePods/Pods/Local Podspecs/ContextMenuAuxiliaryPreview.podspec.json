@@ -1,10 +1,10 @@
 {
   "name": "ContextMenuAuxiliaryPreview",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "summary": "TBA",
   "source": {
     "git": "https://github.com/dominicstop/ContextMenuAuxiliaryPreview.git",
-    "tag": "0.2.5"
+    "tag": "0.3.0"
   },
   "license": {
     "type": "MIT",
@@ -17,7 +17,7 @@
   "social_media_url": "https://twitter.com/@GoDominic",
   "dependencies": {
     "DGSwiftUtilities": [
-      "~> 0"
+      "~> 0.6"
     ]
   },
   "platforms": {
