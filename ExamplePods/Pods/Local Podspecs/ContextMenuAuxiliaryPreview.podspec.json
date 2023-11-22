@@ -1,10 +1,10 @@
 {
   "name": "ContextMenuAuxiliaryPreview",
-  "version": "0.1.0",
+  "version": "0.2.5",
   "summary": "TBA",
   "source": {
     "git": "https://github.com/dominicstop/ContextMenuAuxiliaryPreview.git",
-    "tag": "0.1.0"
+    "tag": "0.2.5"
   },
   "license": {
     "type": "MIT",

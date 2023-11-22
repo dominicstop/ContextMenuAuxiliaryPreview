@@ -1,7 +1,7 @@
 PODS:
-  - ContextMenuAuxiliaryPreview (0.1.0):
+  - ContextMenuAuxiliaryPreview (0.2.5):
     - DGSwiftUtilities (~> 0)
-  - DGSwiftUtilities (0.5.4)
+  - DGSwiftUtilities (0.6.1)
 
 DEPENDENCIES:
   - ContextMenuAuxiliaryPreview (from `../`)
@@ -15,8 +15,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ContextMenuAuxiliaryPreview: a2c9e48a1c35aa73d6cdd42639c3fa3abf387205
-  DGSwiftUtilities: dcc13723d5f673558a2d7f283d9f8d06b42e1055
+  ContextMenuAuxiliaryPreview: 27763c1bed5afcb77427b192191b18a897c54ebe
+  DGSwiftUtilities: 22fab7fe2d4494dfb97c9b80c678d9ea06a058e1
 
 PODFILE CHECKSUM: 390ce9d08904d7f4273b197f28c86720c519721c
 
