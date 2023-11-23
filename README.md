@@ -5,8 +5,9 @@ A library to add an auxiliary preview to the edge of the context menu preview.
 * Support for programmatically showing the context menu.
 * Preset transition for the aux. preview entrance/exit.
 * Support for showing the aux. preview as a popover.
+* This library is used in [`react-native-ios-context-menu`](https://github.com/dominicstop/react-native-ios-context-menu).
 
-
+<br>
 
 ![test-AuxPreviewTest02ViewController](./Assets/test-AuxPreviewTest02ViewController-01.gif)
 
