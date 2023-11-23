@@ -13,6 +13,8 @@ enum Route: CaseIterable {
   case auxPreviewTest02;
   case experiment01;
   case experiment02;
+  
+  case auxPreviewBasicUsage01;
 
   var viewController: UIViewController {
     switch self {
@@ -27,6 +29,9 @@ enum Route: CaseIterable {
         
       case .experiment02:
         return Experiment02ViewController();
+        
+      case .auxPreviewBasicUsage01:
+        return AuxiliaryPreviewBasicUsage01Controller();
     };
   };
 };
