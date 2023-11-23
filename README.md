@@ -6,6 +6,8 @@ A library to add an auxiliary preview to the edge of the context menu preview.
 * Preset transition for the aux. preview entrance/exit.
 * Support for showing the aux. preview as a popover.
 
+![test-AuxPreviewTest02ViewController](./Assets/test-AuxPreviewTest02ViewController.gif)
+
 ## Demo Gifs
 
 TBA
@@ -178,3 +180,4 @@ extension AuxiliaryPreviewBasicUsage01Controller: UIContextMenuInteractionDelega
 
 ```
 
+![AuxiliaryPreviewBasicUsage01](./Assets/example-AuxiliaryPreviewBasicUsage01.gif)
