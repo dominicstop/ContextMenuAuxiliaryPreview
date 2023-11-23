@@ -158,7 +158,7 @@ struct AuxiliaryPreviewPopoverTargetMetadata {
     let bottomEdgeMin: CGFloat = {
       var bottomEdgeMin = bottomEdgeMax - minDistanceFromBottomEdge;
       
-      if bottomEdgeMax != window.frame.maxY {
+      if bottomEdgeMax == window.frame.maxY {
         bottomEdgeMin -= safeAreaInsets.bottom;
       };
       
