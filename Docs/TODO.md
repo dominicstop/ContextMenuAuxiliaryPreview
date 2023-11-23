@@ -4,25 +4,6 @@
 
 ## WIP - Current
 
-- [ ] `TODO:2023-11-10-12-39-29` - Impl: Aux. Preview Popover + ScrollView - Impl. logic for scrolling the target view into view before the aux. preview modal is presented, e.g. `minDistanceFromEdges`.
-  * `2023-11-16-11-18-12` 
-    * **Note A**: Origin is at top left edge, so negative/smaller y is up, positive/bigger y is down.
-    * **Note B**: The height/`minY `/`maxY` of a scrollview will be the same regardless of safe area insets.
-    * **Note C**: Safe area should only be included in computation if the scrollview matches the window size.
-    * "Target min y" < 0 (or "scrollview min y") means it's offscreen top, and "target max y" > "scrollview height" (or "scrollview maxY") means it's offscreen bottom.
-    * **Offscreen Top Amount**: "target distance from top edge" = "target min y" - "scrollview min y"
-      * 0 means touching top edge, negative means offscreen top, and positive means inside.
-    * **Offscreen Bottom Amount**: "target distance from bottom edge" = "target max y" - "scrollview max y"
-      * 0 means touching bottom edge, negative means inside, positive means offscreen bottom.
-    * **Offscreen Top - Anchor Bottom**:
-      * "min. distance from top edge" = "safeArea top" + "margin inner" + "margin outer".
-      * if "target distance from top edge" < "min. distance from top edge", then nudge target view.
-    * **Offscreen Top - Anchor Top**:  
-      * "Min. distance from top" =  "safeArea top" + "aux preview height" + "margin inner" + "margin outer".
-      * if "target distance from top edge" < "min. distance from top edge", then nudge target view.
-    * **Offscreen Bottom - Anchor Top**: 
-    * **Offscreen Bottom - Anchor Bottom**:
-
 <br>
 
 - [ ] `TODO:2023-11-16-08-44-03`  - Bug: Aux. Preview Popover - Entrance Transition/Keyframes - Ignore delay when using `customDelay`. 
@@ -70,6 +51,27 @@
 <br><br>
 
 ## Completed
+
+- [x] `TODO:2023-11-10-12-39-29` - Impl: Aux. Preview Popover + ScrollView - Impl. logic for scrolling the target view into view before the aux. preview modal is presented, e.g. `minDistanceFromEdges`.
+  * `2023-11-16-11-18-12` 
+    * **Note A**: Origin is at top left edge, so negative/smaller y is up, positive/bigger y is down.
+    * **Note B**: The height/`minY `/`maxY` of a scrollview will be the same regardless of safe area insets.
+    * **Note C**: Safe area should only be included in computation if the scrollview matches the window size.
+    * "Target min y" < 0 (or "scrollview min y") means it's offscreen top, and "target max y" > "scrollview height" (or "scrollview maxY") means it's offscreen bottom.
+    * **Offscreen Top Amount**: "target distance from top edge" = "target min y" - "scrollview min y"
+      * 0 means touching top edge, negative means offscreen top, and positive means inside.
+    * **Offscreen Bottom Amount**: "target distance from bottom edge" = "target max y" - "scrollview max y"
+      * 0 means touching bottom edge, negative means inside, positive means offscreen bottom.
+    * **Offscreen Top - Anchor Bottom**:
+      * "min. distance from top edge" = "safeArea top" + "margin inner" + "margin outer".
+      * if "target distance from top edge" < "min. distance from top edge", then nudge target view.
+    * **Offscreen Top - Anchor Top**:  
+      * "Min. distance from top" =  "safeArea top" + "aux preview height" + "margin inner" + "margin outer".
+      * if "target distance from top edge" < "min. distance from top edge", then nudge target view.
+    * **Offscreen Bottom - Anchor Top**: 
+    * **Offscreen Bottom - Anchor Bottom**:
+
+<br>
 
 - [x] `TODO:2023-11-10-12-24-03` - Impl: `ContextMenuManaer.presentContextMenu` - Add helper function that calls `ContextMenuInteractionWrapper.presentMenuAtLocation`. 
 - [x] `TODO:2023-10-22-09-09-34` - Impl: Examples - Add VC for testing the different possible combinations of aux. preview config.
