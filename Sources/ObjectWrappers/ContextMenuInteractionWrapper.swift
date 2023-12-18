@@ -19,6 +19,8 @@ public class ContextMenuInteractionWrapper: ObjectWrapper<
     
     public var encodedString: String {
       switch self {
+      
+        /// Instance method exists in 17.1, 16.3, 15.2.1, 14.4, 13.1.3
         case .presentMenuAtLocation:
           // _presentMenuAtLocation:
           return "X3ByZXNlbnRNZW51QXRMb2NhdGlvbjo=";
