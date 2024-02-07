@@ -248,13 +248,8 @@ public class ContextMenuManager {
               auxiliaryPreviewConfig.transitionConfigEntrance
       else { return };
       
-      print(
-        "notifyOnContextMenuInteraction",
-        "- addAnimations block"
-      );
-      
-      auxiliaryPreviewMenuManager.debugPrintValues();
-      auxiliaryPreviewMenuManager.attachAndAnimateInAuxiliaryPreviewTogetherWithContextMenu();
+      auxiliaryPreviewMenuManager
+        .attachAndAnimateInAuxiliaryPreviewTogetherWithContextMenu();
     };
     
     animator.addCompletion {
@@ -262,7 +257,8 @@ public class ContextMenuManager {
             let auxiliaryPreviewMenuManager = self.auxiliaryPreviewMenuManager
       else { return };
       
-      auxiliaryPreviewMenuManager.attachAndAnimateInAuxiliaryPreviewUsingCustomAnimator();
+      auxiliaryPreviewMenuManager
+        .attachAndAnimateInAuxiliaryPreviewUsingCustomAnimator();
     };
     
     #if DEBUG

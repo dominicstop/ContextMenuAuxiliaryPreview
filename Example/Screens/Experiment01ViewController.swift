@@ -187,7 +187,6 @@ class Experiment01ViewController: UIViewController {
             
             // call original impl.
             originalImp(_self, selector, interaction, configuration, animator);
-            print("intercepted call to will display menu");
           }
         }
       };

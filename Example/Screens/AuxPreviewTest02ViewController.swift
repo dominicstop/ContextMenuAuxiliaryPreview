@@ -347,12 +347,13 @@ extension AuxPreviewTest02ViewController: UIContextMenuInteractionDelegate {
     );
   };
   
+  //
   func contextMenuInteraction(
     _ interaction: UIContextMenuInteraction,
     willEndFor configuration: UIContextMenuConfiguration,
     animator: UIContextMenuInteractionAnimating?
   ) {
-    
+    print("contextMenuInteraction - willEndFor");
     self.contextMenuManager?.notifyOnContextMenuInteraction(
       interaction,
       willEndFor: configuration,
