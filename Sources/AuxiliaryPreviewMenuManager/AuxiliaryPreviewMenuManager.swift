@@ -244,7 +244,8 @@ public class AuxiliaryPreviewMenuManager {
           forView: auxiliaryPreviewView,
           attachingTo: morphingPlatterView,
           enclosingView: contextMenuContainerView,
-          preferredWidth: auxiliaryPreviewViewWidth
+          preferredWidth: auxiliaryPreviewViewWidth,
+          shouldPreferWidthAnchor: horizontalAlignment == .stretch
         );
         
         self.auxiliaryPreviewWidthConstraint = constraints.first {
