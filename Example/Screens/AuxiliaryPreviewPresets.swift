@@ -224,6 +224,27 @@ struct AuxiliaryPreviewPresets {
       .body("Custom entrance transition keyframe"),
       .body("transform: rotateX, perspective")
     ]
+  ), (
+    // Preset Index: 9
+    config: AuxiliaryPreviewConfig(
+      verticalAnchorPosition: .automatic,
+      horizontalAlignment: .stretch,
+      preferredHeight: .constant(90),
+      marginInner: 10,
+      marginOuter: 10,
+      transitionConfigEntrance: .customDelay(
+        AuxiliaryPreviewTransitionAnimationConfig(
+          delay: DEFAULT_DELAY,
+          animatorConfig: .presetCurve(
+            duration: 0.2,
+            curve: .easeInOut
+          ),
+          transitionPreset: .slide()
+        )
+      ),
+      transitionExitPreset: .slide()
+    ),
+    dataEntries: []
   )];
   
   var presetCounter = 0;
