@@ -10,11 +10,12 @@ import DGSwiftUtilities
 
 
 /// Wrapper for: _UIContextMenuContainerView
-/// This is the "root view" that contains the context menut
+/// This is the "root view" that contains the context menu
 ///
 /// **Note**: This `UIView` instance  only exists whenever there's a
 /// context menu interaction.
 ///
+@available(iOS 13, *)
 public class ContextMenuContainerViewWrapper:
   PrivateObjectWrapper<UIView, ContextMenuContainerViewWrapper.EncodedString> {
 
@@ -28,9 +29,8 @@ public class ContextMenuContainerViewWrapper:
           return "X1VJQ29udGV4dE1lbnVDb250YWluZXJWaWV3";
       };
     };
-};
+  };
 
-  
   // MARK: - Computed Properties
   // ---------------------------
   
@@ -44,10 +44,25 @@ public class ContextMenuContainerViewWrapper:
   
   /// Returns the "object wrapper" for the view contains the
   ///  "context menu items" + "context menu preview".
+  @available(iOS 16.0, *)
   public var contextMenuPlatterTransitionViewWrapper: ContextMenuPlatterTransitionViewWrapper? {
     guard let view = self.wrappedObject else { return nil };
     
     return view.subviews.reduce(nil) {
+      $0 ?? .init(objectToWrap: $1)
+    };
+  };
+  
+  @available(iOS 15, *)
+  public var morphingPlatterViewWrapper: MorphingPlatterViewWrapper? {
+    guard let view = self.wrappedObject else { return nil };
+    
+    let targetView = view.subviews.first {
+      $0.subviews.count > 1 && !($0 is UIVisualEffectView);
+    };
+    
+    guard let targetView = targetView else { return nil };
+    return targetView.subviews.reduce(nil) {
       $0 ?? .init(objectToWrap: $1)
     };
   };

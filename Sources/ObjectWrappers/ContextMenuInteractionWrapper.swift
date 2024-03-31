@@ -8,7 +8,7 @@
 import UIKit
 import DGSwiftUtilities
 
-
+@available(iOS 3, *)
 public class ContextMenuInteractionWrapper: ObjectWrapper<
   UIContextMenuInteraction,
   ContextMenuInteractionWrapper.EncodedString

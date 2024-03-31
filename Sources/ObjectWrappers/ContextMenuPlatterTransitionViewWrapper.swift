@@ -12,7 +12,8 @@ import DGSwiftUtilities
 ///
 /// This is a wrapper for the view that holds the "context menu items", and
 /// the  "context menu preview".
-/// 
+///
+@available(iOS, introduced: 16.0)
 public class ContextMenuPlatterTransitionViewWrapper:
   PrivateObjectWrapper<UIView, ContextMenuPlatterTransitionViewWrapper.EncodedString> {
 

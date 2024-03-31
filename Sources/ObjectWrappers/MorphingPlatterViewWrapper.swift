@@ -11,7 +11,8 @@ import DGSwiftUtilities
 
 /// Wrapper for: `_UIMorphingPlatterView`
 /// Root container for the context menu preview
- public class MorphingPlatterViewWrapper:
+@available(iOS 15, *)
+public class MorphingPlatterViewWrapper:
   PrivateObjectWrapper<UIView, MorphingPlatterViewWrapper.EncodedString> {
   
   public enum EncodedString: String, PrivateObjectWrappingEncodedString {

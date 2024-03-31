@@ -11,6 +11,7 @@ import DGSwiftUtilities
 
 /// Wrapper for: `_UIContextMenuView`
 /// Root container for the context menu items
+@available(iOS 15, *)
 public class ContextMenuViewWrapper:
   PrivateObjectWrapper<UIView, ContextMenuViewWrapper.EncodedString> {
   
