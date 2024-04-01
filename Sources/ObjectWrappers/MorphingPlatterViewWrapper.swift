@@ -8,9 +8,11 @@
 import UIKit
 import DGSwiftUtilities
 
-
 /// Wrapper for: `_UIMorphingPlatterView`
 /// Root container for the context menu preview
+///
+/// Available: iOS 17.1, 16.3, 15.2.1
+///
  public class MorphingPlatterViewWrapper:
   PrivateObjectWrapper<UIView, MorphingPlatterViewWrapper.EncodedString> {
   

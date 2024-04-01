@@ -15,6 +15,8 @@ import DGSwiftUtilities
 /// **Note**: This `UIView` instance  only exists whenever there's a
 /// context menu interaction.
 ///
+/// Available: iOS 17, 16, 15, 14, 13
+///
 public class ContextMenuContainerViewWrapper:
   PrivateObjectWrapper<UIView, ContextMenuContainerViewWrapper.EncodedString> {
 
@@ -28,7 +30,7 @@ public class ContextMenuContainerViewWrapper:
           return "X1VJQ29udGV4dE1lbnVDb250YWluZXJWaWV3";
       };
     };
-};
+  };
 
   
   // MARK: - Computed Properties
