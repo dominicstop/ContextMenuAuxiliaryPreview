@@ -13,6 +13,7 @@ import DGSwiftUtilities
 ///
 /// Available: iOS 17.1, 16.3, 15.2.1
 ///
+@available(iOS 15, *)
  public class MorphingPlatterViewWrapper:
   PrivateObjectWrapper<UIView, MorphingPlatterViewWrapper.EncodedString> {
   

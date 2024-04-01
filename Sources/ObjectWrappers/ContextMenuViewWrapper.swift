@@ -14,6 +14,7 @@ import DGSwiftUtilities
 ///
 /// Available: iOS 17, 16, 15
 ///
+@available(iOS 15, *)
 public class ContextMenuViewWrapper:
   PrivateObjectWrapper<UIView, ContextMenuViewWrapper.EncodedString> {
   

@@ -17,6 +17,7 @@ import DGSwiftUtilities
 ///
 /// Available: iOS 17, 16, 15, 14, 13
 ///
+@available(iOS 13, *)
 public class ContextMenuContainerViewWrapper:
   PrivateObjectWrapper<UIView, ContextMenuContainerViewWrapper.EncodedString> {
 
@@ -46,6 +47,7 @@ public class ContextMenuContainerViewWrapper:
   
   /// Returns the "object wrapper" for the view contains the
   ///  "context menu items" + "context menu preview".
+  @available(iOS 16, *)
   public var contextMenuPlatterTransitionViewWrapper: ContextMenuPlatterTransitionViewWrapper? {
     guard let view = self.wrappedObject else { return nil };
     

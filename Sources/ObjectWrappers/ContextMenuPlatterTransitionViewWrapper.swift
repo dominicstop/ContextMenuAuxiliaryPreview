@@ -15,6 +15,7 @@ import DGSwiftUtilities
 ///
 /// Available: iOS 17, 16
 ///
+@available(iOS 16, *)
 public class ContextMenuPlatterTransitionViewWrapper:
   PrivateObjectWrapper<UIView, ContextMenuPlatterTransitionViewWrapper.EncodedString> {
 
