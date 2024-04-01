@@ -85,6 +85,8 @@
 		8380C02F17C389211C9D5F57E24D08B3 /* AuxiliaryPreviewEntranceTransitionConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2C4A26E6BE1AFF9CFDA54FAA7F0F19 /* AuxiliaryPreviewEntranceTransitionConfig.swift */; };
 		861158E1596EEE2FB994F376D09DF455 /* NSObject+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BD7807973EBC8CF7AD9DB5FE81AA5B /* NSObject+Helpers.swift */; };
 		88CEFA522BBAD04A0074147A /* UIView+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CEFA512BBAD04A0074147A /* UIView+Helpers.swift */; };
+		88CEFA542BBB08CE0074147A /* AuxiliaryPreviewViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CEFA532BBB08CE0074147A /* AuxiliaryPreviewViewProvider.swift */; };
+		88CEFA562BBB08F80074147A /* ContextMenuViewExtractorForIOS16.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CEFA552BBB08F80074147A /* ContextMenuViewExtractorForIOS16.swift */; };
 		8976C0064CB3656AAD7F0C32FA0FD417 /* VerticalAnchorPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60CCC38F02863F20E59AB31BFA688B7 /* VerticalAnchorPosition.swift */; };
 		8DC84166B72059A4BA930338FDE36950 /* Angle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE98DAE7B53289B0D395ED73298E3E /* Angle.swift */; };
 		8F8956319E2C210615B1A02117661277 /* UIUserInterfaceStyle+CaseIterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1F39740A0FADB55FBD0799926DE2FD /* UIUserInterfaceStyle+CaseIterable.swift */; };
@@ -291,6 +293,8 @@
 		87940930B7BE74929058CC4491A24ED0 /* UIView+Helpers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIView+Helpers.swift"; path = "Sources/Extension+Helpers/UIView+Helpers.swift"; sourceTree = "<group>"; };
 		888CC16CB18329CF912223096069ACDA /* UITraitEnvironmentLayoutDirection+EnumCaseStringRepresentable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UITraitEnvironmentLayoutDirection+EnumCaseStringRepresentable.swift"; path = "Sources/Extension+EnumCaseStringRepresentable/UITraitEnvironmentLayoutDirection+EnumCaseStringRepresentable.swift"; sourceTree = "<group>"; };
 		88CEFA512BBAD04A0074147A /* UIView+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Helpers.swift"; sourceTree = "<group>"; };
+		88CEFA532BBB08CE0074147A /* AuxiliaryPreviewViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuxiliaryPreviewViewProvider.swift; sourceTree = "<group>"; };
+		88CEFA552BBB08F80074147A /* ContextMenuViewExtractorForIOS16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuViewExtractorForIOS16.swift; sourceTree = "<group>"; };
 		89283229BCC13AEAF8442564755086CB /* GenericErrorCodes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GenericErrorCodes.swift; path = Sources/Common/GenericError/GenericErrorCodes.swift; sourceTree = "<group>"; };
 		8A4DFE9D656BE108966E8DF6EDDA046B /* Pods-ContextMenuAuxiliaryPreview_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ContextMenuAuxiliaryPreview_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		8B988BF3213E978FC7E1CA04205A3B88 /* AuxiliaryPreviewModalViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AuxiliaryPreviewModalViewController.swift; sourceTree = "<group>"; };
@@ -411,6 +415,8 @@
 			children = (
 				BEAC3510DD1D9F9DABE170E1C8963A37 /* AuxiliaryPreviewMenuManager.swift */,
 				0C4E8127D5CA3FBB7A1C91311ADDFBEB /* AuxiliaryPreviewMetadata+AuxiliaryPreviewMenuManager.swift */,
+				88CEFA532BBB08CE0074147A /* AuxiliaryPreviewViewProvider.swift */,
+				88CEFA552BBB08F80074147A /* ContextMenuViewExtractorForIOS16.swift */,
 			);
 			name = AuxiliaryPreviewMenuManager;
 			path = Sources/AuxiliaryPreviewMenuManager;
@@ -899,6 +905,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6737CE41EE6E9EB9D12189170138324A /* AuxiliaryPreviewConfig.swift in Sources */,
+				88CEFA542BBB08CE0074147A /* AuxiliaryPreviewViewProvider.swift in Sources */,
 				8380C02F17C389211C9D5F57E24D08B3 /* AuxiliaryPreviewEntranceTransitionConfig.swift in Sources */,
 				39E7FED66E3E9FD9A1AA67CD676611B2 /* AuxiliaryPreviewError.swift in Sources */,
 				04335BD5AC63140ADEB2BF8C0A1B9B99 /* AuxiliaryPreviewMenuManager.swift in Sources */,
@@ -916,6 +923,7 @@
 				6BBF7A2598BDD7F596F750EF56D32643 /* AuxiliaryPreviewPopoverTargetMetadata.swift in Sources */,
 				15C46EA56A1234F6BF02BB42674B4B47 /* AuxiliaryPreviewSizeValue.swift in Sources */,
 				5ED576DFA9808DB04432020B37A7ACA0 /* AuxiliaryPreviewTransitionAnimationConfig.swift in Sources */,
+				88CEFA562BBB08F80074147A /* ContextMenuViewExtractorForIOS16.swift in Sources */,
 				D118C1213170CE6EF12B34A3B30CAF99 /* AuxiliaryPreviewTransitionConfig.swift in Sources */,
 				F9514CEC4691444D90E1D49CFFFD09F2 /* AuxiliaryPreviewTransitionKeyframe.swift in Sources */,
 				E171FC4D9341C00E1F9E93A9EF284760 /* AuxiliaryPreviewTransitionKeyframeConfig.swift in Sources */,
