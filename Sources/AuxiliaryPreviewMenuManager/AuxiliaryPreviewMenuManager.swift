@@ -34,10 +34,20 @@ public class AuxiliaryPreviewMenuManager {
   weak var contextMenuManager: ContextMenuManager?;
   weak var contextMenuAnimator: UIContextMenuInteractionAnimating?;
   
-  var contextMenuContainerViewWrapper: ContextMenuContainerViewWrapper;
-  var contextMenuPlatterTransitionViewWrapper: ContextMenuPlatterTransitionViewWrapper;
-  var morphingPlatterViewWrapper: MorphingPlatterViewWrapper;
-  var contextMenuViewWrapper: ContextMenuViewWrapper?;
+  /// This is the root view in the current window that contains all the of the
+  /// "context menu"-related views...
+  var contextMenuWindowRootView: UIView?;
+  
+  /// This is where we will attach the "aux preview" to, i.e. this is the
+  /// parent view of the "aux. preview".
+  var contextMenuPreviewRootView: UIView?;
+  
+  /// This is the deepest view that contains both the
+  /// "context menu preview" view, and the "context menu items" list view.
+  ///
+  /// E.g. both "context menu preview", and "context menu items" has this
+  /// view as their closest parent view...
+  var contextMenuSharedRootView: UIView?;
   
   /// where should the aux. preview be attached to?
   weak var auxiliaryPreviewParentView: UIView?;
@@ -71,7 +81,35 @@ public class AuxiliaryPreviewMenuManager {
             contextMenuContainerViewWrapper.wrappedObject
     else { return nil };
     
-    self.contextMenuContainerViewWrapper = contextMenuContainerViewWrapper;
+    
+    let subviews = contextMenuContainerView.recursivelyGetAllSubviews;
+    
+    print(
+      "contextMenuContainerView.recursivelyGetAllSubviews",
+      "\n - count:", subviews.count,
+      "\n - items::", subviews,
+      "\n"
+    );
+    
+    subviews.enumerated().forEach {
+      print(
+        "contextMenuContainerView.recursivelyGetAllSubviews items:",
+        "\n - item \($0.offset) of \(subviews.count - 1)",
+        "\n - className:", $0.element.className,
+        "\n - frame:", $0.element.frame,
+        "\n - bounds:", $0.element.bounds,
+        "\n - gestureRecognizers count:", $0.element.gestureRecognizers?.count ?? -1,
+        "\n - isUserInteractionEnabled:", $0.element.isUserInteractionEnabled,
+        "\n - constraints count:", $0.element.constraints.count,
+        "\n - subviews: count:", $0.element.subviews.count,
+        "\n - recursivelyGetAllSuperviews count:", $0.element.recursivelyGetAllSuperviews.count,
+        "\n - gestureRecognizers:", $0.element.gestureRecognizers ?? [],
+        "\n - constraints:", $0.element.constraints,
+        "\n"
+      );
+    };
+    
+    self.contextMenuWindowRootView = contextMenuContainerView;
     self.window = contextMenuContainerView.window;
           
     /// get wrapper for the "root view" that contains the "context menu items"
@@ -84,8 +122,8 @@ public class AuxiliaryPreviewMenuManager {
           let contextMenuContainerView = contextMenuContainerViewWrapper.wrappedObject
     else { return nil };
     
-    self.contextMenuPlatterTransitionViewWrapper =
-      contextMenuPlatterTransitionViewWrapper;
+    self.contextMenuSharedRootView =
+      contextMenuPlatterTransitionViewWrapper.wrappedObject;
           
           /// get the wrapper for the root view that holds the
           /// "context menu preview".
@@ -96,16 +134,13 @@ public class AuxiliaryPreviewMenuManager {
           let morphingPlatterView = morphingPlatterViewWrapper.wrappedObject
     else { return nil };
     
-    self.morphingPlatterViewWrapper = morphingPlatterViewWrapper;
-    
     /// get the wrapper for the root view that holds the "context menu items".
     ///
     /// note: if you configure the "context menu" to not have any menu items,
     /// then this will be `nil`
     ///
     let contextMenuViewWrapper = contextMenuPlatterTransitionViewWrapper.contextMenuViewWrapper;
-    self.contextMenuViewWrapper = contextMenuViewWrapper;
-    
+
     /// a ref. to the view that contains the "context menu items".
     ///
     /// note: if you configure the "context menu" to not have any menu items,
@@ -154,7 +189,7 @@ public class AuxiliaryPreviewMenuManager {
       menuPosition: menuItemsPlacement
     );
   };
-  
+
   // MARK: - Functions
   // -----------------
   
@@ -163,12 +198,10 @@ public class AuxiliaryPreviewMenuManager {
           let auxiliaryPreviewConfig = manager.auxiliaryPreviewConfig,
           let auxiliaryPreviewMetadata = self.auxiliaryPreviewMetadata,
           
-          /// get the wrapper for the root view that hold the context menu
           let auxiliaryPreviewView = manager.auxiliaryPreviewView,
           let auxiliaryPreviewParentView = self.auxiliaryPreviewParentView,
           
-          let morphingPlatterView = self.morphingPlatterViewWrapper.wrappedObject,
-          let contextMenuContainerView = self.contextMenuContainerViewWrapper.wrappedObject
+          let contextMenuWindowRootView = self.contextMenuWindowRootView
     else { return };
 
     // Bugfix: Stop bubbling touch events from propagating to parent
@@ -231,7 +264,7 @@ public class AuxiliaryPreviewMenuManager {
       constraints.append(
         auxiliaryPreviewMetadata.verticalAnchorPosition.createVerticalConstraints(
           forView: auxiliaryPreviewView,
-          attachingTo: morphingPlatterView,
+          attachingTo: auxiliaryPreviewParentView,
           margin: auxiliaryPreviewConfig.marginInner
         )
       );
@@ -242,8 +275,8 @@ public class AuxiliaryPreviewMenuManager {
         
         let constraints = horizontalAlignment.createHorizontalConstraints(
           forView: auxiliaryPreviewView,
-          attachingTo: morphingPlatterView,
-          enclosingView: contextMenuContainerView,
+          attachingTo: auxiliaryPreviewParentView,
+          enclosingView: contextMenuWindowRootView,
           preferredWidth: auxiliaryPreviewViewWidth,
           shouldPreferWidthAnchor: horizontalAlignment == .stretch
         );
@@ -266,12 +299,11 @@ public class AuxiliaryPreviewMenuManager {
     guard let auxiliaryPreviewMetadata = self.auxiliaryPreviewMetadata,
           auxiliaryPreviewMetadata.offsetY != 0,
     
-          let contextMenuPlatterTransitionView =
-            self.contextMenuPlatterTransitionViewWrapper.wrappedObject
+          let contextMenuSharedRootView = self.contextMenuSharedRootView
     else { return };
     
-    contextMenuPlatterTransitionView.frame = {
-      let initFrame = contextMenuPlatterTransitionView.frame;
+    contextMenuSharedRootView.frame = {
+      let initFrame = contextMenuSharedRootView.frame;
       
       return initFrame.offsetBy(
         dx: 0,
@@ -301,19 +333,11 @@ public class AuxiliaryPreviewMenuManager {
   };
   
   func debugPrintValues(){
-    guard let contextMenuContainerView = self.contextMenuContainerViewWrapper.wrappedObject,
-          let contextMenuPlatterTransitionView = self.contextMenuPlatterTransitionViewWrapper.wrappedObject,
-          let morphingPlatterView = self.morphingPlatterViewWrapper.wrappedObject
-    else { return };
-    
-    let contextMenuView = self.contextMenuViewWrapper?.wrappedObject;
-    
     print(
       "debugPrintValues:",
-      "\n- contextMenuContainerView.frame:", contextMenuContainerView.frame,
-      "\n- contextMenuPlatterTransitionView.frame:", contextMenuPlatterTransitionView.frame,
-      "\n- morphingPlatterView.frame:", morphingPlatterView.frame,
-      "\n- contextMenuView.frame:", contextMenuView?.frame ?? .zero,
+      "\n- contextMenuWindowRootView.frame:", self.contextMenuWindowRootView?.frame.debugDescription,
+      "\n- contextMenuPlatterTransitionView.frame:", self.contextMenuSharedRootView?.frame.debugDescription,
+      "\n- contextMenuPreviewRootView.frame:", self.contextMenuPreviewRootView?.frame.debugDescription,
       "\n- menuPreviewPosition:", self.contextMenuMetadata.menuPreviewPosition.rawValue,
       "\n- menuPosition:", self.contextMenuMetadata.menuPosition?.rawValue ?? "N/A",
       "\n"
