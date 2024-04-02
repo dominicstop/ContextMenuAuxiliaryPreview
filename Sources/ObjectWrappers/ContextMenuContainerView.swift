@@ -55,4 +55,21 @@ public class ContextMenuContainerViewWrapper:
       $0 ?? .init(objectToWrap: $1)
     };
   };
+  
+  /// This is the view that contains both the "context menu preview" view, and
+  /// the "context menu items" list view.
+  ///
+  /// On iOS 13 to 15, this view is just a regular `UIView` instance, but
+  /// starting on iOS 16, it became a custom subclass called:
+  ///  `_UIContextMenuPlatterTransitionView`
+  ///
+  public var contextMenuSharedRootView: UIView? {
+    guard let view = self.wrappedObject else { return nil };
+    
+    return view.subviews.first {
+         !($0 is UIVisualEffectView)
+      && $0.subviews.count > 0
+      && $0.constraints.count > 0;
+    };
+  };
 };

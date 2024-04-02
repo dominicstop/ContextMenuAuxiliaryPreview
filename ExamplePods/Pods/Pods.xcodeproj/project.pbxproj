@@ -87,6 +87,9 @@
 		88CEFA522BBAD04A0074147A /* UIView+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CEFA512BBAD04A0074147A /* UIView+Helpers.swift */; };
 		88CEFA542BBB08CE0074147A /* AuxiliaryPreviewViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CEFA532BBB08CE0074147A /* AuxiliaryPreviewViewProvider.swift */; };
 		88CEFA562BBB08F80074147A /* ContextMenuViewExtractorForIOS16.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CEFA552BBB08F80074147A /* ContextMenuViewExtractorForIOS16.swift */; };
+		88CEFA582BBC04F60074147A /* ContextMenuViewExtractorForIOS13.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CEFA572BBC04F60074147A /* ContextMenuViewExtractorForIOS13.swift */; };
+		88CEFA5A2BBC0B7A0074147A /* PreviewPlaterViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CEFA592BBC0B7A0074147A /* PreviewPlaterViewWrapper.swift */; };
+		88CEFA5C2BBC0D340074147A /* ContextMenuActionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CEFA5B2BBC0D340074147A /* ContextMenuActionsListView.swift */; };
 		8976C0064CB3656AAD7F0C32FA0FD417 /* VerticalAnchorPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60CCC38F02863F20E59AB31BFA688B7 /* VerticalAnchorPosition.swift */; };
 		8DC84166B72059A4BA930338FDE36950 /* Angle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE98DAE7B53289B0D395ED73298E3E /* Angle.swift */; };
 		8F8956319E2C210615B1A02117661277 /* UIUserInterfaceStyle+CaseIterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1F39740A0FADB55FBD0799926DE2FD /* UIUserInterfaceStyle+CaseIterable.swift */; };
@@ -295,6 +298,9 @@
 		88CEFA512BBAD04A0074147A /* UIView+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Helpers.swift"; sourceTree = "<group>"; };
 		88CEFA532BBB08CE0074147A /* AuxiliaryPreviewViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuxiliaryPreviewViewProvider.swift; sourceTree = "<group>"; };
 		88CEFA552BBB08F80074147A /* ContextMenuViewExtractorForIOS16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuViewExtractorForIOS16.swift; sourceTree = "<group>"; };
+		88CEFA572BBC04F60074147A /* ContextMenuViewExtractorForIOS13.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuViewExtractorForIOS13.swift; sourceTree = "<group>"; };
+		88CEFA592BBC0B7A0074147A /* PreviewPlaterViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewPlaterViewWrapper.swift; sourceTree = "<group>"; };
+		88CEFA5B2BBC0D340074147A /* ContextMenuActionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuActionsListView.swift; sourceTree = "<group>"; };
 		89283229BCC13AEAF8442564755086CB /* GenericErrorCodes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GenericErrorCodes.swift; path = Sources/Common/GenericError/GenericErrorCodes.swift; sourceTree = "<group>"; };
 		8A4DFE9D656BE108966E8DF6EDDA046B /* Pods-ContextMenuAuxiliaryPreview_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ContextMenuAuxiliaryPreview_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		8B988BF3213E978FC7E1CA04205A3B88 /* AuxiliaryPreviewModalViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AuxiliaryPreviewModalViewController.swift; sourceTree = "<group>"; };
@@ -417,6 +423,7 @@
 				0C4E8127D5CA3FBB7A1C91311ADDFBEB /* AuxiliaryPreviewMetadata+AuxiliaryPreviewMenuManager.swift */,
 				88CEFA532BBB08CE0074147A /* AuxiliaryPreviewViewProvider.swift */,
 				88CEFA552BBB08F80074147A /* ContextMenuViewExtractorForIOS16.swift */,
+				88CEFA572BBC04F60074147A /* ContextMenuViewExtractorForIOS13.swift */,
 			);
 			name = AuxiliaryPreviewMenuManager;
 			path = Sources/AuxiliaryPreviewMenuManager;
@@ -634,6 +641,8 @@
 				0EAF2FC1476FCB2875B2B2FB62548B69 /* ContextMenuPlatterTransitionViewWrapper.swift */,
 				1191C03C32AA357677817D379063EF9B /* ContextMenuViewWrapper.swift */,
 				2F21EA1E0880DCF0F95A9788C5FEE405 /* MorphingPlatterViewWrapper.swift */,
+				88CEFA592BBC0B7A0074147A /* PreviewPlaterViewWrapper.swift */,
+				88CEFA5B2BBC0D340074147A /* ContextMenuActionsListView.swift */,
 			);
 			name = ObjectWrappers;
 			path = Sources/ObjectWrappers;
@@ -917,9 +926,11 @@
 				D05D6C70776180BA503A5E13A8652F42 /* AuxiliaryPreviewModalManager+UIViewControllerAnimatedTransitioning.swift in Sources */,
 				F8AB5C647AC7F32954B830DF588BDA98 /* AuxiliaryPreviewModalManager+UIViewControllerTransitioningDelegate.swift in Sources */,
 				6F23A2A12B8504231F8B673EAF06C71B /* AuxiliaryPreviewModalManagerDelegate.swift in Sources */,
+				88CEFA5A2BBC0B7A0074147A /* PreviewPlaterViewWrapper.swift in Sources */,
 				8196E4DA92F7681E996440220BA8F299 /* AuxiliaryPreviewModalViewController.swift in Sources */,
 				A4A9C339D863C168511B85DEC05146F4 /* AuxiliaryPreviewModalWrapperViewController.swift in Sources */,
 				FF2BC9B58602C67D9B32FA6C6C61D3B6 /* AuxiliaryPreviewModaPresentationController.swift in Sources */,
+				88CEFA582BBC04F60074147A /* ContextMenuViewExtractorForIOS13.swift in Sources */,
 				6BBF7A2598BDD7F596F750EF56D32643 /* AuxiliaryPreviewPopoverTargetMetadata.swift in Sources */,
 				15C46EA56A1234F6BF02BB42674B4B47 /* AuxiliaryPreviewSizeValue.swift in Sources */,
 				5ED576DFA9808DB04432020B37A7ACA0 /* AuxiliaryPreviewTransitionAnimationConfig.swift in Sources */,
@@ -932,6 +943,7 @@
 				78A48D5B6527B4A9CECEBC86C9908DD4 /* ContextMenuContainerView.swift in Sources */,
 				10E7AC48E7033C7D556675FAD50743E7 /* ContextMenuInteractionWrapper.swift in Sources */,
 				4885C738B60A8156AA9999C07B751F51 /* ContextMenuManager.swift in Sources */,
+				88CEFA5C2BBC0D340074147A /* ContextMenuActionsListView.swift in Sources */,
 				99BC2A0DE2BD2C53CF28FFA110E553C5 /* ContextMenuManager+AuxiliaryPreviewModalManagerDelegate.swift in Sources */,
 				3C1228F198F6E8FD0997F42034B1AD5A /* ContextMenuManagerDelegate.swift in Sources */,
 				88CEFA522BBAD04A0074147A /* UIView+Helpers.swift in Sources */,

@@ -65,6 +65,10 @@ public class AuxiliaryPreviewMenuManager {
         return ContextMenuViewExtractorForIOS16(usingManager: manager);
       };
       
+      if #available(iOS 13, *) {
+        return ContextMenuViewExtractorForIOS13(usingManager: manager);
+      };
+      
       return nil;
     }();
     
