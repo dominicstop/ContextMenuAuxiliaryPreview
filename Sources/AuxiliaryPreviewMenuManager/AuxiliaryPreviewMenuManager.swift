@@ -103,7 +103,7 @@ public class AuxiliaryPreviewMenuManager {
       let previewFrame = contextMenuPreviewRootView.frame;
       let menuItemsFrame = contextMenuListRootView.frame;
       
-      return (menuItemsFrame.midY < previewFrame.midY) ? .bottom : .top;
+      return (menuItemsFrame.midY > previewFrame.midY) ? .bottom : .top;
     }();
     
     let morphingPlatterViewPlacement: VerticalAnchorPosition = {

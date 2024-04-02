@@ -49,14 +49,12 @@ extension AuxiliaryPreviewMetadata {
       };
       
       if let menuPosition = contextMenuMetadata.menuPosition {
-        return menuPosition;
+        return menuPosition.opposite;
       };
       
       // the context menu does not have menu items, determine anchor position
       // of auxiliary view via the position of the preview in the screen
-      return contextMenuMetadata.menuPreviewPosition == .bottom
-        ? .top
-        : .bottom;
+      return contextMenuMetadata.menuPreviewPosition.opposite;
     }();
     
     self.computedWidth = {
