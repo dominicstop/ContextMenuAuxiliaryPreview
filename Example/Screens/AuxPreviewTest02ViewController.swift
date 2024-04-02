@@ -24,6 +24,9 @@ fileprivate class TestAuxiliaryPreviewView: UIView {
     
     if #available(iOS 15.0, *) {
       button.configuration = .filled()
+      
+    } else {
+      button.tintColor = .blue;
     };
     
     button.addTarget(self,
@@ -118,7 +121,10 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
       button.setTitle("Show Aux. Preview", for: .normal);
       
       if #available(iOS 15.0, *) {
-        button.configuration = .filled()
+        button.configuration = .filled();
+        
+      } else {
+        button.tintColor = .blue;
       };
       
       button.addTarget(self,
@@ -170,7 +176,10 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
       button.setTitle("Show Context Menu", for: .normal);
       
       if #available(iOS 15.0, *) {
-        button.configuration = .filled()
+        button.configuration = .filled();
+        
+      } else {
+        button.tintColor = .blue;
       };
       
       button.addTarget(self,
@@ -188,7 +197,10 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
       button.setTitle("Show Aux. Preview", for: .normal);
       
       if #available(iOS 15.0, *) {
-        button.configuration = .filled()
+        button.configuration = .filled();
+        
+      } else {
+        button.tintColor = .blue;
       };
       
       button.addTarget(self,
@@ -206,7 +218,10 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
       button.setTitle("Next Preset", for: .normal);
       
       if #available(iOS 15.0, *) {
-        button.configuration = .filled()
+        button.configuration = .filled();
+        
+      } else {
+        button.tintColor = .blue;
       };
       
       button.addTarget(self,
