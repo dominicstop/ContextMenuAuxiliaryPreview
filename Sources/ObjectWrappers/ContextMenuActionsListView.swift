@@ -13,7 +13,7 @@ import DGSwiftUtilities
 ///
 @available(iOS 13, *)
 public class ContextMenuActionsListView:
-  PrivateObjectWrapper<UIView, PreviewPlaterViewWrapper.EncodedString> {
+  PrivateObjectWrapper<UIView, ContextMenuActionsListView.EncodedString> {
 
   public enum EncodedString: String, PrivateObjectWrappingEncodedString {
     case className;
@@ -22,7 +22,7 @@ public class ContextMenuActionsListView:
       switch self {
         case .className:
           // _UlContextMenuActionsListView
-          return "X1VsQ29udGV4dE1lbnVBY3Rpb25zTGlzdFZpZXc=";
+          return "X1VJQ29udGV4dE1lbnVBY3Rpb25zTGlzdFZpZXc=";
       };
     };
   };

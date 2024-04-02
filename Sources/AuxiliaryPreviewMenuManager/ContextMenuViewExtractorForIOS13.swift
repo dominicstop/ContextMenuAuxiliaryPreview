@@ -11,7 +11,7 @@ public struct ContextMenuViewExtractorForIOS13: AuxiliaryPreviewViewProvider  {
 
   public var contextMenuContainerViewWrapper: ContextMenuContainerViewWrapper;
   public var previewPlaterViewWrapper: PreviewPlaterViewWrapper;
-  public var contextMenuActionsListView: ContextMenuActionsListView?;
+  public var contextMenuActionsListViewWrapper: ContextMenuActionsListView?;
   
   public weak var contextMenuSharedRootView: UIView?;
   
@@ -24,7 +24,7 @@ public struct ContextMenuViewExtractorForIOS13: AuxiliaryPreviewViewProvider  {
   };
   
   public var contextMenuListRootView: UIView? {
-    self.contextMenuActionsListView?.wrappedObject;
+    self.contextMenuActionsListViewWrapper?.wrappedObject;
   };
 
   public init?(usingManager contextMenuManager: ContextMenuManager){
@@ -51,7 +51,7 @@ public struct ContextMenuViewExtractorForIOS13: AuxiliaryPreviewViewProvider  {
  
     self.previewPlaterViewWrapper = previewPlaterViewWrapper;
     
-    self.contextMenuActionsListView = contextMenuSharedRootView.subviews.reduce(nil) {
+    self.contextMenuActionsListViewWrapper = contextMenuSharedRootView.subviews.reduce(nil) {
       $0 ?? .init(objectToWrap: $1)
     };
   };
