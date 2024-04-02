@@ -77,9 +77,31 @@ fileprivate class TestAuxiliaryPreviewView: UIView {
   };
 };
 
+fileprivate class TestCustomPreviewController: UIViewController {
+  
+  override func viewDidLoad(){
+    super.viewDidLoad();
+    self.view.backgroundColor = .white;
+    
+    let label = UILabel();
+    label.text = "Hello World";
+    label.textColor = .black;
+    label.font = .systemFont(ofSize: 42);
+    
+    label.translatesAutoresizingMaskIntoConstraints = false;
+    self.view.addSubview(label);
+    
+    NSLayoutConstraint.activate([
+      label.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+      label.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+    ]);
+  };
+};
+
 class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelegate {
 
   var presets = AuxiliaryPreviewPresets();
+  var shouldUseCustomPreview: Bool = false;
 
   weak var boxView: UIView?;
   weak var debugDataCardController: DebugDataCardViewController?;
@@ -234,6 +256,30 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
     
     stackView.addArrangedSubview(nextPresetButton);
     
+    let toggleCustomPreviewButton: UIView = {
+      let button = UIButton(frame: .zero);
+      button.setTitle(
+        "Toggle Custom Preview",
+        for: .normal
+      );
+      
+      if #available(iOS 15.0, *) {
+        button.configuration = .filled();
+        
+      } else {
+        button.tintColor = .blue;
+      };
+      
+      button.addTarget(self,
+        action: #selector(Self.onPressToggleCustomPreviewButton(_:)),
+        for: .touchUpInside
+      );
+      
+      return button;
+    }();
+    
+    stackView.addArrangedSubview(toggleCustomPreviewButton);
+    
     for index in itemCountMid...itemCount {
       let label = UILabel();
       
@@ -304,6 +350,14 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
     else { return };
       
     debugDataCardController.debugData = self.presets.currentDataEntries;
+    debugDataCardController.debugData += [
+      .spacing(size: 10),
+      .labelDesc(
+        label: "Custom Preview",
+        desc: self.shouldUseCustomPreview.description
+      ),
+    ];
+    
     debugDataCardController.updateViews();
   };
   
@@ -323,9 +377,19 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
     self.presets.nextPreset();
     self.applyPresets();
   };
+  
+  @objc func onPressToggleCustomPreviewButton(_ sender: UIButton){
+    self.shouldUseCustomPreview.toggle();
+    self.applyPresets();
+  };
 };
 
 extension AuxPreviewTest02ViewController: UIContextMenuInteractionDelegate {
+
+  func contextMenuPreviewProvider() -> UIViewController? {
+    guard self.shouldUseCustomPreview else { return nil };
+    return TestCustomPreviewController();
+  };
 
   func contextMenuInteraction(
     _ interaction: UIContextMenuInteraction,
@@ -337,7 +401,10 @@ extension AuxPreviewTest02ViewController: UIContextMenuInteractionDelegate {
       configurationForMenuAtLocation: location
     );
     
-    return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ -> UIMenu? in
+    return UIContextMenuConfiguration(
+      identifier: nil,
+      previewProvider: self.contextMenuPreviewProvider
+    ) { _ -> UIMenu? in
       let shareAction = UIAction(
         title: "Share",
         image: UIImage(systemName: "square.and.arrow.up")
