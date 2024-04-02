@@ -162,8 +162,8 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
     let debugDataCardController: DebugDataCardViewController = {
       let controller = DebugDataCardViewController();
       
-      self.addChildViewController(controller);
-      controller.didMove(toParentViewController: self);
+      self.addChild(controller);
+      controller.didMove(toParent: self);
       
       return controller;
     }();
