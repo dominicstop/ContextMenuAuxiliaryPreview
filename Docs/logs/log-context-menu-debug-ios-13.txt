@@ -1,0 +1,453 @@
+// iOS 13.7
+contextMenuContainerView.recursivelyGetAllSubviews 
+ - count: 32 
+ - items:: [<UIVisualEffectView: 0x7fc4dda3e9d0; frame = (0 0; 375 667); autoresize = W+H; layer = <CALayer: 0x6000037b14c0>> effect=none,
+  <UIView: 0x7fc4dbc360f0; frame = (0 0; 375 667); autoresize = W+H; layer = <CALayer: 0x6000037aaf00>>,
+  <_UIPreviewPlatterView: 0x7fc4ddb4d3e0; frame = (101.5 335; 172.5 172.5); gestureRecognizers = <NSArray: 0x60000397b990>; layer = <CALayer: 0x6000037a0d20>>,
+  <_UICutoutShadowView: 0x7fc4ddb56ec0; frame = (-150 -150; 472.5 472.5); opaque = NO; userInteractionEnabled = NO; layer = <CALayer: 0x6000037a3160>>,
+  <_UIPlatterSoftShadowView: 0x7fc4ddb557a0; frame = (0 0; 172.5 172.5); transform = [1.1499999999999999, 0, 0, 1.1499999999999999, 0, 0]; alpha = 0; layer = <CALayer: 0x6000037a2760>>,
+  <_UIPlatterShadowView: 0x7fc4ddb56470; frame = (0 0; 150 150); layer = <CALayer: 0x6000037a2ca0>>,
+  <_UIPlatterShadowView: 0x7fc4ddb568d0; frame = (0 0; 150 150); layer = <CALayer: 0x6000037a2d80>>,
+  <UIView: 0x7fc4ddb50b80; frame = (0 0; 172.5 172.5); clipsToBounds = YES; alpha = 0; layer = <CALayer: 0x6000037a24a0>>,
+  <_UIPlatterTransformView: 0x7fc4ddb50cf0; frame = (0 0; 172.5 172.5); transform = [1.1499999999999999, 0, 0, 1.1499999999999999, 0, 0]; anchorPoint = (0.5, 0); layer = <CALayer: 0x6000037a0b80>>,
+  <_UIPortalView: 0x7fc4ddb56d30; frame = (0 0; 150 150); layer = <CAPortalLayer: 0x6000037a2e40>; ,
+  <UIView: 0x7fc4ddb50e80; frame = (0 0; 172.5 172.5); clipsToBounds = YES; layer = <CALayer: 0x6000037a0ec0>>,
+  <_UIPlatterTransformView: 0x7fc4ddb47ac0; frame = (0 0; 172.5 172.5); transform = [1.1499999999999999, 0, 0, 1.1499999999999999, 0, 0]; anchorPoint = (0.5, 0); layer = <CALayer: 0x6000037a2fa0>>,
+  <_UIPortalView: 0x7fc4ddb55610; frame = (0 0; 150 150); layer = <CAPortalLayer: 0x6000037a2a00>; ,
+  <_UIContextMenuActionsListView: 0x7fc4ddb51e50; frame = (63 275; 250 44); anchorPoint = (0.5, 1); clipsToBounds = YES; autoresizesSubviews = NO; layer = <CALayer: 0x6000037a2940>>,
+  <UIInterfaceActionGroupView: 0x7fc4ddc1c7e0; frame = (0 0; 250 44); opaque = NO; gestureRecognizers = <NSArray: 0x60000399a040>; layer = <CALayer: 0x6000037bdea0>>,
+  <_UIDimmingKnockoutBackdropView: 0x7fc4ddc0a6f0; frame = (0 0; 250 44); clipsToBounds = YES; layer = <CALayer: 0x6000037bd700>>,
+  <UIVisualEffectView: 0x7fc4ddc1d920; frame = (0 0; 250 44); clipsToBounds = YES; autoresize = W+H; layer = <CALayer: 0x6000037bd780>> clientRequestedContentView effect=<UIBlurEffect: 0x600003516040> style=UIBlurEffectStyleSystemVibrantBackgroundRegular,
+  <_UIVisualEffectBackdropView: 0x7fc4ddc1db00; frame = (0 0; 250 44); autoresize = W+H; userInteractionEnabled = NO; layer = <UICABackdropLayer: 0x6000037bc0c0>>,
+  <_UIVisualEffectContentView: 0x7fc4ddb54ff0; frame = (0 0; 250 44); clipsToBounds = YES; autoresize = W+H; layer = <CALayer: 0x6000037a33a0>>,
+  <UIView: 0x7fc4ddc190e0; frame = (0 0; 250 44); clipsToBounds = YES; layer = <CALayer: 0x6000037bd6e0>>,
+  <_UIInterfaceActionRepresentationsSequenceView: 0x7fc4dc879800; frame = (0 0; 250 44); clipsToBounds = YES; gestureRecognizers = <NSArray: 0x6000039ae1c0>; layer = <CALayer: 0x6000037bcb80>; contentOffset: {0, 0}; contentSize: {250, 44}; adjustedContentInset: {0, 0, 0, 0}>,
+  <_UIInterfaceActionSeparatableSequenceView: 0x7fc4ddc1d760; frame = (0 0; 250 44); layer = <CALayer: 0x6000037bdf60>>,
+  <UIStackView: 0x7fc4ddc1aa10; frame = (0 0; 250 44); layer = <CATransformLayer: 0x6000037bcfc0>>,
+  <_UIInterfaceActionCustomViewRepresentationView: 0x7fc4dbc33c60; frame = (0 0; 250 44); layer = <CALayer: 0x6000037aaea0>> action = <UIInterfaceAction: 0x6000000249a0>  customContentView = <_UIContextMenuActionView: 0x7fc4ddb49cc0; frame = (0 0; 250 44); layer = <CALayer: 0x6000037a2ee0>> action = <UIInterfaceAction: 0x6000000249a0>  customContentView = <_UIContextMenuActionView: 0x7fc4ddb49cc0; frame = (0 0; 250 44); layer = <CALayer: 0x6000037a2ee0>>,
+  <_UIContextMenuActionView: 0x7fc4ddb49cc0; frame = (0 0; 250 44); layer = <CALayer: 0x6000037a2ee0>>,
+  <UIStackView: 0x7fc4ddb49e90; frame = (16 12; 44.5 21); layer = <CATransformLayer: 0x6000037a3540>>,
+  <UILabel: 0x7fc4ddb54d70; frame = (0 0; 44.5 21); text = 'Share'; alpha = 0.96; userInteractionEnabled = NO; layer = <_UILabelLayer: 0x600001454870>>,
+  <UIImageView: 0x7fc4ddc1c610; frame = (212.5 11; 19 21); opaque = NO; userInteractionEnabled = NO; tintColor = <UIDynamicProviderColor: 0x6000037bd500; provider = <__NSMallocBlock__: 0x6000039acc30>>; layer = <CALayer: 0x6000037bc3c0>>,
+  <_UIScrollViewScrollIndicator: 0x7fc4ddc1e750; frame = (244 87; 3 7); alpha = 0; autoresize = LM; layer = <CALayer: 0x6000037bc940>>,
+  <UIView: 0x7fc4ddc1e8f0; frame = (0 0; 3 7); layer = <CALayer: 0x6000037bd1c0>>,
+  <_UIScrollViewScrollIndicator: 0x7fc4ddc1e090; frame = (90 35; 7 3); alpha = 0; autoresize = TM; layer = <CALayer: 0x6000037bc1c0>>,
+  <UIView: 0x7fc4ddc1e230; frame = (0 0; 7 3); layer = <CALayer: 0x6000037bd180>>] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 0 of 31 
+ - className: UIVisualEffectView 
+ - frame: (0.0, 0.0, 375.0, 667.0) 
+ - bounds: (0.0, 0.0, 375.0, 667.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 0 
+ - subviews: count: 0 
+ - recursivelyGetAllSuperviews count: 2 
+ - gestureRecognizers: [] 
+ - constraints: [] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 1 of 31 
+ - className: UIView 
+ - frame: (0.0, 0.0, 375.0, 667.0) 
+ - bounds: (0.0, 0.0, 375.0, 667.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 4 
+ - subviews: count: 2 
+ - recursivelyGetAllSuperviews count: 2 
+ - gestureRecognizers: [] 
+ - constraints: [<NSAutoresizingMaskLayoutConstraint:0x600001449e00 h=--& v=--& _UIContextMenuActionsListView:0x7fc4ddb51e50.minX == 63   (active, names: '|':UIView:0x7fc4dbc360f0 )>, <NSAutoresizingMaskLayoutConstraint:0x600001449cc0 h=--& v=--& _UIContextMenuActionsListView:0x7fc4ddb51e50.width == 250   (active)>, <NSAutoresizingMaskLayoutConstraint:0x600001448eb0 h=--& v=--& _UIContextMenuActionsListView:0x7fc4ddb51e50.minY == 275   (active, names: '|':UIView:0x7fc4dbc360f0 )>, <NSAutoresizingMaskLayoutConstraint:0x6000014491d0 h=--& v=--& _UIContextMenuActionsListView:0x7fc4ddb51e50.height == 44   (active)>] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 2 of 31 
+ - className: _UIPreviewPlatterView 
+ - frame: (101.5, 335.0, 172.5, 172.5) 
+ - bounds: (0.0, 0.0, 172.5, 172.5) 
+ - gestureRecognizers count: 1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 0 
+ - subviews: count: 4 
+ - recursivelyGetAllSuperviews count: 3 
+ - gestureRecognizers: [<UITapGestureRecognizer: 0x7fc4dbc36840 (com.apple.UIKit.ContextMenuPreviewActionTap); state = Possible; view = <_UIPreviewPlatterView 0x7fc4ddb4d3e0>; target= <(action=_handlePlatterActionTapGesture:, target=<_UIPreviewPlatterPresentationController 0x7fc4ddc1bed0>)>>] 
+ - constraints: [] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 3 of 31 
+ - className: _UICutoutShadowView 
+ - frame: (-150.0, -150.0, 472.5, 472.5) 
+ - bounds: (0.0, 0.0, 472.5, 472.5) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: false 
+ - constraints count: 0 
+ - subviews: count: 0 
+ - recursivelyGetAllSuperviews count: 4 
+ - gestureRecognizers: [] 
+ - constraints: [] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 4 of 31 
+ - className: _UIPlatterSoftShadowView 
+ - frame: (0.0, 0.0, 172.5, 172.5) 
+ - bounds: (0.0, 0.0, 150.0, 150.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 0 
+ - subviews: count: 2 
+ - recursivelyGetAllSuperviews count: 4 
+ - gestureRecognizers: [] 
+ - constraints: [] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 5 of 31 
+ - className: _UIPlatterShadowView 
+ - frame: (0.0, 0.0, 150.0, 150.0) 
+ - bounds: (0.0, 0.0, 150.0, 150.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 0 
+ - subviews: count: 0 
+ - recursivelyGetAllSuperviews count: 5 
+ - gestureRecognizers: [] 
+ - constraints: [] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 6 of 31 
+ - className: _UIPlatterShadowView 
+ - frame: (0.0, 0.0, 150.0, 150.0) 
+ - bounds: (0.0, 0.0, 150.0, 150.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 0 
+ - subviews: count: 0 
+ - recursivelyGetAllSuperviews count: 5 
+ - gestureRecognizers: [] 
+ - constraints: [] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 7 of 31 
+ - className: UIView 
+ - frame: (0.0, 0.0, 172.5, 172.5) 
+ - bounds: (0.0, 0.0, 172.5, 172.5) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 0 
+ - subviews: count: 1 
+ - recursivelyGetAllSuperviews count: 4 
+ - gestureRecognizers: [] 
+ - constraints: [] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 8 of 31 
+ - className: _UIPlatterTransformView 
+ - frame: (0.0, 0.0, 172.5, 172.5) 
+ - bounds: (0.0, 0.0, 150.0, 150.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 0 
+ - subviews: count: 1 
+ - recursivelyGetAllSuperviews count: 5 
+ - gestureRecognizers: [] 
+ - constraints: [] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 9 of 31 
+ - className: _UIPortalView 
+ - frame: (0.0, 0.0, 150.0, 150.0) 
+ - bounds: (0.0, 0.0, 150.0, 150.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 0 
+ - subviews: count: 0 
+ - recursivelyGetAllSuperviews count: 6 
+ - gestureRecognizers: [] 
+ - constraints: [] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 10 of 31 
+ - className: UIView 
+ - frame: (0.0, 0.0, 172.5, 172.5) 
+ - bounds: (0.0, 0.0, 172.5, 172.5) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 0 
+ - subviews: count: 1 
+ - recursivelyGetAllSuperviews count: 4 
+ - gestureRecognizers: [] 
+ - constraints: [] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 11 of 31 
+ - className: _UIPlatterTransformView 
+ - frame: (0.0, 0.0, 172.5, 172.5) 
+ - bounds: (0.0, 0.0, 150.0, 150.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 0 
+ - subviews: count: 1 
+ - recursivelyGetAllSuperviews count: 5 
+ - gestureRecognizers: [] 
+ - constraints: [] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 12 of 31 
+ - className: _UIPortalView 
+ - frame: (0.0, 0.0, 150.0, 150.0) 
+ - bounds: (0.0, 0.0, 150.0, 150.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 0 
+ - subviews: count: 0 
+ - recursivelyGetAllSuperviews count: 6 
+ - gestureRecognizers: [] 
+ - constraints: [] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 13 of 31 
+ - className: _UIContextMenuActionsListView 
+ - frame: (63.0, 275.0, 250.0, 44.0) 
+ - bounds: (0.0, 0.0, 250.0, 44.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 4 
+ - subviews: count: 1 
+ - recursivelyGetAllSuperviews count: 3 
+ - gestureRecognizers: [] 
+ - constraints: [<NSAutoresizingMaskLayoutConstraint:0x600001449860 h=--& v=--& UIInterfaceActionGroupView:0x7fc4ddc1c7e0.minX == 0   (active, names: '|':_UIContextMenuActionsListView:0x7fc4ddb51e50 )>, <NSAutoresizingMaskLayoutConstraint:0x600001449db0 h=--& v=--& UIInterfaceActionGroupView:0x7fc4ddc1c7e0.width == 250   (active)>, <NSAutoresizingMaskLayoutConstraint:0x600001449d10 h=--& v=--& UIInterfaceActionGroupView:0x7fc4ddc1c7e0.minY == 0   (active, names: '|':_UIContextMenuActionsListView:0x7fc4ddb51e50 )>, <NSAutoresizingMaskLayoutConstraint:0x600001449d60 h=--& v=--& UIInterfaceActionGroupView:0x7fc4ddc1c7e0.height == 44   (active)>] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 14 of 31 
+ - className: UIInterfaceActionGroupView 
+ - frame: (0.0, 0.0, 250.0, 44.0) 
+ - bounds: (0.0, 0.0, 250.0, 44.0) 
+ - gestureRecognizers count: 3 
+ - isUserInteractionEnabled: true 
+ - constraints count: 23 
+ - subviews: count: 2 
+ - recursivelyGetAllSuperviews count: 4 
+ - gestureRecognizers: [<UILongPressGestureRecognizer: 0x7fc4ddb53f10 (UIInterfaceAction.selection); state = Possible; cancelsTouchesInView = NO; view = <UIInterfaceActionGroupView 0x7fc4ddc1c7e0>; target= <(action=_handleActionSelectionGestureRecognizer:, target=<UIInterfaceActionSelectionTrackingController 0x60000052cc60>)>; numberOfTapsRequired = 0>, <UIHoverGestureRecognizer: 0x7fc4ddb51ff0; state = Possible; view = <UIInterfaceActionGroupView 0x7fc4ddc1c7e0>; target= <(action=_rolloverActionChanged:, target=<UIInterfaceActionSelectionTrackingController 0x60000052cc60>)>>, <_UIInterfaceActionSelectionDelayGestureRecognizer: 0x60000080cc30 (UIInterfaceAction.selectionDelay); state = Possible; view = <UIInterfaceActionGroupView 0x7fc4ddc1c7e0>>] 
+ - constraints: [<NSLayoutConstraint:0x600001450190 H:|-(0)-[_UIContentConstraintsLayoutGuide:0x7fc4ddc1c0a0'']   (active, names: '|':UIInterfaceActionGroupView:0x7fc4ddc1c7e0 )>, <NSLayoutConstraint:0x600001450050 _UIContentConstraintsLayoutGuide:0x7fc4ddc1c0a0''.trailing == UIInterfaceActionGroupView:0x7fc4ddc1c7e0.trailing   (active)>, <NSLayoutConstraint:0x600001450960 V:|-(0@750)-[_UIContentConstraintsLayoutGuide:0x7fc4ddc1c0a0''] priority:750   (active, names: '|':UIInterfaceActionGroupView:0x7fc4ddc1c7e0 )>, <NSLayoutConstraint:0x6000014504b0 _UIContentConstraintsLayoutGuide:0x7fc4ddc1c0a0''.bottom == UIInterfaceActionGroupView:0x7fc4ddc1c7e0.bottom priority:750   (active)>, <NSLayoutConstraint:0x6000014500f0 UIInterfaceActionGroupView:0x7fc4ddc1c7e0.top == _UIContentConstraintsLayoutGuide:0x7fc4ddc1c0a0''.top   (active)>, <NSLayoutConstraint:0x600001450730 V:[_UIContentConstraintsLayoutGuide:0x7fc4ddc1c0a0'']-(0)-|   (active, names: '|':UIInterfaceActionGroupView:0x7fc4ddc1c7e0 )>, <NSLayoutConstraint:0x600001450550 UIInterfaceActionGroupView:0x7fc4ddc1c7e0.leading == _UIContentConstraintsLayoutGuide:0x7fc4ddc1c0a0''.leading   (active)>, <NSLayoutConstraint:0x600001450b90 H:[_UIContentConstraintsLayoutGuide:0x7fc4ddc1c0a0'']-(0)-|   (active, names: '|':UIInterfaceActionGroupView:0x7fc4ddc1c7e0 )>, <NSLayoutConstraint:0x600001450af0 _UIContentConstraintsLayoutGuide:0x7fc4ddc1c0a0''.width <= 375 priority:999   (active)>, <NSLayoutConstraint:0x600001450460 _UIContentConstraintsLayoutGuide:0x7fc4ddc1c0a0''.height <= 667 priority:999   (active)>, <NSLayoutConstraint:0x6000014503c0 _UIContentConstraintsLayoutGuide:0x7fc4ddc1c0a0''.width >= 39 priority:999   (active)>, <NSLayoutConstraint:0x600001454b40 groupView.actionsSequence....centerX == _UIContentConstraintsLayoutGuide:0x7fc4ddc1c0a0''.centerX   (active, names: groupView.actionsSequence...:0x7fc4dc879800 )>, <NSLayoutConstraint:0x6000014511d0 groupView.actionsSequence....width == _UIContentConstraintsLayoutGuide:0x7fc4ddc1c0a0''.width   (active, names: groupView.actionsSequence...:0x7fc4dc879800 )>, <NSLayoutConstraint:0x600001454a50 groupView.actionsSequence....top == _UIContentConstraintsLayoutGuide:0x7fc4ddc1c0a0''.top   (active, names: groupView.actionsSequence...:0x7fc4dc879800 )>, <NSLayoutConstraint:0x600001454aa0 groupView.actionsSequence....bottom == _UIContentConstraintsLayoutGuide:0x7fc4ddc1c0a0''.bottom   (active, names: groupView.actionsSequence...:0x7fc4dc879800 )>, <NSLayoutConstraint:0x600001454c30 'backgroundViewFrame' H:|-(0)-[_UIDimmingKnockoutBackdropView:0x7fc4ddc0a6f0]   (active, names: '|':UIInterfaceActionGroupView:0x7fc4ddc1c7e0 )>, <NSLayoutConstraint:0x600001454be0 'backgroundViewFrame' _UIDimmingKnockoutBackdropView:0x7fc4ddc0a6f0.trailing == UIInterfaceActionGroupView:0x7fc4ddc1c7e0.trailing   (active)>, <NSLayoutConstraint:0x600001454b90 'backgroundViewFrame' V:|-(0@750)-[_UIDimmingKnockoutBackdropView:0x7fc4ddc0a6f0] priority:750   (active, names: '|':UIInterfaceActionGroupView:0x7fc4ddc1c7e0 )>, <NSLayoutConstraint:0x6000014546e0 'backgroundViewFrame' _UIDimmingKnockoutBackdropView:0x7fc4ddc0a6f0.bottom == UIInterfaceActionGroupView:0x7fc4ddc1c7e0.bottom priority:750   (active)>, <NSLayoutConstraint:0x6000014505a0 'topLevelItemsFrame' UIView:0x7fc4ddc190e0.leading == _UIContentConstraintsLayoutGuide:0x7fc4ddc1c0a0''.leading   (active)>, <NSLayoutConstraint:0x600001450a00 'topLevelItemsFrame' UIView:0x7fc4ddc190e0.trailing == _UIContentConstraintsLayoutGuide:0x7fc4ddc1c0a0''.trailing   (active)>, <NSLayoutConstraint:0x600001450500 'topLevelItemsFrame' UIView:0x7fc4ddc190e0.top == _UIContentConstraintsLayoutGuide:0x7fc4ddc1c0a0''.top priority:750   (active)>, <NSLayoutConstraint:0x6000014512c0 'topLevelItemsFrame' UIView:0x7fc4ddc190e0.bottom == _UIContentConstraintsLayoutGuide:0x7fc4ddc1c0a0''.bottom priority:750   (active)>] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 15 of 31 
+ - className: _UIDimmingKnockoutBackdropView 
+ - frame: (0.0, 0.0, 250.0, 44.0) 
+ - bounds: (0.0, 0.0, 250.0, 44.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 0 
+ - subviews: count: 1 
+ - recursivelyGetAllSuperviews count: 5 
+ - gestureRecognizers: [] 
+ - constraints: [] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 16 of 31 
+ - className: UIVisualEffectView 
+ - frame: (0.0, 0.0, 250.0, 44.0) 
+ - bounds: (0.0, 0.0, 250.0, 44.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 0 
+ - subviews: count: 2 
+ - recursivelyGetAllSuperviews count: 6 
+ - gestureRecognizers: [] 
+ - constraints: [] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 17 of 31 
+ - className: _UIVisualEffectBackdropView 
+ - frame: (0.0, 0.0, 250.0, 44.0) 
+ - bounds: (0.0, 0.0, 250.0, 44.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: false 
+ - constraints count: 0 
+ - subviews: count: 0 
+ - recursivelyGetAllSuperviews count: 7 
+ - gestureRecognizers: [] 
+ - constraints: [] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 18 of 31 
+ - className: _UIVisualEffectContentView 
+ - frame: (0.0, 0.0, 250.0, 44.0) 
+ - bounds: (0.0, 0.0, 250.0, 44.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 0 
+ - subviews: count: 0 
+ - recursivelyGetAllSuperviews count: 7 
+ - gestureRecognizers: [] 
+ - constraints: [] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 19 of 31 
+ - className: UIView 
+ - frame: (0.0, 0.0, 250.0, 44.0) 
+ - bounds: (0.0, 0.0, 250.0, 44.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 0 
+ - subviews: count: 1 
+ - recursivelyGetAllSuperviews count: 5 
+ - gestureRecognizers: [] 
+ - constraints: [] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 20 of 31 
+ - className: _UIInterfaceActionRepresentationsSequenceView 
+ - frame: (0.0, 0.0, 250.0, 44.0) 
+ - bounds: (0.0, 0.0, 250.0, 44.0) 
+ - gestureRecognizers count: 6 
+ - isUserInteractionEnabled: true 
+ - constraints count: 7 
+ - subviews: count: 3 
+ - recursivelyGetAllSuperviews count: 6 
+ - gestureRecognizers: [<UIScrollViewDelayedTouchesBeganGestureRecognizer: 0x600000b05c00; state = Possible; enabled = NO; delaysTouchesBegan = YES; view = <_UIInterfaceActionRepresentationsSequenceView 0x7fc4dc879800>; target= <(action=delayed:, target=<_UIInterfaceActionRepresentationsSequenceView 0x7fc4dc879800>)>>, <UIScrollViewPanGestureRecognizer: 0x7fc4ddc174b0; state = Possible; enabled = NO; delaysTouchesEnded = NO; view = <_UIInterfaceActionRepresentationsSequenceView 0x7fc4dc879800>; target= <(action=handlePan:, target=<_UIInterfaceActionRepresentationsSequenceView 0x7fc4dc879800>)>>, <UIScrollViewKnobLongPressGestureRecognizer: 0x7fc4ddc176a0; state = Possible; view = <_UIInterfaceActionRepresentationsSequenceView 0x7fc4dc879800>; target= <(action=_handleKnobLongPressGesture:, target=<_UIInterfaceActionRepresentationsSequenceView 0x7fc4dc879800>)>; numberOfTapsRequired = 0; minimumPressDuration = 0.1>, <UIScrollViewKnobLongPressGestureRecognizer: 0x7fc4ddc17870; state = Possible; view = <_UIInterfaceActionRepresentationsSequenceView 0x7fc4dc879800>; target= <(action=_handleKnobLongPressGesture:, target=<_UIInterfaceActionRepresentationsSequenceView 0x7fc4dc879800>)>; numberOfTapsRequired = 0>, <UIHoverGestureRecognizer: 0x7fc4ddc168a0; state = Possible; view = <_UIInterfaceActionRepresentationsSequenceView 0x7fc4dc879800>; target= <(action=_handleKnobHoverGesture:, target=<_UIInterfaceActionRepresentationsSequenceView 0x7fc4dc879800>)>>, <_UIDragAutoScrollGestureRecognizer: 0x6000008080f0; state = Possible; cancelsTouchesInView = NO; delaysTouchesEnded = NO; view = <_UIInterfaceActionRepresentationsSequenceView 0x7fc4dc879800>; target= <(action=_handleAutoScroll:, target=<_UIInterfaceActionRepresentationsSequenceView 0x7fc4dc879800>)>>] 
+ - constraints: [<NSAutoresizingMaskLayoutConstraint:0x600001455180 h=--& v=--& actions-separatableSequen....minX == 0   (active, names: actions-separatableSequen...:0x7fc4ddc1d760, '|':groupView.actionsSequence...:0x7fc4dc879800 )>, <NSAutoresizingMaskLayoutConstraint:0x600001454690 h=--& v=--& actions-separatableSequen....width == 250   (active, names: actions-separatableSequen...:0x7fc4ddc1d760 )>, <NSAutoresizingMaskLayoutConstraint:0x600001455720 h=--& v=--& actions-separatableSequen....minY == 0   (active, names: actions-separatableSequen...:0x7fc4ddc1d760, '|':groupView.actionsSequence...:0x7fc4dc879800 )>, <NSAutoresizingMaskLayoutConstraint:0x600001455950 h=--& v=--& actions-separatableSequen....height == 44   (active, names: actions-separatableSequen...:0x7fc4ddc1d760 )>, <NSContentSizeLayoutConstraint:0x60000130efa0 groupView.actionsSequence....width == 250 Hug:250 CompressionResistance:750   (active, names: groupView.actionsSequence...:0x7fc4dc879800 )>, <NSContentSizeLayoutConstraint:0x60000130ed60 groupView.actionsSequence....height == 44 Hug:1000 CompressionResistance:749   (active, names: groupView.actionsSequence...:0x7fc4dc879800 )>, <NSLayoutConstraint:0x600001451180 groupView.actionsSequence....height >= 44   (active, names: groupView.actionsSequence...:0x7fc4dc879800 )>] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 21 of 31 
+ - className: _UIInterfaceActionSeparatableSequenceView 
+ - frame: (0.0, 0.0, 250.0, 44.0) 
+ - bounds: (0.0, 0.0, 250.0, 44.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 4 
+ - subviews: count: 1 
+ - recursivelyGetAllSuperviews count: 7 
+ - gestureRecognizers: [] 
+ - constraints: [<NSAutoresizingMaskLayoutConstraint:0x600001455680 h=--& v=--& actions-separatableSequen....minX == 0   (active, names: actions-separatableSequen...:0x7fc4ddc1aa10, '|':actions-separatableSequen...:0x7fc4ddc1d760 )>, <NSAutoresizingMaskLayoutConstraint:0x6000014554f0 h=--& v=--& actions-separatableSequen....width == 250   (active, names: actions-separatableSequen...:0x7fc4ddc1aa10 )>, <NSAutoresizingMaskLayoutConstraint:0x6000014545f0 h=--& v=--& actions-separatableSequen....minY == 0   (active, names: actions-separatableSequen...:0x7fc4ddc1aa10, '|':actions-separatableSequen...:0x7fc4ddc1d760 )>, <NSAutoresizingMaskLayoutConstraint:0x600001454ff0 h=--& v=--& actions-separatableSequen....height == 44   (active, names: actions-separatableSequen...:0x7fc4ddc1aa10 )>] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 22 of 31 
+ - className: UIStackView 
+ - frame: (0.0, 0.0, 250.0, 44.0) 
+ - bounds: (0.0, 0.0, 250.0, 44.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 8 
+ - subviews: count: 1 
+ - recursivelyGetAllSuperviews count: 8 
+ - gestureRecognizers: [] 
+ - constraints: [<NSLayoutConstraint:0x600001454a00 'UISV-canvas-connection' actions-separatableSequen....top == _UIInterfaceActionCustomViewRepresentationView:0x7fc4dbc33c60.top   (active, names: actions-separatableSequen...:0x7fc4ddc1aa10 )>, <NSLayoutConstraint:0x600001454dc0 'UISV-canvas-connection' V:[_UIInterfaceActionCustomViewRepresentationView:0x7fc4dbc33c60]-(0)-|   (active, names: actions-separatableSequen...:0x7fc4ddc1aa10, '|':actions-separatableSequen...:0x7fc4ddc1aa10 )>, <NSLayoutConstraint:0x600001455220 'UISV-canvas-connection' actions-separatableSequen....leading == _UIInterfaceActionCustomViewRepresentationView:0x7fc4dbc33c60.leading   (active, names: actions-separatableSequen...:0x7fc4ddc1aa10 )>, <NSLayoutConstraint:0x6000014554a0 'UISV-canvas-connection' H:[_UIInterfaceActionCustomViewRepresentationView:0x7fc4dbc33c60]-(0)-|   (active, names: actions-separatableSequen...:0x7fc4ddc1aa10, '|':actions-separatableSequen...:0x7fc4ddc1aa10 )>, <NSLayoutConstraint:0x60000144ca00 'UIView-Encapsulated-Layout-Height' actions-separatableSequen....height == 44   (active, names: actions-separatableSequen...:0x7fc4ddc1aa10 )>, <NSAutoresizingMaskLayoutConstraint:0x60000144cbe0 h=--& v=--& 'UIView-Encapsulated-Layout-Left' actions-separatableSequen....minX == 0   (active, names: actions-separatableSequen...:0x7fc4ddc1aa10, '|':actions-separatableSequen...:0x7fc4ddc1d760 )>, <NSAutoresizingMaskLayoutConstraint:0x60000144dc20 h=--& v=--& 'UIView-Encapsulated-Layout-Top' actions-separatableSequen....minY == 0   (active, names: actions-separatableSequen...:0x7fc4ddc1aa10, '|':actions-separatableSequen...:0x7fc4ddc1d760 )>, <NSLayoutConstraint:0x60000144c9b0 'UIView-Encapsulated-Layout-Width' actions-separatableSequen....width == 250   (active, names: actions-separatableSequen...:0x7fc4ddc1aa10 )>] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 23 of 31 
+ - className: _UIInterfaceActionCustomViewRepresentationView 
+ - frame: (0.0, 0.0, 250.0, 44.0) 
+ - bounds: (0.0, 0.0, 250.0, 44.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 7 
+ - subviews: count: 1 
+ - recursivelyGetAllSuperviews count: 9 
+ - gestureRecognizers: [] 
+ - constraints: [<NSAutoresizingMaskLayoutConstraint:0x6000014557c0 h=--& v=--& _UIContextMenuActionView:0x7fc4ddb49cc0.minX == 0   (active, names: '|':_UIInterfaceActionCustomViewRepresentationView:0x7fc4dbc33c60 )>, <NSAutoresizingMaskLayoutConstraint:0x600001455810 h=--& v=--& _UIContextMenuActionView:0x7fc4ddb49cc0.width == 250   (active)>, <NSAutoresizingMaskLayoutConstraint:0x600001455770 h=--& v=--& _UIContextMenuActionView:0x7fc4ddb49cc0.minY == 0   (active, names: '|':_UIInterfaceActionCustomViewRepresentationView:0x7fc4dbc33c60 )>, <NSAutoresizingMaskLayoutConstraint:0x600001455860 h=--& v=--& _UIContextMenuActionView:0x7fc4ddb49cc0.height == 44   (active)>, <NSContentSizeLayoutConstraint:0x600001313000 _UIInterfaceActionCustomViewRepresentationView:0x7fc4dbc33c60.width == 250 Hug:250 CompressionResistance:750   (active)>, <NSContentSizeLayoutConstraint:0x6000013114a0 _UIInterfaceActionCustomViewRepresentationView:0x7fc4dbc33c60.height == 43.5 Hug:250 CompressionResistance:750   (active)>, <NSLayoutConstraint:0x60000144da90 _UIInterfaceActionCustomViewRepresentationView:0x7fc4dbc33c60.height >= 44 priority:999   (active)>] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 24 of 31 
+ - className: _UIContextMenuActionView 
+ - frame: (0.0, 0.0, 250.0, 44.0) 
+ - bounds: (0.0, 0.0, 250.0, 44.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 6 
+ - subviews: count: 2 
+ - recursivelyGetAllSuperviews count: 10 
+ - gestureRecognizers: [] 
+ - constraints: [<NSLayoutConstraint:0x6000014509b0 UIStackView:0x7fc4ddb49e90.firstBaseline == _UIContextMenuActionView:0x7fc4ddb49cc0.top + 28   (active)>, <NSLayoutConstraint:0x600001450820 UIStackView:0x7fc4ddb49e90.lastBaseline == _UIContextMenuActionView:0x7fc4ddb49cc0.bottom - 15.5   (active)>, <NSLayoutConstraint:0x6000014505f0 H:|-(16)-[UIStackView:0x7fc4ddb49e90]   (active, names: '|':_UIContextMenuActionView:0x7fc4ddb49cc0 )>, <NSLayoutConstraint:0x6000014507d0 UIStackView:0x7fc4ddb49e90.trailing <= UIImageView:0x7fc4ddc1c610.centerX - 16   (active)>, <NSLayoutConstraint:0x600001450a50 UIImageView:0x7fc4ddc1c610.centerX == _UIContextMenuActionView:0x7fc4ddb49cc0.trailing - 28   (active)>, <NSLayoutConstraint:0x600001450870 UIImageView:0x7fc4ddc1c610.centerY == _UIContextMenuActionView:0x7fc4ddb49cc0.centerY   (active)>] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 25 of 31 
+ - className: UIStackView 
+ - frame: (16.0, 12.0, 44.5, 21.0) 
+ - bounds: (0.0, 0.0, 44.5, 21.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 4 
+ - subviews: count: 1 
+ - recursivelyGetAllSuperviews count: 11 
+ - gestureRecognizers: [] 
+ - constraints: [<NSLayoutConstraint:0x60000144e170 'UISV-canvas-connection' UIStackView:0x7fc4ddb49e90.top == UILabel:0x7fc4ddb54d70'Share'.top   (active)>, <NSLayoutConstraint:0x60000144e2b0 'UISV-canvas-connection' V:[UILabel:0x7fc4ddb54d70'Share']-(0)-|   (active, names: '|':UIStackView:0x7fc4ddb49e90 )>, <NSLayoutConstraint:0x60000144ce10 'UISV-canvas-connection' UIStackView:0x7fc4ddb49e90.leading == UILabel:0x7fc4ddb54d70'Share'.leading   (active)>, <NSLayoutConstraint:0x60000144ce60 'UISV-canvas-connection' H:[UILabel:0x7fc4ddb54d70'Share']-(0)-|   (active, names: '|':UIStackView:0x7fc4ddb49e90 )>] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 26 of 31 
+ - className: UILabel 
+ - frame: (0.0, 0.0, 44.5, 21.0) 
+ - bounds: (0.0, 0.0, 44.5, 21.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: false 
+ - constraints count: 2 
+ - subviews: count: 0 
+ - recursivelyGetAllSuperviews count: 12 
+ - gestureRecognizers: [] 
+ - constraints: [<NSContentSizeLayoutConstraint:0x6000013340c0 UILabel:0x7fc4ddb54d70'Share'.width == 44.5 Hug:250 CompressionResistance:750   (active)>, <NSContentSizeLayoutConstraint:0x6000013346c0 UILabel:0x7fc4ddb54d70'Share'.height == 20.5 Hug:250 CompressionResistance:750   (active)>] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 27 of 31 
+ - className: UIImageView 
+ - frame: (212.5, 11.0, 19.0, 21.0) 
+ - bounds: (0.0, 0.0, 19.0, 21.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: false 
+ - constraints count: 2 
+ - subviews: count: 0 
+ - recursivelyGetAllSuperviews count: 11 
+ - gestureRecognizers: [] 
+ - constraints: [<NSContentSizeLayoutConstraint:0x600001334660 UIImageView:0x7fc4ddc1c610.width == 19 Hug:250 CompressionResistance:750   (active)>, <NSContentSizeLayoutConstraint:0x600001334b40 UIImageView:0x7fc4ddc1c610.height == 20 Hug:250 CompressionResistance:750   (active)>] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 28 of 31 
+ - className: _UIScrollViewScrollIndicator 
+ - frame: (244.0, 87.0, 3.0, 7.0) 
+ - bounds: (0.0, 0.0, 3.0, 7.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 0 
+ - subviews: count: 1 
+ - recursivelyGetAllSuperviews count: 7 
+ - gestureRecognizers: [] 
+ - constraints: [] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 29 of 31 
+ - className: UIView 
+ - frame: (0.0, 0.0, 3.0, 7.0) 
+ - bounds: (0.0, 0.0, 3.0, 7.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 0 
+ - subviews: count: 0 
+ - recursivelyGetAllSuperviews count: 8 
+ - gestureRecognizers: [] 
+ - constraints: [] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 30 of 31 
+ - className: _UIScrollViewScrollIndicator 
+ - frame: (90.0, 35.0, 7.0, 3.0) 
+ - bounds: (0.0, 0.0, 7.0, 3.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 0 
+ - subviews: count: 1 
+ - recursivelyGetAllSuperviews count: 7 
+ - gestureRecognizers: [] 
+ - constraints: [] 
+
+contextMenuContainerView.recursivelyGetAllSubviews items: 
+ - item 31 of 31 
+ - className: UIView 
+ - frame: (0.0, 0.0, 7.0, 3.0) 
+ - bounds: (0.0, 0.0, 7.0, 3.0) 
+ - gestureRecognizers count: -1 
+ - isUserInteractionEnabled: true 
+ - constraints count: 0 
+ - subviews: count: 0 
+ - recursivelyGetAllSuperviews count: 8 
+ - gestureRecognizers: [] 
+ - constraints: [] 
+
+UIContextMenuInteractionAnimating - completion:
