@@ -26,7 +26,7 @@ fileprivate class TestAuxiliaryPreviewView: UIView {
       button.configuration = .filled()
       
     } else {
-      button.tintColor = .blue;
+      button.setTitleColor(.blue, for: .normal);
     };
     
     button.addTarget(self,
@@ -146,7 +146,7 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
         button.configuration = .filled();
         
       } else {
-        button.tintColor = .blue;
+        button.setTitleColor(.blue, for: .normal);
       };
       
       button.addTarget(self,
@@ -201,7 +201,7 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
         button.configuration = .filled();
         
       } else {
-        button.tintColor = .blue;
+        button.setTitleColor(.blue, for: .normal);
       };
       
       button.addTarget(self,
@@ -222,7 +222,7 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
         button.configuration = .filled();
         
       } else {
-        button.tintColor = .blue;
+        button.setTitleColor(.blue, for: .normal);
       };
       
       button.addTarget(self,
@@ -243,7 +243,7 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
         button.configuration = .filled();
         
       } else {
-        button.tintColor = .blue;
+        button.setTitleColor(.blue, for: .normal);
       };
       
       button.addTarget(self,
@@ -267,7 +267,7 @@ class AuxPreviewTest02ViewController: UIViewController, ContextMenuManagerDelega
         button.configuration = .filled();
         
       } else {
-        button.tintColor = .blue;
+        button.setTitleColor(.blue, for: .normal);
       };
       
       button.addTarget(self,
