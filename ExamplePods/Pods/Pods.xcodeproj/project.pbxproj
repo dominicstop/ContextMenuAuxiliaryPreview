@@ -91,6 +91,7 @@
 		88CEFA5A2BBC0B7A0074147A /* PreviewPlaterViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CEFA592BBC0B7A0074147A /* PreviewPlaterViewWrapper.swift */; };
 		88CEFA5C2BBC0D340074147A /* ContextMenuActionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CEFA5B2BBC0D340074147A /* ContextMenuActionsListView.swift */; };
 		88CEFA5E2BBC1A8E0074147A /* VerticalAnchorPosition+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CEFA5D2BBC1A8E0074147A /* VerticalAnchorPosition+Helpers.swift */; };
+		88CEFA602BBC5F1D0074147A /* ContextMenuViewExtractorForIOS15.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CEFA5F2BBC5F1D0074147A /* ContextMenuViewExtractorForIOS15.swift */; };
 		8976C0064CB3656AAD7F0C32FA0FD417 /* VerticalAnchorPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60CCC38F02863F20E59AB31BFA688B7 /* VerticalAnchorPosition.swift */; };
 		8DC84166B72059A4BA930338FDE36950 /* Angle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE98DAE7B53289B0D395ED73298E3E /* Angle.swift */; };
 		8F8956319E2C210615B1A02117661277 /* UIUserInterfaceStyle+CaseIterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1F39740A0FADB55FBD0799926DE2FD /* UIUserInterfaceStyle+CaseIterable.swift */; };
@@ -303,6 +304,7 @@
 		88CEFA592BBC0B7A0074147A /* PreviewPlaterViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewPlaterViewWrapper.swift; sourceTree = "<group>"; };
 		88CEFA5B2BBC0D340074147A /* ContextMenuActionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuActionsListView.swift; sourceTree = "<group>"; };
 		88CEFA5D2BBC1A8E0074147A /* VerticalAnchorPosition+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VerticalAnchorPosition+Helpers.swift"; sourceTree = "<group>"; };
+		88CEFA5F2BBC5F1D0074147A /* ContextMenuViewExtractorForIOS15.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuViewExtractorForIOS15.swift; sourceTree = "<group>"; };
 		89283229BCC13AEAF8442564755086CB /* GenericErrorCodes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GenericErrorCodes.swift; path = Sources/Common/GenericError/GenericErrorCodes.swift; sourceTree = "<group>"; };
 		8A4DFE9D656BE108966E8DF6EDDA046B /* Pods-ContextMenuAuxiliaryPreview_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ContextMenuAuxiliaryPreview_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		8B988BF3213E978FC7E1CA04205A3B88 /* AuxiliaryPreviewModalViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AuxiliaryPreviewModalViewController.swift; sourceTree = "<group>"; };
@@ -424,8 +426,9 @@
 				BEAC3510DD1D9F9DABE170E1C8963A37 /* AuxiliaryPreviewMenuManager.swift */,
 				0C4E8127D5CA3FBB7A1C91311ADDFBEB /* AuxiliaryPreviewMetadata+AuxiliaryPreviewMenuManager.swift */,
 				88CEFA532BBB08CE0074147A /* AuxiliaryPreviewViewProvider.swift */,
-				88CEFA552BBB08F80074147A /* ContextMenuViewExtractorForIOS16.swift */,
 				88CEFA572BBC04F60074147A /* ContextMenuViewExtractorForIOS13.swift */,
+				88CEFA5F2BBC5F1D0074147A /* ContextMenuViewExtractorForIOS15.swift */,
+				88CEFA552BBB08F80074147A /* ContextMenuViewExtractorForIOS16.swift */,
 			);
 			name = AuxiliaryPreviewMenuManager;
 			path = Sources/AuxiliaryPreviewMenuManager;
@@ -950,6 +953,7 @@
 				88CEFA5C2BBC0D340074147A /* ContextMenuActionsListView.swift in Sources */,
 				99BC2A0DE2BD2C53CF28FFA110E553C5 /* ContextMenuManager+AuxiliaryPreviewModalManagerDelegate.swift in Sources */,
 				3C1228F198F6E8FD0997F42034B1AD5A /* ContextMenuManagerDelegate.swift in Sources */,
+				88CEFA602BBC5F1D0074147A /* ContextMenuViewExtractorForIOS15.swift in Sources */,
 				88CEFA522BBAD04A0074147A /* UIView+Helpers.swift in Sources */,
 				F681E4C1D76FB8C49EB5A7C2066BDA3C /* ContextMenuMetadata.swift in Sources */,
 				50710C055DEC068480C9EDFDA39745FC /* ContextMenuPlatterTransitionViewWrapper.swift in Sources */,
