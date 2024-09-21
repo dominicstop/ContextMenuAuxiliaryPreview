@@ -33,7 +33,7 @@ public class ContextMenuManager {
   internal(set) public var auxiliaryPreviewView: UIView?;
   
   var auxiliaryPreviewModalManager: AuxiliaryPreviewModalManager?;
-  var auxiliaryPreviewModalController: AuxiliaryPreviewModalViewController?;
+  var auxiliaryPreviewModalController: UIViewController?;
   
   // MARK: - Properties - References
   // -------------------------------
@@ -171,11 +171,26 @@ public class ContextMenuManager {
       );
     };
     
-    let auxPreviewView = delegate.onRequestMenuAuxiliaryPreview(sender: self);
+    guard let auxPreviewView = delegate.onRequestMenuAuxiliaryPreview(sender: self) else {
+      throw AuxiliaryPreviewError(
+        errorCode: .unexpectedNilValue,
+        description: "`auxPreviewView` is nil"
+      );
+    };
+    
     self.auxiliaryPreviewView = auxPreviewView;
     
-    let modalVC = AuxiliaryPreviewModalViewController();
-    modalVC.view = auxPreviewView;
+    let modalVC: UIViewController = {
+      let match = auxPreviewView.recursivelyGetAllParentResponders.first {
+        $0 is UIViewController;
+      };
+      
+      guard let associatedVC = match as? UIViewController else {
+        return AuxiliaryPreviewModalViewController();
+      };
+      
+      return associatedVC;
+    }();
     
     self.auxiliaryPreviewModalController = modalVC;
     
