@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ContextMenuAuxiliaryPreview'
-  s.version          = '0.5.1'
+  s.version          = '0.5.0'
   s.summary          = 'TBA'
 
   
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.author           = { 'Dominic Go' => 'dominic@dominicgo.dev' }
   s.social_media_url = 'https://twitter.com/@GoDominic'
 
-  s.dependency 'DGSwiftUtilities', '~> 0.18'
+  s.dependency 'DGSwiftUtilities', '~> 0.29'
 
   s.ios.deployment_target = '13.0'
   s.swift_version = '5.0'
